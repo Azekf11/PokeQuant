@@ -22,3 +22,4 @@ File name: `NNNN-short-title.md`. Template:
 | [0001](0001-repository-layout-and-tooling.md) | Repository layout and tooling | accepted |
 | [0002](0002-code-license.md) | Code licence | accepted |
 | [0003](0003-amendments-to-plan-v1.md) | Amendments to the v1.0 plan | accepted |
+| [0004](0004-publication-route.md) | Publication route | accepted |

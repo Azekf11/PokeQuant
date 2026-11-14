@@ -1,0 +1,154 @@
+# Source register — PokéQuant
+#
+# One entry per candidate data source. Updated whenever terms are re-checked.
+# Rights values: yes | no | unclear | not_stated.
+# Quotes are short excerpts from the source's own pages. They were collected
+# with an automated text extractor on the date below: re-check them on the live
+# page before citing them in the paper.
+#
+# Price types (see research/protocol/protocol.md §5.1):
+#   listing | provider_market | sold | window_median | estimate
+
+checked_on: "2026-11-14"
+
+sources:
+  - id: pokelife
+    name: "Poké Life — Pokémon TCG pull-rate evidence registry"
+    urls:
+      - https://www.poke-life.com/data/
+      - https://www.poke-life.com/data/changelog/
+      - https://www.poke-life.com/methodology/
+    access: open download, no key
+    versioning: >-
+      Immutable dated files under /data/v/<YYYY-MM-DD>/ ("Files at these links
+      never change"); latest version 2026-11-13.
+    files:
+      - /data/pull-rates.csv   # set_id, set_name, rarity_id, rarity, cards_in_rarity, hits, packs, rate, ci95_lower, ci95_upper, confidence, counts_reconstructed, datasets
+      - /data/datasets.csv     # one row per reviewed opening, with a `qualifying` flag
+      - /data/evidence.json
+    collection_method: >-
+      Aggregation of published openings (case breaks, store tallies, box
+      streams; mostly YouTube, also Twitch, Reddit, store pages, TCGplayer
+      Authentication Center). Some counts are reconstructed from a published
+      rate and margin (counts_reconstructed = TRUE); some are lower bounds.
+      Intervals: Beta posterior with Jeffreys prior. Review is largely
+      automated, with human review of a sample only.
+    coverage: "167 English sets + separate Japanese section (36 sets), per /sets/"
+    licence: CC BY 4.0
+    rights: {access: yes, display: yes, redistribution: yes}
+    attribution: >-
+      Poké Life, "Pokémon TCG pull-rate evidence registry,"
+      https://www.poke-life.com/data/ (accessed <date>). CC BY 4.0.
+    key_quote: "Free to share and adapt, including commercially, under CC BY 4.0."
+    use_as: pull_rates
+    risks:
+      - Operator not named; mostly automated curation.
+      - Licence of the underlying third-party openings not stated.
+      - Reconstructed counts must not be treated as exact observations.
+    actions:
+      - Pin a dated version; keep counts_reconstructed and confidence fields.
+      - Sensitivity analysis excluding reconstructed rows.
+
+  - id: tcgdex
+    name: "TCGdex"
+    urls:
+      - https://tcgdex.dev
+      - https://tcgdex.dev/markets-prices
+      - https://github.com/tcgdex/cards-database
+    access: open API, no key, no published hard rate limit
+    coverage: "10+ languages (EN, FR, ES, IT, PT-BR, DE, JA, ZH-TW, ID, TH); completeness varies by language"
+    price_fields:
+      - {provider: cardmarket, currency: EUR, types: [listing, provider_market], frequency: daily}
+      - {provider: tcgplayer, currency: USD, types: [listing, provider_market], frequency: hourly_to_daily}
+    licence: "MIT (card database)"
+    rights:
+      catalogue: {access: yes, display: yes, redistribution: yes}
+      prices: {access: yes, display: unclear, redistribution: unclear}
+      images: {access: yes, display: unclear, redistribution: not_stated}
+    key_quote: "The Database is licensed under the MIT License."
+    use_as: catalogue
+    actions:
+      - Ask TCGdex maintainers about the status of price fields and images.
+
+  - id: pokemontcg_io
+    name: "Pokémon TCG API (pokemontcg.io)"
+    urls:
+      - https://docs.pokemontcg.io/
+      - https://github.com/PokemonTCG/pokemon-tcg-data
+    status: "deprecated; new registrations closed; scheduled offline 2027-03-01"
+    quota: "1000 requests/day without key; 20000/day with key"
+    licence: not_stated
+    rights: {access: "yes until shutdown", display: not_stated, redistribution: not_stated}
+    use_as: do_not_use
+    reason: Shuts down during the project; no licence; no new keys.
+
+  - id: pkmnprices
+    name: "PkmnPrices"
+    urls:
+      - https://www.pkmnprices.com/docs
+      - https://www.pkmnprices.com/pricing
+      - https://www.pkmnprices.com/terms
+    access: "API key; free plan 500 credits/day, 60 req/min, English cards only"
+    price_types: [provider_market, "listing (paid plans)", "sold (paid plans, eBay comps)"]
+    licence: "none granted (terms updated 2026-04-14)"
+    rights: {access: "yes, via API only", display: not_stated, redistribution: not_stated}
+    key_quote: "Not included: Commercial use"  # free-plan limits, /pricing
+    use_as: prices_only_with_written_permission
+    actions:
+      - Email support to ask whether derived statistics and a frozen snapshot may be published.
+
+  - id: tcgdb
+    name: "TCGdb (beta)"
+    urls:
+      - https://tcgdb.org/api-docs
+      - https://tcgdb.org/terms
+    access: "API key; open beta; 100 calls/day"
+    price_types: [estimate]
+    rights: {access: yes, display: no, redistribution: no}
+    key_quote: "personal, non-commercial purposes"
+    use_as: do_not_use
+
+  - id: tcgplayer_api
+    name: "TCGplayer API"
+    urls: [https://docs.tcgplayer.com/docs/getting-started]
+    status: "No new API access granted"
+    use_as: do_not_use
+
+  - id: cardmarket_api
+    name: "Cardmarket API"
+    urls: [https://help.cardmarket.com/en/cardmarket-api]
+    status: "Not accepting access applications"
+    use_as: do_not_use
+
+  - id: ebay
+    name: "eBay Browse API / Marketplace Insights API"
+    urls:
+      - https://developer.ebay.com/api-docs/buy/api-browse.html
+    status: >-
+      Browse API returns active listings only; sold history is in Marketplace
+      Insights, which is restricted and closed to new users. Buy APIs require
+      partner approval.
+    price_types: [listing]
+    use_as: do_not_use
+
+  - id: tpci_official
+    name: "The Pokémon Company International — official sites"
+    urls:
+      - https://tcg.pokemon.com/
+      - https://www.pokemon.com/us/legal/terms-of-use/
+    pull_rates: "None published on the product pages checked (EN and JP)."
+    rights: {images: no, redistribution: no}
+    use_as: "card names and numbers as facts only; no images; non-affiliation disclaimer"
+
+summary: >-
+  Redistributable: Poké Life pull rates (CC BY 4.0) and the TCGdex catalogue
+  (MIT). No price source can currently be redistributed without written
+  permission. This is the main input for Gate G2 (end of S2).
+
+open_questions:
+  - Does Poké Life's CC BY 4.0 cover the underlying third-party openings? Which feed produces `rate`?
+  - Licence of TCGdex images and of its TCGplayer / Cardmarket price fields.
+  - Will PkmnPrices allow publishing derived statistics or a snapshot?
+  - Do TCGplayer / Cardmarket terms restrict republication of their prices via aggregators?
+  - eBay API License Agreement terms (not read).
+  - pokemon.com fan-content page could not be read (bot check, not bypassed).

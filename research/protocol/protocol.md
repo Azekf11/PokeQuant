@@ -1,11 +1,13 @@
 # Research protocol
 
-> **Status: DRAFT v0** — transcribed from the internal *Protocole scientifique
-> et plan du papier* (v1.0, 2 Nov 2026) with the amendments of
-> [ADR 0003](../../docs/decisions/0003-amendments-to-plan-v1.md).
-> To be finalised and frozen at the end of week S1 (git tag `prereg-v1`).
-> The analysis plan (sets, budgets, baskets, scenarios) is frozen at the end of
-> S4 (tag `prereg-v2`) in `research/experiments/`.
+> **Status: v1 — candidate for pre-registration** (2026-11-15). Based on the
+> internal *Protocole scientifique et plan du papier* (v1.0, 2 Nov 2026), the
+> amendments of [ADR 0003](../../docs/decisions/0003-amendments-to-plan-v1.md)
+> and the S1 work ([scoping note](scoping_note.md)).
+> Frozen by the git tag `prereg-v1`. After that tag, any change is a documented
+> deviation (ADR + reported in the paper).
+> The analysis plan (sets, product, budgets, baskets, n_max, scenarios) is
+> frozen at the end of S4 (tag `prereg-v2`) in `research/experiments/`.
 
 **Objective:** an honest, reproducible and falsifiable study. The paper does not
 try to show that boosters are profitable or not; it measures under which
@@ -44,11 +46,19 @@ negative or inconclusive results are reported.
 ### 1.3 Claimed contribution (cautious wording)
 
 A reproducible framework combining (i) a probabilistic representation of booster
-structure, (ii) pull-rate estimation uncertainty, (iii) a card value
-distribution built from typed market observations, and (iv) a risk-adjusted
-comparison of acquisition strategies at a given budget. The contribution is
-**not** to be the first odds calculator or price tracker. The novelty statement
-is written only after the literature review (S1).
+structure, (ii) Bayesian uncertainty on community-estimated pull rates,
+propagated through a nested Monte Carlo, (iii) typed market prices converted
+into net realisable values with explicit fees and liquidity scenarios, and
+(iv) a risk-adjusted comparison with direct purchase under two pre-registered
+estimands (E1, E2 — §6.3).
+
+The contribution is **not** to be the first odds calculator, EV calculator or
+pack-opening simulator: practitioner tools already simulate outcome
+distributions with fixed pull rates, and Mota (2026) formalises a
+sealed-opened spread for Magic: The Gathering. The current novelty statement
+is in [`literature_review.md`](literature_review.md) §4 and stays provisional
+until the closest papers are read in full. It is not part of the
+pre-registration.
 
 ### 1.4 What the paper does not claim
 
@@ -69,14 +79,22 @@ is written only after the literature review (S1).
 | Market liquidity | Spread, volume, time to sale, listed vs realised price. | Theoretical → realisable value. |
 | Selection bias in grading | Self-selection, survivorship, population reports. | Frame the future grading module. |
 
-Leads to verify in full (not proof of novelty): a Princeton thesis (2026) on
-Pokémon TCG market dynamics; an SSRN paper on hedonic valuation of graded cards.
+The two leads of the v1.0 protocol were identified in S1: Danz (2026,
+Princeton senior thesis, restricted access) and Baro (2026, SSRN). Neither
+abstract models boosters or pull rates. Full review and references:
+[`literature_review.md`](literature_review.md),
+[`references.bib`](../paper/references.bib).
 
 ## 3. Empirical design
 
 ### 3.1 Population and sample
 
-- 1–3 sets selected by a data-coverage audit, not personal preference.
+- 1–3 sets selected by a data-coverage audit, not personal preference. The
+  selection rule is written in S2 **before** prices are inspected: (1) pull-rate
+  sample size and share of non-reconstructed counts in the Poké Life registry,
+  (2) documented slot structure, (3) share of cards with a usable price.
+- English-language products only for the main analysis (largest pull-rate
+  samples; one catalogue language).
 - One exact sealed product (single booster, display, ETB) and its configuration; configurations are never mixed without an explicit model.
 - Languages and variants fixed; an English and a Japanese card are different observations.
 - A reference date for each price and a common time window.
@@ -178,36 +196,106 @@ use labelled scenarios (fast sale, slow sale, haircut).
 - Current prices are never used to reconstruct past values.
 - If history is too short, no temporal prediction — scenario analysis only.
 
-## 6. Strategies
+## 6. Strategies and estimands
 
-- **A — Opening.** Budget B, unit cost b, n = ⌊B / b⌋ boosters. Gross value, net
-  liquidation value, profit, risk metrics. Low-value cards not sellable
-  individually get a lot value, or 0 in a prudent scenario — justified.
-- **B — Direct purchase.** Target card or basket defined **ex ante**; fees and
-  shipping included; resale value at the same horizon. No a-posteriori best basket.
-- **C — Raw + grading (extension, excluded from main results).**
+### 6.1 Prices used
+
+For a card printing c at reference date t₀:
+
+- **Acquisition price** a(c) — what a buyer pays: price + buyer fees + shipping.
+- **Liquidation value** ℓ(c) — what a seller receives: realisable price −
+  seller fees − payment fees − shipping/insurance, after the liquidity scenario
+  (haircut, or 0 for unsellable bulk in the prudent scenario).
+
+Always ℓ(c) ≤ a(c). Gross scenarios (no fees, provider market price) are
+reported only as a theoretical reference, never as the main result.
+
+**Static design.** The main analysis uses a single reference date t₀ (one price
+snapshot): no price dynamics, no holding-period return. Time enters only
+through robustness on other snapshot dates (H4). This is a deliberate limit,
+stated in the paper.
+
+### 6.2 Strategies
+
+- **A — Opening.** Buy n boosters at unit cost b (incl. taxes and shipping) and
+  liquidate everything obtained.
+- **B — Direct purchase.** Buy a target card or basket defined **ex ante** in the
+  experiment configs (tag `prereg-v2`); no a-posteriori best basket.
+- **C — Raw + grading** (extension, excluded from main results).
   EV = Σ_g P(G = g | X) · V_g − purchase − grading − shipping − selling fees.
   P(G | X) requires a representative sample of documented raw cards, never the
   PSA population report alone.
 
+### 6.3 Estimands
+
+The research question mixes two economically different uses of boosters. Both
+are reported, separately:
+
+- **E1 — Budget liquidation.** With budget B, Strategy A opens n = ⌊B / b⌋
+  boosters. Net profit of simulated opening j:
+  Π_j = Σ_{cards i obtained} ℓ(C_ij) − n·b.
+  Strategy B at the same date has a near-deterministic profit
+  Π_B = Σ_{c ∈ basket} [ℓ(c) − a(c)] ≤ 0 (the round-trip cost), so E1 compares a
+  risky distribution with a known transaction cost.
+- **E2 — Target acquisition cost.** Goal: own one copy of target card c\*.
+  Strategy A opens boosters until the first c\* (capped at n_max, a
+  pre-registered limit) and liquidates every other card. Net cost of run j:
+  K_j = k_j·b − Σ_{other cards i} ℓ(C_ij), where k_j is the number of boosters
+  opened (if the cap is reached without a hit, the run is a failure and c\* is
+  then bought directly at a(c\*)). Strategy B costs a(c\*).
+  Main quantity: P(K < a(c\*)) and the distribution of K − a(c\*).
+
 ## 7. Metrics and comparison protocol
 
-Profit of opening j: Π_j = V_j − booster cost, where V_j is the net realisable
-value of the cards obtained. **Sign convention:** losses are negative profits;
-VaR and CVaR are reported as losses (positive numbers) — to confirm in S1.
+### 7.0 Definitions and sign conventions
+
+Π denotes a net profit (E1) or minus a net cost (E2, Π = a(c\*) − K, so that
+Π > 0 means opening was cheaper). Losses are negative profits. Risk measures
+are reported **as positive losses**:
+
+- q_α(Π): α-quantile of Π.
+- VaR_α = −q_α(Π).
+- CVaR_α = −E[Π | Π ≤ q_α(Π)]; estimator: minus the mean of the ⌈αN⌉ smallest
+  simulated values.
+- α = 5 % for both. A tail estimate must rest on at least 1 000 tail samples
+  (N ≥ 20 000 per epistemic draw for α = 5 %).
 
 | Metric | Definition |
 |---|---|
-| Net EV | Mean simulated net profit. |
-| Median | 50th percentile of profit. |
-| P(loss) | Share of scenarios with negative net profit. |
-| VaR 5 % | 5 % quantile of profit (as a loss). |
-| CVaR 5 % | Mean of the worst 5 % outcomes (as a loss). |
-| Break-even | Booster price at which net EV = 0. |
-| P(target hit) | Probability of at least one target in n packs. |
-| Expected packs to hit | 1/p under independence. |
-| Sensitivity | Variation with prices, rates, fees, N. |
-| Uncertainty interval | Interval of results under parameter uncertainty. |
+| Net EV | E[Π], mean simulated net profit. |
+| Median | q₀.₅(Π). |
+| P(loss) | P(Π < 0). |
+| Quantiles | q₀.₀₅, q₀.₂₅, q₀.₇₅, q₀.₉₅ of Π. |
+| VaR 5 % | −q₀.₀₅(Π). |
+| CVaR 5 % | −E[Π \| Π ≤ q₀.₀₅(Π)]. |
+| Break-even booster price | b\* = E[Σ_i ℓ(C_i)] for one booster (E1): net EV = 0 when b = b\*. |
+| P(target hit in n) | 1 − ∏_{packs}(1 − p_hit) under independence; simulated otherwise. |
+| Expected packs to hit | 1 / p_hit under independence. |
+| Uncertainty interval | 2.5 %–97.5 % interval of each metric over epistemic draws. |
+| Monte Carlo error | Standard error of each metric over the aleatory draws (batch means or bootstrap for quantiles and CVaR). |
+
+### 7.0b Pre-registered decision rules for H1–H4
+
+A strategy comparison is called **decisive** when the posterior probability
+(share of epistemic draws) that one strategy beats the other on a given metric
+is ≥ 0.90, and **undetermined** between 0.10 and 0.90. Thresholds are
+conventions fixed here, before any result.
+
+- **H1 supported** if, in at least one pre-registered set and scenario, the
+  ranking of strategies by EV differs from their ranking by median or by CVaR
+  5 %, or if EV > 0 while P(loss) > 0.5 for Strategy A.
+- **H2 supported** if a comparison that is decisive at the posterior mean of
+  the pull rates becomes undetermined, or reverses, once epistemic
+  uncertainty is propagated.
+- **H3 supported** if the advantage of A over B in EV (E1) or in
+  P(K < a(c\*)) (E2) decreases from the gross to the net scenario, with a 95 %
+  interval of the change excluding 0.
+- **H4 supported** if the decisive winner differs between at least two sets, or
+  between at least two price snapshot dates. With a single set and a single
+  snapshot, H4 is reported as **not testable**.
+
+Every hypothesis is reported as supported, not supported, or not testable,
+with the evidence.
 
 ### 7.1 Comparability
 
@@ -226,7 +314,12 @@ analysis; no parameter chosen because it makes a strategy win.
 6. Compare several sets if data allows.
 7. Vary the number of simulations and check metric stability.
 
-Added: prior sensitivity (Jeffreys vs uniform).
+Added in S1:
+
+8. Prior sensitivity (Jeffreys vs uniform).
+9. Exclude pull-rate rows with reconstructed counts or "estimated" confidence.
+10. Liquidity haircuts anchored on observed sell-through and time-to-sale
+    figures (Heck et al. 2026), clearly labelled as transferred evidence.
 
 ## 8. Paper structure
 

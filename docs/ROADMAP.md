@@ -76,14 +76,17 @@ PR into `main`.
 **Exit:** `make check` passes locally and in CI.
 
 ### S1 — Scoping, literature, source register · branch `week/01-scoping`
-- [ ] Locate and read in full the Princeton (2026) thesis and the SSRN hedonic-pricing paper; 10–20 references across the six axes of protocol §2 (collectibles, hedonic pricing, simulation, risk measures, liquidity, grading selection bias) → `research/paper/references.bib`, notes in `research/protocol/literature_review.md`.
-- [ ] Write the novelty statement *after* the review, relative to existing calculators and papers.
-- [ ] Source register `data/manifests/sources.yaml`: for each source — URL, access method, key/quota, licence or ToS, redistribution right (yes / no / unclear), price types offered, date checked.
-- [ ] Re-check the ToS of Poké Life (CC BY 4.0), Pokémon TCG API, TCGdex, PkmnPrices, TCGdb. TCGplayer, Cardmarket and eBay sold data are assumed unavailable unless proven otherwise.
-- [ ] Finalise `research/protocol/protocol.md` v1: question, Q1–Q5, H1–H4, metric definitions **with sign conventions** (VaR/CVaR), variables.
-- [ ] Check the arXiv endorsement path for q-fin.GN / stat.AP.
+- [x] Locate the Princeton (2026) thesis and the SSRN hedonic-pricing paper; 40 verified references across the six axes → `research/paper/references.bib`, notes in `research/protocol/literature_review.md`.
+- [ ] Read in full the closest papers (Mota 2026, Baro 2026, Sharma 2026, Danz 2026 — restricted) — *author action, see scoping note §3*.
+- [x] Write a provisional novelty statement relative to existing calculators and papers.
+- [x] Source register `data/manifests/sources.yaml`: for each source — URL, access method, key/quota, licence or ToS, redistribution right (yes / no / unclear), price types offered, date checked.
+- [x] Re-check the ToS of Poké Life (CC BY 4.0), Pokémon TCG API, TCGdex, PkmnPrices, TCGdb, TCGplayer, Cardmarket, eBay.
+- [x] Finalise `research/protocol/protocol.md` v1: question, Q1–Q5, H1–H4 with decision rules, estimands E1/E2, metric definitions **with sign conventions**, variables.
+- [x] Check the publication route → [ADR 0004](decisions/0004-publication-route.md).
+- [ ] Author review of protocol v1, then tag `prereg-v1`.
 
-**Deliverable:** protocol v1, source register, bibliography.
+**Deliverable:** protocol v1, source register, bibliography, [scoping note](../research/protocol/scoping_note.md).
+**S1 finding that matters for G2:** no price source is redistributable without written permission; options P1–P4 are listed in the scoping note.
 **Exit:** question, hypotheses, scope and variables frozen → tag `prereg-v1`.
 
 ### S2 — Data audit · branch `week/02-data-audit`
