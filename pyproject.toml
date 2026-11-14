@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pokequant"
+version = "0.0.1"
+description = "Reproducible probabilistic and risk-adjusted comparison of Pokémon TCG booster opening versus direct secondary-market purchase."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Azekf11" }]
+keywords = ["monte-carlo", "collectibles", "risk", "pokemon-tcg"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+# Runtime dependencies are added in the roadmap week that first uses them (ADR 0001).
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/Azekf11/PokeQuant"
+
+[dependency-groups]
+dev = [
+  "pytest>=8",
+  "hypothesis>=6",
+  "ruff>=0.6",
+  "mypy>=1.10",
+  "pre-commit>=3.7",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["packages/pokequant_core"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "N", "SIM", "NPY", "RUF"]
+
+[tool.mypy]
+files = ["packages/pokequant_core", "tests"]
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--strict-markers", "--strict-config", "-ra"]
+xfail_strict = true

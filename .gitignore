@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.hypothesis/
+.coverage
+htmlcov/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Data: nothing from raw/ or processed/ is committed by default.
+# A source is allow-listed here only after its redistribution right is
+# confirmed in an ADR, e.g.:
+#   !data/raw/<source>/
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Simulation outputs (regenerable)
+results/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/

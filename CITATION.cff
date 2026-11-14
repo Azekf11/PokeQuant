@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "PokéQuant: reproducible risk-adjusted analysis of Pokémon TCG booster opening versus direct purchase"
+abstract: >-
+  Open-source engine and study comparing booster opening with direct
+  secondary-market purchase of Pokémon TCG cards, accounting for pull-rate
+  uncertainty, value dispersion, fees and liquidity.
+authors:
+  - alias: "Azekf11"
+repository-code: "https://github.com/Azekf11/PokeQuant"
+license: MIT
+version: 0.0.1
+keywords:
+  - Monte Carlo simulation
+  - collectibles
+  - risk measurement
+  - Pokémon TCG
