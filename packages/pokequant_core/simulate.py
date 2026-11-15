@@ -43,12 +43,24 @@ class CompiledModel:
 
 
 def compile_model(
-    model: BoosterModel, distinct_groups: Sequence[Sequence[str]] = DISTINCT_GROUPS
+    model: BoosterModel,
+    distinct_groups: Sequence[Sequence[str]] = DISTINCT_GROUPS,
+    multiplicity: Mapping[str, int] | None = None,
 ) -> CompiledModel:
+    """Integer arrays of ``model``.
+
+    ``multiplicity`` gives a printing that many entries in its pool instead of
+    one, so that printings of one pool can have unequal weights (robustness
+    R11; the default is assumption A-EQ). Pool probabilities are unchanged.
+    """
     printing_ids = tuple(sorted({p for pool in model.cards_by_rarity.values() for p in pool}))
     position = {p: i for i, p in enumerate(printing_ids)}
+    weight = dict(multiplicity or {})
+    unknown = set(weight) - set(position)
+    if unknown or any(w < 1 for w in weight.values()):
+        raise ValueError(f"bad multiplicity: unknown {sorted(unknown)} or weight < 1")
     pool_arrays = {
-        name: np.array([position[p] for p in pool], dtype=np.int64)
+        name: np.array([position[p] for p in pool for _ in range(weight.get(p, 1))], dtype=np.int64)
         for name, pool in model.cards_by_rarity.items()
     }
     slots = []

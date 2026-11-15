@@ -155,15 +155,17 @@ PR into `main`.
 *Gate G7 passed (2026-11-15): net values use TCGplayer's published seller fees plus labelled shipping and haircut assumptions; the main conclusion (opening loses on average) already holds in the gross reference. Caveat: market prices are a provider aggregate, not observed sales → tested in S8. See [results.md](../research/reports/results.md) and paper draft §6.5.*
 
 ### S8 — Robustness and sensitivity · branch `week/08-robustness`
-- [ ] The seven robustness tests of protocol §7.2, plus prior sensitivity (Jeffreys vs uniform) and CI-bound scenarios.
-- [ ] Tornado plot and Table 4; multi-set comparison if data allows.
-- [ ] `research/reports/robustness.md`.
-- [ ] `make reproduce` regenerates every paper figure and table from the configs.
-- [ ] Ask 1–2 external readers now for a review in S11.
+- [x] The seven robustness tests of protocol §7.2, plus prior sensitivity (Jeffreys vs uniform) and CI-bound scenarios. *R1–R12 defined operationally in [ADR 0012](decisions/0012-operational-robustness-tests.md); R13 not run (homogeneity not rejected).*
+- [x] Tornado plot and Table 4; multi-set comparison if data allows. *Three sets (R6).*
+- [x] `research/reports/robustness.md`.
+- [x] `make reproduce` regenerates every paper figure and table from the configs. *Validation, valuation and results reports regenerate byte for byte; the robustness baseline reproduces the main run exactly.*
+- [ ] Ask 1–2 external readers now for a review in S11. *Author action.*
 
 **Deliverable:** robustness report.
 **Exit:** every conclusion comes with intervals and limits.
-**Gate G8:** GO / NO-GO on the publishability criteria (protocol §11) → tag `analysis-v1` (analysis freeze).
+**Gate G8:** GO / NO-GO on the publishability criteria (protocol §10) → tag `analysis-v1` (analysis freeze).
+
+*Gate G8 passed (2026-11-15): C1 and C3 hold in every robustness variant; C2 fails once (Stellar Crown, gross break-even price under indicative asking-price statistics, R1). H2 is supported but fragile (lost with 1,000 runs per draw). Assessment against protocol §10 in paper draft §7.5. Analysis frozen at tag `analysis-v1`.*
 
 ### S9 — API and minimal web · branch `week/09-web`
 - [ ] `apps/api/` FastAPI: sets, pull rates, simulate (bounded N), compare, export; OpenAPI contract.

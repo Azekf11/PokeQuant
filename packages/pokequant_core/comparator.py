@@ -12,10 +12,11 @@ results therefore do not depend on the order in which jobs run.
 
 from __future__ import annotations
 
+import dataclasses
 import math
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
-from typing import Any
+from dataclasses import dataclass, field
+from typing import Any, Literal
 
 import numpy as np
 from numpy.typing import NDArray
@@ -24,15 +25,31 @@ from pokequant_core.booster import LAYOUTS, SIR, SetPosterior, build_set_posteri
 from pokequant_core.experiment import ExperimentConfig
 from pokequant_core.metrics import METRICS, constant_metrics, summarise
 from pokequant_core.model import BoosterModel, p_hit
-from pokequant_core.schemas import CardPrinting, PriceObservation, PullRateObservation
+from pokequant_core.schemas import (
+    CardPrinting,
+    CostScenario,
+    PriceObservation,
+    PullRateObservation,
+)
 from pokequant_core.simulate import (
     CompiledModel,
     compile_model,
     simulate_e1,
     simulate_e2,
     slot_card_probabilities,
+    split_on_target,
 )
-from pokequant_core.valuation import CardValues, MissingRule, PriceBasis, select_prices, value_cards
+from pokequant_core.valuation import (
+    CardValues,
+    MissingRule,
+    PriceBasis,
+    PriceVector,
+    select_prices,
+    statistics_median,
+    value_cards,
+)
+
+STATISTICS = ("low", "mid", "high", "direct_low", "market")  # R1: TCGplayer statistics
 
 FloatArray = NDArray[np.float64]
 
@@ -48,6 +65,11 @@ class SetContext:
     values: tuple[CardValues, ...]  # one per scenario, same order
     observed: frozenset[str]  # pool printings with an observed price
     booster_cost: FloatArray  # one per scenario
+    multiplicity: Mapping[str, int] = field(default_factory=dict)  # R11 pool weights
+    excluded: frozenset[str] = frozenset()  # R5: worth 0 when opened, not buyable
+
+    def compile(self, model: BoosterModel) -> CompiledModel:
+        return compile_model(model, multiplicity=self.multiplicity)
 
     def value_matrix(self, cm: CompiledModel) -> FloatArray:
         """l(c) for every compiled printing, one column per scenario."""
@@ -65,6 +87,15 @@ def missing_rule(cfg: ExperimentConfig, scenario: str) -> MissingRule:
     return rules.adverse if scenario == "adverse" else rules.central
 
 
+@dataclass(frozen=True)
+class Column:
+    """An extra value column: a cost scenario and a price source (robustness, ADR 0012)."""
+
+    scenario: CostScenario  # its name is the column name
+    base: str  # the main scenario it stands for (missing-price rule)
+    prices: Literal["market", "statistics_median"] = "market"
+
+
 def build_context(
     cfg: ExperimentConfig,
     set_id: str,
@@ -75,7 +106,16 @@ def build_context(
     layout: str | None = None,
     prior: float | None = None,
     weight: float | None = None,
+    columns: Sequence[Column] = (),
+    exclude_top: float = 0.0,
+    multiplicity: Mapping[str, int] | None = None,
 ) -> SetContext:
+    """Context of one set; the keyword arguments implement the robustness variants.
+
+    ``columns`` adds value columns after the main scenarios; ``exclude_top``
+    removes the top share of priced printings (R5); ``multiplicity`` weights
+    printings within their pool (R11).
+    """
     posterior = build_set_posterior(
         set_id,
         [p for p in printings if p.set_id == set_id],
@@ -93,20 +133,50 @@ def build_context(
         pricing.condition,
         cfg.data.reference_date,
     )
-    prices = select_prices(observations, basis)
+    sources: dict[str, PriceVector] = {"market": select_prices(observations, basis)}
+    if any(c.prices == "statistics_median" for c in columns):
+        sources["statistics_median"] = statistics_median(
+            observations,
+            pricing.venue,
+            pricing.currency,
+            pricing.condition,
+            cfg.data.reference_date,
+            STATISTICS,
+        )
+    prices = sources["market"]
     pools = drawable_pools(posterior)
-    values = tuple(
-        value_cards(prices, pools, s, missing_rule(cfg, s.name)) for s in cfg.cost_scenarios
-    )
+    every = [Column(s, s.name) for s in cfg.cost_scenarios] + list(columns)
+    values = [
+        value_cards(
+            sources[c.prices],
+            pools,
+            c.scenario,
+            missing_rule(cfg, c.base),
+            allow_estimate=c.prices != "market",
+        )
+        for c in every
+    ]
     observed = frozenset(p for ids in pools.values() for p in ids if p in prices.prices)
+    excluded: frozenset[str] = frozenset()
+    if exclude_top > 0:
+        central = values[[c.scenario.name for c in every].index("central")]
+        ranked = sorted(observed, key=lambda c: (-central.price[c], c))
+        excluded = frozenset(ranked[: math.ceil(exclude_top * len(ranked))])
+        values = [
+            dataclasses.replace(cv, liquidation={**cv.liquidation, **dict.fromkeys(excluded, 0.0)})
+            for cv in values
+        ]
+        observed -= excluded
     return SetContext(
         set_id=set_id,
         index=cfg.sets.index(set_id),
         posterior=posterior,
-        scenarios=tuple(s.name for s in cfg.cost_scenarios),
-        values=values,
+        scenarios=tuple(c.scenario.name for c in every),
+        values=tuple(values),
         observed=observed,
-        booster_cost=np.array([s.booster_cost for s in cfg.cost_scenarios]),
+        booster_cost=np.array([c.scenario.booster_cost for c in every]),
+        multiplicity=dict(multiplicity or {}),
+        excluded=excluded,
     )
 
 
@@ -214,6 +284,13 @@ def _simulate(
     return a - cost
 
 
+def _p_hit(ctx: SetContext, model: BoosterModel, target: str) -> float:
+    """P(target in one pack); with pool weights (R11), from the compiled model."""
+    if not ctx.multiplicity:
+        return p_hit(model, target)
+    return split_on_target(ctx.compile(model), target).p_hit
+
+
 def run_job(
     ctx: SetContext,
     job: Job,
@@ -225,13 +302,13 @@ def run_job(
     models: Sequence[BoosterModel] | None = None,
 ) -> JobResult:
     models = list(models) if models is not None else posterior_models(ctx, seed, draws)
-    mean_cm = compile_model(ctx.posterior.mean_model())
+    mean_cm = ctx.compile(ctx.posterior.mean_model())
     values = ctx.value_matrix(mean_cm)
     extra: dict[str, Any] = {}
     target, n_max = "", 0
     if job.estimand == "E2":
         target = choose_target(ctx, job.target_rule)
-        p_mean = p_hit(ctx.posterior.mean_model(), target)
+        p_mean = _p_hit(ctx, ctx.posterior.mean_model(), target)
         n_max = math.ceil(3 / p_mean)
         extra.update(target=target, p_hit_mean_model=p_mean, n_max=n_max)
         extra["acquisition"] = dict(
@@ -254,7 +331,7 @@ def run_job(
     p_hits: list[float] = []
     aleatory = np.random.SeedSequence(seed, spawn_key=(ctx.index, 1, job_index)).spawn(len(models))
     for model, ss in zip(models, aleatory, strict=True):
-        cm = compile_model(model)
+        cm = ctx.compile(model)
         if cm.printing_ids != mean_cm.printing_ids:
             raise RuntimeError("posterior draws changed the printing set")
         profit = _simulate(job, ctx, cm, values, np.random.Generator(np.random.PCG64(ss)), runs,
@@ -266,7 +343,7 @@ def run_job(
                 a_se[s][m].append(summary.mc_se[m])
         break_even.append((slot_card_probabilities(cm).sum(axis=0) @ values).tolist())
         if target:
-            p_hits.append(p_hit(model, target))
+            p_hits.append(_p_hit(ctx, model, target))
     extra["break_even_booster_price"] = {
         s: [row[k] for row in break_even] for k, s in enumerate(ctx.scenarios)
     }
