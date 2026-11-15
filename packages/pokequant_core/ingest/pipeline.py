@@ -45,8 +45,12 @@ def _digest_inputs(fetched: Iterable[Fetched]) -> dict[str, Any]:
     }
 
 
-def output_dir(root: Path, pokelife_version: str, tcgdex_version: str) -> Path:
-    return root / "data/processed" / f"pokelife-{pokelife_version}_tcgdex-{tcgdex_version}"
+def output_dir(
+    root: Path, pokelife_version: str, tcgdex_version: str, name: str | None = None
+) -> Path:
+    return (
+        root / "data/processed" / (name or f"pokelife-{pokelife_version}_tcgdex-{tcgdex_version}")
+    )
 
 
 def run(
@@ -55,6 +59,7 @@ def run(
     tcgdex_version: str,
     set_ids: Iterable[str],
     client: CachedClient,
+    out_name: str | None = None,
 ) -> IngestResult:
     selected = sorted(set(set_ids))
     if not selected:
@@ -92,7 +97,7 @@ def run(
     tables = Tables(sets=sets, printings=printings, pull_rates=pull_rates, prices=prices)
     validate(tables)
 
-    out = output_dir(root, pokelife_version, tcgdex_version)
+    out = output_dir(root, pokelife_version, tcgdex_version, out_name)
     outputs = {}
     for name, key in KEYS.items():
         records = getattr(tables, name)

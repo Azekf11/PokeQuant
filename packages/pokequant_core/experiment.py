@@ -18,6 +18,7 @@ class DataRefs(Record):
     tcgdex: str
     reference_date: date
     h4_snapshot_date: date
+    processed: str | None = None  # folder under data/processed; default pokelife-<v>_tcgdex-<v>
 
 
 class Product(Record):

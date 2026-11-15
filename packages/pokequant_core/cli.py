@@ -21,6 +21,7 @@ def _parser() -> argparse.ArgumentParser:
     ingest.add_argument("--sets", required=True, help="comma-separated TCGdex set IDs")
     ingest.add_argument("--offline", action="store_true", help="use only cached raw files")
     ingest.add_argument("--root", type=Path, default=Path.cwd(), help="repository root")
+    ingest.add_argument("--out-name", help="output folder under data/processed (default: versions)")
     run = commands.add_parser("run", help="run an experiment config and write its results")
     run.add_argument(
         "config", type=Path, help="experiment YAML, e.g. research/experiments/main.yaml"
@@ -74,7 +75,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     sets = [s.strip() for s in args.sets.split(",") if s.strip()]
     try:
         with CachedClient(offline=args.offline) as client:
-            result = pipeline.run(args.root, args.pokelife, args.tcgdex, sets, client)
+            result = pipeline.run(
+                args.root, args.pokelife, args.tcgdex, sets, client, out_name=args.out_name
+            )
     except (SourceUnavailableError, ValidationError) as error:
         print(f"ingestion failed: {error}", file=sys.stderr)
         return 1

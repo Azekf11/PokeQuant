@@ -1,0 +1,91 @@
+# Extension to every evaluable eligible set (ADR 0015, tag prereg-v4).
+# Identical to main.yaml (tag prereg-v2) except name, description, sets, the
+# processed-data folder and the robustness list. Fixed before any price value
+# of the seven added sets is analysed.
+# Schema: pokequant_core.experiment.ExperimentConfig. Spec: research/protocol/model_spec.md.
+name: extension_sets
+description: >-
+  Main experiment repeated on the ten eligible sets that fit the main booster
+  layout (ADR 0005 eligibility, ADR 0015 evaluability rule); no robustness tests.
+sets: [sv01, sv02, sv03, sv04, sv05, sv06, sv07, sv08, sv09, sv10]
+data:
+  pokelife: "2026-11-13"
+  tcgdex: "2026-11-15"
+  reference_date: "2026-11-15"          # t0: the TCGdex price snapshot used by the main analysis
+  h4_snapshot_date: "2026-12-13"        # unused here (dates: ADR 0014 panel)
+  processed: extension-sets_pokelife-2026-11-13_tcgdex-2026-11-15
+product:
+  id: booster-en
+  layout: tcgplayer                     # model_spec §2; R12 uses hyper-in-rare-slot
+  non_card_value: 0.0                   # Basic Energy and code card
+pricing:
+  venue: tcgplayer
+  currency: USD
+  statistic: market
+  price_type: provider_market
+  condition: unspecified
+  missing_price:                        # ADR 0010 item 8
+    central: pool_median
+    adverse: zero
+liquidation_rule: >-
+  l(c) = max(0, p(c) * (1 - haircut) * (1 - marketplace_fee_rate - payment_fee_rate)
+  - selling_fixed_fee - shipping_per_sale); one card per sale.
+acquisition_rule: >-
+  a(c) = p(c) * (1 + buyer_fee_rate) + buyer_shipping; one card per order.
+cost_scenarios:
+  - name: gross
+    currency: USD
+    booster_cost: 4.49
+    marketplace_fee_rate: 0.0
+    payment_fee_rate: 0.0
+    buyer_fee_rate: 0.0
+    liquidity_haircut: 0.0
+    description: Theoretical reference only, never the main result (protocol 6.1).
+  - name: central
+    currency: USD
+    booster_cost: 4.49
+    marketplace_fee_rate: 0.1075
+    payment_fee_rate: 0.025
+    selling_fixed_fee: 0.30
+    shipping_per_sale: 1.00
+    buyer_fee_rate: 0.0
+    buyer_shipping: 1.00
+    liquidity_haircut: 0.15
+    description: >-
+      TCGplayer Level 1-4 seller fees (10.75 % commission, 2.5 % + 0.30 USD
+      transaction fee; TCGplayer fee page, read 2026-11-15). Booster at the US
+      suggested retail price. Shipping 1.00 USD per untracked card and 15 %
+      liquidity haircut are assumptions.
+  - name: adverse
+    currency: USD
+    booster_cost: 5.49
+    marketplace_fee_rate: 0.1075
+    payment_fee_rate: 0.025
+    selling_fixed_fee: 0.30
+    shipping_per_sale: 4.50
+    buyer_fee_rate: 0.0
+    buyer_shipping: 4.50
+    liquidity_haircut: 0.30
+    description: >-
+      Same fees; booster 1 USD above retail, tracked shipping and a 30 %
+      haircut (assumptions).
+estimands:
+  E1:
+    budgets_in_packs: [1, 10, 36, 100]  # budget B = n * booster_cost
+    basket_rule: >-
+      Strategy B buys, at t0, the printings of the set in decreasing order of
+      a(c), skipping any that exceed the remaining budget, until none fits.
+  E2:
+    targets:
+      - top_price: the printing of the set with the highest a(c) at t0
+      - top_sir: the Special Illustration Rare with the highest a(c) at t0
+    cap_rule: n_max = ceil(3 / p_hit(target)) at the posterior-mean model
+simulation:
+  seed: 20261115
+  epistemic_draws: 200                  # outer loop (posterior draws)
+  aleatory_runs: 20000                  # inner loop per draw (>= 1000 tail samples at 5 %)
+  alpha: 0.05
+estimation:
+  prior: 0.5                            # Jeffreys
+  weight: 1.0
+robustness: []                          # robustness stays on the three main sets
