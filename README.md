@@ -4,8 +4,9 @@
 comparison of Pokémon TCG booster opening versus direct purchase on the
 secondary market.
 
-> **Status: week 2 — data audit.** Protocol pre-registered (tag `prereg-v1`);
-> sets selected; no economic result has been computed yet. See the
+> **Status: week 4 — booster model.** Protocol pre-registered (tag `prereg-v1`);
+> sets selected; ingestion pipeline in place; no economic result has been
+> computed yet. See the
 > [roadmap](docs/ROADMAP.md).
 
 ## Research question
@@ -38,7 +39,7 @@ Details: [research protocol](research/protocol/protocol.md) ·
 packages/pokequant_core/   Python engine (importable package)
 tests/                     Automated tests (+ synthetic toy data in tests/fixtures/)
 scripts/                   Reproducible audit and research scripts
-data/                      raw/ (immutable snapshots) · processed/ · manifests/ (provenance, licences)
+data/                      raw/ (immutable snapshots) · processed/ · manifests/ (data provenance)
 research/protocol/         Research protocol, model specification
 research/reports/          Data audit and other reports
 research/paper/            References and section drafts of the paper
@@ -67,25 +68,6 @@ uv run pokequant ingest --pokelife 2026-11-13 --tcgdex 2026-11-15 --sets sv07,sv
 
 Each run writes a `manifest.json` with input and output checksums; two runs on
 the same inputs give byte-identical outputs.
-
-## Data and licences
-
-- Code: [MIT](LICENSE).
-- Third-party data keeps its own licence and is listed in
-  `data/manifests/sources.yaml` (from week 1). Data that may not be
-  redistributed is **never** committed; the repository then ships the import
-  scripts and a synthetic toy dataset instead.
-- No marketplace scraping and no circumvention of API terms or quotas.
-
-## Disclaimer
-
-PokéQuant is an independent research project. It is **not affiliated with,
-endorsed or sponsored by** The Pokémon Company, Nintendo, Creatures or
-Game Freak. Pokémon and related names are trademarks of their respective
-owners.
-
-Results are experimental analyses for educational and research purposes. They
-are **not financial or investment advice**.
 
 ## Contributing and citation
 
