@@ -198,11 +198,11 @@ def figure_2(ctx: SetContext) -> None:
     model = ctx.posterior.mean_model()
     probs = {s.slot_id: s.outcomes for s in model.slots}
     layout = LAYOUTS["tcgplayer"]
-    widths = [2.1 if spec.hits else 0.62 for spec in layout.slots]
-    fig, ax = plt.subplots(figsize=(7.2, 2.6))
+    widths = [2.9 if spec.hits else 0.5 for spec in layout.slots]
+    fig, ax = plt.subplots(figsize=(7.2, 2.2))
     ax.axis("off")
     ax.set_xlim(0, sum(widths) + 0.1)
-    ax.set_ylim(0, 1.0)
+    ax.set_ylim(0.2, 0.95)
     x = 0.0
     for spec, w in zip(layout.slots, widths, strict=True):
         random = bool(spec.hits)
@@ -261,8 +261,8 @@ def figure_2(ctx: SetContext) -> None:
             )
         x += w
     ax.set_title(
-        f"Booster model ({ctx.set_id}, layout 'tcgplayer'): random slots with "
-        "posterior-mean outcome probabilities",
+        f"Slot model of one booster ({ctx.set_id}): posterior-mean probabilities "
+        "of the random slots",
         loc="left",
     )
     source_note(

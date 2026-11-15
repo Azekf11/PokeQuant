@@ -4,12 +4,12 @@
 comparison of Pokémon TCG booster opening versus direct purchase on the
 secondary market.
 
-> **Status: week 8 — robustness.** Protocol pre-registered in two stages
-> (tags `prereg-v1`, `prereg-v2`); Monte Carlo engine validated; first results
-> of the main experiment in
-> [research/reports/results.md](research/reports/results.md), before
-> robustness tests. See the
-> [roadmap](docs/ROADMAP.md).
+> **Status: working paper v1.0.** Analysis frozen at tag `analysis-v1`;
+> paper in [research/paper/paper.pdf](research/paper/paper.pdf)
+> ([HTML](research/paper/paper.html)); interactive demo at
+> <https://azekf11.github.io/PokeQuant/>. See the [roadmap](docs/ROADMAP.md).
+
+![The web demo: choose a set, a scenario and a budget, and compare opening with buying](docs/img/web-demo.png)
 
 ## Research question
 
@@ -26,14 +26,44 @@ quantiles, CVaR), not only the expected value.
 Details: [research protocol](research/protocol/protocol.md) ·
 [project charter](docs/PROJECT_CHARTER.md).
 
-## Planned deliverables
+## Key results
 
-1. `pokequant_core` — a Python engine: slot-based booster model, pull-rate
-   uncertainty, Monte Carlo simulation, valuation and risk metrics.
+Three English sets (Stellar Crown, Surging Sparks, Destined Rivals), TCGplayer
+market prices in USD on 2026-11-15 (condition unspecified), pull rates from
+the Poké Life registry (version 2026-11-13), 200 posterior draws × 20,000
+runs. Central cost scenario unless stated.
+
+| Result | Value |
+|---|---|
+| Break-even booster price (retail 4.49 USD) | 1.03 to 1.42 USD |
+| Same, without fees, shipping or haircut | 3.44 to 4.29 USD |
+| Mean loss of opening 36 boosters | 111 to 125 USD |
+| Mean loss of buying singles with the same budget | 46 to 51 USD |
+| Buying decisively better (mean, median, CVaR 5 %) | 35 of 36 budget comparisons |
+| Opening until the top card is cheaper than buying it | 4 % to 14 % of runs |
+| Robustness variants in which opening still loses on average | 16 of 16 |
+
+Every number has an interval in
+[results.md](research/reports/results.md) and
+[robustness.md](research/reports/robustness.md). Answers to the usual
+objections: [docs/FAQ.md](docs/FAQ.md).
+
+## Deliverables
+
+1. `pokequant_core`: a Python engine with a slot-based booster model,
+   pull-rate uncertainty, nested Monte Carlo simulation, valuation and risk
+   metrics.
 2. A data ingestion pipeline with a provenance manifest for every source.
-3. Validation and robustness reports.
-4. A working paper whose figures all regenerate from this repository.
-5. A minimal web interface to explore scenarios.
+3. Reports: [data audit](research/reports/data_audit.md),
+   [validation](research/reports/validation.md),
+   [valuation](research/reports/valuation.md),
+   [results](research/reports/results.md),
+   [robustness](research/reports/robustness.md),
+   [web QA](research/reports/qa.md).
+4. The [working paper](research/paper/paper.pdf), whose figures and tables all
+   regenerate from this repository.
+5. A [static web demo](https://azekf11.github.io/PokeQuant/) of the frozen
+   results (`apps/web/`).
 
 ## Repository layout
 
@@ -45,7 +75,8 @@ data/                      raw/ (immutable snapshots) · processed/ · manifests
 research/protocol/         Research protocol, booster model specification
 research/experiments/      Pre-registered experiment configurations
 research/reports/          Data audit and other reports
-research/paper/            References and section drafts of the paper
+research/paper/            Paper sources (drafts/), figures and built paper (md, html, pdf)
+apps/web/                  Static web demo and its browser tests
 docs/                      Roadmap, project charter, decision log (ADRs)
 ```
 
@@ -71,6 +102,13 @@ uv run pokequant ingest --pokelife 2026-11-13 --tcgdex 2026-11-15 --sets sv07,sv
 
 Each run writes a `manifest.json` with input and output checksums; two runs on
 the same inputs give byte-identical outputs.
+
+Regenerate every report, figure and the paper (about three hours on eight
+cores):
+
+```bash
+make reproduce
+```
 
 ## Contributing and citation
 

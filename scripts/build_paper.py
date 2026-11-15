@@ -160,6 +160,7 @@ def assemble() -> str:
             raise FileNotFoundError(f"missing section draft: {path}")
         text = re.sub(r"<!--.*?-->\s*", "", path.read_text(encoding="utf-8"), flags=re.S)
         text = text.replace("](../figures/", "](figures/")
+        text = text.replace("](../../reports/figures/", "](../reports/figures/")
         if name == APPENDIX:
             refs = sorted((bib[k] for k in cited), key=lambda e: (e.surnames[0], e.year))
             body.append("# References\n\n" + "\n\n".join(reference(e) for e in refs) + "\n")

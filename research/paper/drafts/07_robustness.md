@@ -98,7 +98,10 @@ the central break-even price, at two decimals, or the gap by more than
 
 Setting every hit rate at a bound of its 95 % interval at once (R4), an
 extreme case, moves the central break-even price by 0.12 to 0.15 USD. This
-is comparable to the width of the intervals of the main run.
+is comparable to the width of the intervals of the main run. Figure 6 shows
+these pull-rate variants set by set.
+
+![Figure 6. Central break-even booster price under the pull-rate assumptions: posterior mean and 95 % interval over the draws (R4: single models at the bounds of every rate). The retail price, 4.49 USD, is off the scale.](../figures/fig6_breakeven_rates.png)
 
 ## 7.3 Simulation precision (R7)
 

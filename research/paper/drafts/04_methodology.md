@@ -2,6 +2,12 @@
 
 # 4. Methodology
 
+Figure 1 shows how the data, the model and the simulation produce each
+result. Each step is implemented in the repository, and each source box
+gives the version or date of its data.
+
+![Figure 1. Data and simulation architecture: sources (left), model and card values, nested Monte Carlo, and outputs, with the section that describes each step.](../figures/fig1_pipeline.png)
+
 ## 4.1 Booster model
 
 A booster is a sequence of slots s = 1, …, S. Each slot draws one rarity
@@ -19,6 +25,11 @@ The fixed slots (Commons and Uncommons) have a single outcome. Within one pack,
 the four Commons are distinct, and so are the three Uncommons (assumption
 A-CU); the random slots are drawn with replacement. Assumptions, slot layout
 and their sources are listed in §5.1 and in the model specification.
+
+Figure 2 shows the resulting slot structure for Surging Sparks, with the
+posterior-mean probability of each outcome of the random slots.
+
+![Figure 2. Slot structure of one booster (Surging Sparks), with the posterior-mean outcome probabilities of the three random slots. Rates: Poké Life registry, version 2026-11-13.](../figures/fig2_slots.png)
 
 ## 4.2 Estimation and uncertainty in the pull rates
 

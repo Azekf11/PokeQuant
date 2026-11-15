@@ -186,18 +186,18 @@ PR into `main`.
 **Gate G10:** if security, licences or reproducibility are not satisfactory → delay public release.
 
 ### S11 — Working paper · branch `week/11-paper`
-- [ ] Assemble the manuscript in `research/paper/` following protocol §8; figures Fig. 1–7 and Tables 1–4 from `make reproduce` only.
-- [ ] Results, robustness, discussion (incl. negative / inconclusive results), conclusion, abstract, appendix.
-- [ ] External review.
+- [x] Assemble the manuscript in `research/paper/` following protocol §8; figures Fig. 1–7 and Tables 1–4 from `make reproduce` only. *`scripts/paper_figures.py` and `scripts/build_paper.py` (Markdown → HTML → PDF); Fig. 8 is the tornado plot of the robustness report.*
+- [x] Results, robustness, discussion (incl. negative / inconclusive results), conclusion, abstract, appendix. *H4 not supported; H2 supported but fragile (§7.3).*
+- [ ] External review. *Author action.*
 
 **Deliverable:** preprint v0 + reproducible repository.
 **Exit:** every figure regenerates from the repository.
 
 ### S12 — Review, release, publication · branch `week/12-release`
-- [ ] Address review; write answers to the ten defence questions (protocol §14) in `docs/FAQ.md`.
-- [ ] Tag `v1.0.0`, Zenodo DOI, update `CITATION.cff`.
-- [ ] Deploy site; 5–8 min presentation and demo video.
-- [ ] Submit preprint.
+- [ ] Address review; write answers to the ten defence questions (protocol §14) in `docs/FAQ.md`. *FAQ written; review pending (author action).*
+- [ ] Tag `v1.0.0`, Zenodo DOI, update `CITATION.cff`. *Tag `v1.0.0` and `CITATION.cff` done; Zenodo DOI is an author action.*
+- [ ] Deploy site; 5–8 min presentation and demo video. *Site deployed at <https://azekf11.github.io/PokeQuant/>; video is an author action.*
+- [ ] Submit preprint. *Author action.*
 
 **Exit:** publication checklist validated.
 
