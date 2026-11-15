@@ -126,6 +126,59 @@ def window_median(vectors: Sequence[PriceVector]) -> PriceVector:
     return PriceVector(basis, prices)
 
 
+def statistics_median(
+    observations: Iterable[PriceObservation],
+    venue: Venue,
+    currency: Currency,
+    condition: str,
+    reference_date: date,
+    statistics_: Sequence[str],
+    *,
+    max_age_days: int = 7,
+) -> PriceVector:
+    """Per printing, the median of the listed statistics available at t0 (robustness R1).
+
+    Mixes asking-price statistics with the provider market price, so the
+    result has price type ``estimate``: indicative only (ADR 0012).
+    """
+    observations = list(observations)
+    vectors = [
+        select_prices(
+            observations,
+            PriceBasis(venue, currency, ptype, stat, condition, reference_date),
+            max_age_days=max_age_days,
+        )
+        for stat, ptype in _statistic_types(observations, venue, currency, statistics_)
+    ]
+    ids = sorted({p for v in vectors for p in v.prices})
+    prices = {
+        p: float(statistics.median(v.prices[p] for v in vectors if p in v.prices)) for p in ids
+    }
+    seen = {p: max(v.observed_at[p] for v in vectors if p in v.prices) for p in ids}
+    statistic = "median(" + ",".join(statistics_) + ")"
+    basis = PriceBasis(venue, currency, "estimate", statistic, condition, reference_date)
+    return PriceVector(basis, prices, seen)
+
+
+def _statistic_types(
+    observations: Iterable[PriceObservation],
+    venue: Venue,
+    currency: Currency,
+    stats: Sequence[str],
+) -> list[tuple[str, PriceType]]:
+    types: dict[str, set[PriceType]] = {}
+    for o in observations:
+        if o.venue == venue and o.currency == currency and o.statistic in stats:
+            types.setdefault(o.statistic, set()).add(o.price_type)
+    out = []
+    for stat in stats:
+        found = types.get(stat, set())
+        if len(found) != 1:
+            raise PriceBasisError(f"statistic {stat!r} has price types {sorted(found)}")
+        out.append((stat, next(iter(found))))
+    return out
+
+
 def impute(
     prices: PriceVector, pools: Mapping[str, Sequence[str]], rule: MissingRule
 ) -> tuple[dict[str, float], frozenset[str]]:
@@ -188,8 +241,12 @@ def value_cards(
     pools: Mapping[str, Sequence[str]],
     scenario: CostScenario,
     rule: MissingRule,
+    *,
+    allow_estimate: bool = False,
 ) -> CardValues:
-    if prices.basis.price_type not in TRANSACTION_TYPES:
+    """Values of every pool printing; ``allow_estimate`` admits an indicative basis (R1)."""
+    allowed = TRANSACTION_TYPES | ({"estimate"} if allow_estimate else set())
+    if prices.basis.price_type not in allowed:
         raise PriceBasisError(
             f"price type {prices.basis.price_type!r} is not a transaction value (protocol §5.1)"
         )
