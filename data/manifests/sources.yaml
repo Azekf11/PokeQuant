@@ -58,7 +58,7 @@ sources:
     access: open API, no key, no published hard rate limit
     coverage: "10+ languages (EN, FR, ES, IT, PT-BR, DE, JA, ZH-TW, ID, TH); completeness varies by language"
     price_fields:
-      - {provider: cardmarket, currency: EUR, types: [listing, provider_market], frequency: daily}
+      - {provider: cardmarket, currency: EUR, types: [listing, provider_market], frequency: daily}  # avg1/avg7/avg30 are venue sale averages (ADR 0014)
       - {provider: tcgplayer, currency: USD, types: [listing, provider_market], frequency: hourly_to_daily}
     licence: "MIT (card database)"
     rights:
@@ -70,6 +70,39 @@ sources:
     permission: "Price use authorised by the maintainers for this non-commercial project (reported by the author 2026-11-15; ADR 0009)."
     actions:
       - Images: status still not asked; images are not used.
+
+  - id: cardmarket_price_guide
+    name: "Cardmarket price guide (official daily files)"
+    urls:
+      - https://downloads.s3.cardmarket.com/productCatalog/priceGuide/price_guide_6.json
+      - https://downloads.s3.cardmarket.com/productCatalog/productList/products_singles_6.json
+      - https://apiv2.cardmarket.com/ws/documentation/API_2.0:PriceGuide
+    access: open download, no key; one file per game, regenerated daily (createdAt field)
+    price_fields:
+      - {provider: cardmarket, currency: EUR, statistics: [avg, low, trend, avg1, avg7, avg30], frequency: daily}
+    definitions: >-
+      Cardmarket API 2.0 documentation (read 2026-11-15): AVG1, AVG7 and AVG30
+      are "the average sale price over the last day / 7 days / 30 days". The
+      endpoint is deprecated "as this feature was made generally available via
+      the website".
+    licence: not_stated
+    rights: {access: yes, display: unclear, redistribution: unclear}
+    use_as: relay_check_only (ADR 0014)
+    risks:
+      - Terms of use of the public files not read; raw files are never committed.
+      - avg30 is a venue average with unknown sample size and unspecified condition.
+    actions:
+      - Read Cardmarket's terms before any use beyond the relay check.
+
+  - id: ecb_fx
+    name: "European Central Bank euro reference rates"
+    urls:
+      - https://data-api.ecb.europa.eu/service/data/EXR/D.USD.EUR.SP00.A
+    access: open API, no key
+    series: "EXR.D.USD.EUR.SP00.A (USD per EUR, daily reference rate)"
+    licence: "ECB statistics reuse policy (not re-read for this entry)"
+    rights: {access: yes, display: yes, redistribution: not_stated}
+    use_as: eur_to_usd_conversion (ADR 0014)
 
   - id: pokemontcg_io
     name: "Pokémon TCG API (pokemontcg.io)"

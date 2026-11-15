@@ -1,0 +1,56 @@
+name: Price panel
+
+# Weekly snapshot of the sale-price benchmark (ADR 0014, tag prereg-v3).
+# Runs on the Sundays listed in research/experiments/sales_benchmark.yaml and
+# commits derived statistics only (raw prices stay on the runner, ADR 0009).
+on:
+  schedule:
+    - cron: "0 9 * * 0"   # Sundays, 09:00 UTC
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Snapshot date (YYYY-MM-DD); must be a panel date"
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: price-panel
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - name: Install
+        run: uv sync --locked
+      - name: Snapshot date
+        id: day
+        run: echo "date=${{ inputs.date || '' }}" >> "$GITHUB_OUTPUT"
+      - name: Ingest TCGdex prices
+        run: |
+          D="${{ steps.day.outputs.date }}"; D="${D:-$(date -u +%F)}"
+          echo "D=$D" >> "$GITHUB_ENV"
+          if uv run python -c "import sys,yaml; d=yaml.safe_load(open('research/experiments/sales_benchmark.yaml'))['panel']['dates']; sys.exit(0 if '$D' in map(str,d) else 1)"; then
+            uv run pokequant ingest --pokelife 2026-11-13 --tcgdex "$D" --sets sv07,sv08,sv10
+          else
+            echo "$D is not a panel date; skipping"
+          fi
+      - name: Benchmark
+        run: uv run python scripts/sales_benchmark.py --date "$D" --panel-only
+      - name: Commit derived statistics
+        run: |
+          git config user.name "Azekf11"
+          git config user.email "anhvu.frank.ta@gmail.com"
+          git add research/reports/price_panel.csv research/reports/price_ratios.csv \
+                  research/reports/price_relay_check.csv research/reports/sales_benchmark.md
+          if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
+          git commit -m "Price panel snapshot $D (ADR 0014)"
+          git push origin HEAD:main

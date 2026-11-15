@@ -12,9 +12,22 @@ from pokequant_core.experiment import ExperimentConfig, load_experiment
 EXPERIMENTS = Path(__file__).resolve().parents[1] / "research/experiments"
 
 
-@pytest.mark.parametrize("path", sorted(EXPERIMENTS.glob("*.yaml")), ids=lambda p: p.name)
+# Parameter files of extensions (they name a base experiment) are not experiments.
+CONFIGS = [p for p in sorted(EXPERIMENTS.glob("*.yaml")) if "base_experiment:" not in p.read_text()]
+
+
+@pytest.mark.parametrize("path", CONFIGS, ids=lambda p: p.name)
 def test_every_experiment_config_is_valid(path: Path) -> None:
     load_experiment(path)
+
+
+def test_sales_benchmark_parameters_point_to_the_main_experiment() -> None:
+    bench = yaml.safe_load((EXPERIMENTS / "sales_benchmark.yaml").read_text(encoding="utf-8"))
+    assert bench["base_experiment"] == "research/experiments/main.yaml"
+    assert (
+        bench["q1"]["booster_cost"]
+        == load_experiment(EXPERIMENTS / "main.yaml").scenario("central").booster_cost
+    )
 
 
 def test_main_config_matches_the_selected_sets_and_tcgplayer_fees() -> None:
