@@ -1,707 +1,405 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>Opening or Buying? A Probabilistic and Risk-Adjusted Comparison of Pokémon TCG Booster Acquisition and Secondary-Market Purchases</title><style>
-body { font: 11pt/1.5 Georgia, "Times New Roman", serif; color: #111; max-width: 46em;
-       margin: 2em auto; padding: 0 1em; }
-h1 { font-size: 1.45em; margin: 1.6em 0 .5em; } h1:first-child { font-size: 1.7em; }
-h2 { font-size: 1.15em; margin: 1.3em 0 .4em; } h3 { font-size: 1em; }
-table { border-collapse: collapse; margin: .8em 0; font-size: .86em; }
-th, td { border-bottom: 1px solid #ccc; padding: .25em .5em; text-align: left;
-         vertical-align: top; }
-th { border-bottom: 1.5px solid #333; }
-img { max-width: 100%; display: block; margin: .6em auto 0; }
-code, pre { font-size: .85em; } pre { background: #f5f5f3; padding: .6em; overflow-x: auto; }
-p > em:only-child { display: block; font-size: .9em; color: #333; margin-bottom: 1em; }
-@page { size: A4; margin: 2cm 2cm; }
-@media print { body { margin: 0; max-width: none; } h1 { break-after: avoid; }
-  h2, h3 { break-after: avoid; } table, img { break-inside: avoid; } }
+body { font: 11pt/1.45 "Latin Modern Roman", "CMU Serif", "Times New Roman", Times, serif;
+       color: #111; max-width: 44em; margin: 2em auto; padding: 0 1em; text-align: justify;
+       hyphens: auto; }
+h1 { font-size: 1.2em; margin: 1.8em 0 .6em; text-align: left; }
+h1:first-child { font-size: 1.55em; text-align: center; line-height: 1.3; margin: .5em 0 .8em; }
+h2 { font-size: 1.02em; margin: 1.4em 0 .4em; text-align: left; } h3 { font-size: 1em; }
+p.author { text-align: center; font-size: 1.1em; margin: 0; }
+p.meta { text-align: center; font-size: .85em; color: #333; margin: .4em 0 1.6em; }
+div.abstract { margin: 0 2.5em 2em; font-size: .92em; }
+div.abstract h1 { font-size: 1em; text-align: center; margin: 0 0 .4em; }
+table { border-collapse: collapse; margin: .6em auto 1.2em; font-size: .84em;
+        border-top: 1.5px solid #111; border-bottom: 1.5px solid #111; text-align: left; }
+th, td { padding: .22em .55em; vertical-align: top; }
+th { border-bottom: .8px solid #111; font-weight: 600; }
+figure { margin: 1em 0 1.3em; break-inside: avoid; }
+figure img { max-width: 100%; display: block; margin: 0 auto; }
+figcaption { font-size: .86em; margin-top: .4em; text-align: left; }
+code, pre { font-size: .82em; } pre { background: #f6f6f4; padding: .7em; overflow-x: auto;
+  border-top: 1px solid #111; border-bottom: 1px solid #111; text-align: left; }
+@page { size: letter; margin: 2.4cm 2.5cm; }
+@media print { body { margin: 0; max-width: none; } h1, h2, h3 { break-after: avoid; }
+  table, figure, pre { break-inside: avoid; } }
 </style></head><body>
 <h1>Opening or Buying? A Probabilistic and Risk-Adjusted Comparison of Pokémon TCG Booster Acquisition and Secondary-Market Purchases</h1>
-<p><strong>Anh-Vu TA</strong> · Working paper, November 2026 · Code, data and configurations: <a href="https://github.com/Azekf11/PokeQuant">https://github.com/Azekf11/PokeQuant</a>, DOI <a href="https://doi.org/10.5281/zenodo.24251050">10.5281/zenodo.24251050</a></p>
-<h1>Abstract</h1>
-<p>Is opening Pokémon Trading Card Game booster packs a competitive way to
-acquire cards, compared with buying them directly on the secondary market?
-We model three recent English sets (Stellar Crown, Surging Sparks and
-Destined Rivals) slot by slot. Rarity rates come from community openings,
-with Dirichlet posteriors, and a nested Monte Carlo propagates their
-uncertainty (200 posterior draws × 20,000 runs). Cards are valued at
-TCGplayer market prices in USD on 2026-11-15, converted into net realisable
-values under three cost scenarios. Hypotheses, metrics, decision rules and
-robustness tests were pre-registered before any result existed.</p>
-<p>Under the central scenario, opening loses money on average for every set and
-budget. The break-even booster price is 1.03 to 1.42 USD against a retail
-price of 4.49 USD, and 3.44 to 4.29 USD without any fee, shipping or
-haircut. Opening 36 boosters loses 111 to 125 USD on average. Buying cards
-directly also loses money through round-trip costs, but less than half as
-much, and it is decisively better on the mean, the median and the 5 %
-conditional value-at-risk in 35 of 36 budget comparisons. Opening until a
-set's most valuable card appears is cheaper than buying it in only 4 % to
-14 % of simulated runs. Opening's average loss and the advantage of buying
-hold in all sixteen pre-registered robustness variants. Liquidation
-assumptions change the size of the gap; pull-rate assumptions barely do. Code, configurations, the pull-rate
-snapshot and all derived results are public, and one command regenerates
-every table and figure.</p>
-<p><em>Keywords:</em> trading card games, loot boxes, Monte Carlo simulation, Bayesian
-uncertainty, conditional value-at-risk, pre-registration, reproducibility.</p>
+<p class="author">Anh-Vu TA</p>
+
+<p class="meta">Working paper, version 2, November 2026<br>Code, data and configurations: <a href="https://github.com/Azekf11/PokeQuant">https://github.com/Azekf11/PokeQuant</a> · DOI <a href="https://doi.org/10.5281/zenodo.24251050">10.5281/zenodo.24251050</a></p>
+
+<div class="abstract"><h1>Abstract</h1>
+<p>Collectors of Pokémon trading cards can obtain a card by opening booster packs
+or by buying it on the secondary market. I compare the two strategies for
+three recent English sets with a slot-level model of the booster pack,
+Bayesian posteriors on community-measured pull rates, and a nested Monte Carlo
+simulation (200 posterior draws × 20,000 runs). Cards are valued at dated
+TCGplayer market prices net of published fees, shipping and a liquidity
+haircut. Hypotheses, metrics and decision rules were pre-registered. Under
+central costs the break-even booster price is 1.03 to 1.42 USD, against a
+retail price of 4.49 USD. Opening 36 boosters loses 111 to 125 USD on average,
+and buying the same value directly is better on the mean, the median and the
+5 % conditional value-at-risk in 35 of 36 comparisons. The average loss from
+opening holds in sixteen robustness variants, on seven further sets and at
+European sale prices, and buying stays decisively better for every budget of
+ten boosters or more in all ten sets. Selling costs drive the result: for two
+sets, a pack's gross market value exceeds its retail price. Pull-rate
+uncertainty widens every interval but changes no main conclusion.</p>
+<p><em>Keywords:</em> collectibles, loot boxes, Monte Carlo simulation, Bayesian
+uncertainty, expected shortfall, pre-registration.</p>
+<p><em>JEL codes:</em> C11, C15, D12, D81, Z11.</p>
+</div>
 <h1>1. Introduction</h1>
-<p>A Pokémon Trading Card Game booster pack is a lottery over cards. Each English
-pack holds ten game cards, plus a Basic Energy and a code card. Most cards are
-worth less than the cost of selling them, while a small number of rare
-printings trade for tens or hundreds of dollars. A collector who wants those
-cards can either open packs and sell what they do not keep, or buy the cards
-directly on the secondary market.</p>
-<p>Online guides and calculators settle the choice with an expected value: the
-sum over cards of price × pull rate, compared with the price of a pack. That
-number hides four things:</p>
-<ol>
-<li>The distribution. The value of a pack is very skewed, so its mean says
-   little about what a typical opening returns.</li>
-<li>The odds. For English sets the pull rates are not published; they are
-   estimated from community openings, with sampling error.</li>
-<li>The costs. A listed or aggregated market price is not what a seller
-   receives. Fees, shipping and the discount needed to sell all intervene,
-   and a fixed cost per sale wipes out the value of cheap cards.</li>
-<li>The alternative. The relevant comparison is between opening and buying
-   the same value directly, rather than between opening and doing nothing,
-   and buying has costs too.</li>
-</ol>
-<p>This paper asks, for three recent English sets, to what extent opening
-boosters is an economically competitive way to acquire cards, compared with
-buying them directly, once pull-rate uncertainty, value dispersion, fees and
-liquidity are taken into account. We answer with two estimands, both fixed
-before any price was analysed. The first, E1 (budget liquidation), sets
-spending a budget on boosters and selling every card against buying the most
-expensive single cards the budget allows and selling them back. The second,
-E2 (target acquisition), sets opening boosters until a chosen card appears
-against buying that card.</p>
-<p>We model a booster slot by slot. Rarity rates follow Dirichlet posteriors
-estimated from community openings, and we propagate their uncertainty through
-a nested Monte Carlo of 200 posterior draws of the rates, each with 20,000
-simulated runs. Cards are valued at a dated provider market price and
-converted into net realisable values under three pre-registered cost
-scenarios. Alongside means we report medians, probabilities of loss and the
-5 % conditional value-at-risk, each with its Monte Carlo error and its
-interval over pull-rate uncertainty. Hypotheses, metrics, decision rules,
-scenarios and robustness tests were registered in two stages, as signed git
-tags, before the results existed, and every table and figure is regenerated
-by one command.</p>
-<p>Under the central scenario, opening loses money on average for every set and
-budget. The break-even booster price, below which opening would have a
+<p>A booster pack of the Pokémon Trading Card Game is a lottery over cards. An
+English pack holds ten game cards. Most are worth less than the cost of
+selling them, while a few rare printings trade for tens or hundreds of
+dollars. A collector who wants those cards can open packs and sell what they
+do not keep, or buy the cards directly. Online guides settle the choice with
+an expected value, the sum over cards of price times pull rate, compared with
+the price of a pack. That number leaves out four things. The value of a pack
+is highly skewed, so its mean says little about a typical opening. Pull rates
+for English sets are not published by the manufacturer and must be estimated
+from community openings. A market price is not what a seller receives once
+fees, shipping and the discount needed to sell are paid. And the relevant
+alternative is to buy the same cards, which has costs too.</p>
+<p>This paper asks to what extent opening boosters is an economically
+competitive way to acquire cards, compared with buying them directly. I study
+three recent English sets, Stellar Crown, Surging Sparks and Destined Rivals,
+and two comparisons fixed before any price was analysed. In the first (E1),
+a budget is spent on boosters and every card is sold, or the same budget buys
+the most expensive single cards and they are sold back. In the second (E2),
+packs are opened until a chosen card appears, or that card is bought.</p>
+<p>The method has three parts. A booster is modelled slot by slot, with rarity
+probabilities given Dirichlet posteriors estimated from community openings.
+Cards are valued at a dated provider market price and converted into net
+realisable values under three cost scenarios. A nested Monte Carlo simulation
+then propagates both the uncertainty on the pull rates (200 posterior draws)
+and the randomness of the packs (20,000 runs per draw). I report means,
+medians, probabilities of loss and the 5 % conditional value-at-risk, each
+with its Monte Carlo error and its interval over pull-rate uncertainty.
+Hypotheses, metrics, decision rules and robustness tests were registered as
+signed git tags before the results existed, and one command regenerates every
+table and figure.</p>
+<p>Three findings stand out. First, opening loses money on average. Under
+central costs, the break-even booster price, below which opening has a
 positive expected profit, is 1.03 to 1.42 USD against a retail price of 4.49
-USD; without any fee, shipping or haircut it is still 3.44 to 4.29 USD.
-Opening 36 boosters loses 111 to 125 USD on average. Buying cards directly
-also loses money through its round-trip costs, but less than half as much,
-and it is decisively better on the mean, the median and the CVaR in 35 of 36
-comparisons. For a collector who wants a set's most valuable card, opening
-until it appears is cheaper than buying it in only 4 % to 14 % of simulated
-runs.</p>
-<p>These conclusions survive sixteen pre-registered variants (§7): other price
-statistics, haircuts up to 0.50, halved or increased selling costs, pull
-rates at the bounds of their intervals, another prior, the exclusion of the
-1 % most valuable cards, and up to 100,000 runs per draw. In every variant
-opening loses on average and buying is decisively better. The break-even
-booster price stays between 0.54 and 1.74 USD, and the gross break-even price
-stays below the retail price in every variant but one, where its upper bound
-exceeds it.</p>
-<p>Our contribution is not a new expected-value calculator. It is a
-reproducible and pre-registered framework that combines four elements: (1) a
-slot-level booster model, (2) Bayesian uncertainty on community pull rates,
-(3) typed prices converted into net values, and (4) tail-risk measures in a
-comparison with direct purchase. The code, configurations, pull-rate snapshot
-and every derived result are public. Raw prices are not redistributed, but
-the scripts that fetch them and the checksums of the snapshot are.</p>
-<p>The paper is organised as follows. Section 2 reviews related work. Section 3
-describes the data. Section 4 sets out the model and the simulation engine,
-and Section 5 the pre-registered design. Section 6 reports the results and
-Section 7 their robustness. Section 8 discusses limits and implications, and
-Section 9 concludes.</p>
-<h1>2. Related literature</h1>
-<p>The paper draws on five strands of work. For most of them we cite only what
-the published abstract states, and the <code>note</code> field of each bibliography entry
-records what was read.</p>
-<h2>2.1 Collectibles as assets</h2>
-<p>The returns on collectibles are well studied, and this strand of work stresses
-transaction costs. Burton and Jacobsen (1999) survey how such
-returns are measured. Dimson and Spaenjers (2011) report the
-long-run performance of stamps, while Mei and Moses (2002) and
-Renneboog and Spaenjers (2013) study art.</p>
-<p>Recent work comes closer to our object by covering sealed products.
-Dobrynskaya and Kishilova (2022) study LEGO sets as an
-investment, and Wang and Langelett (2023) examine sealed
-trading-card products as investments and portfolio diversifiers. Mota
-(2026) builds an index of sealed Magic: The Gathering booster boxes.
-Dobrynskaya and Strelnikov (2025) turn to video-game
-items, some of which are obtained from randomised loot boxes.</p>
-<p>These studies ask whether holding a collectible pays. Our question is narrower
-and comes earlier: what does it cost to <em>obtain</em> cards by opening packs rather
-than buying them?</p>
-<h2>2.2 Pokémon cards and their markets</h2>
-<p>Academic work on Pokémon cards concerns price determinants, grading and market
-efficiency. Danz (2026) relates prices to scarcity and sentiment in
-a large panel of sets and tests weak-form efficiency; access to this thesis is
-restricted, and we know its abstract only. Baro (2026) estimates
-a hedonic model of graded card prices in a paper that is linked to a
-commercial product. Sharma (2026) measures grading premiums
-over the 2020–2022 boom and bust.</p>
-<p>The hedonic approach goes back to Rosen (1974), and among its
-applications to cards is the study of baseball cards by Mullin and Dunn
-(2002). For a game that sells randomised packs, the most
-relevant hedonic result is Hughes (2022): in Magic: The
-Gathering, a card's rarity designation, which is set through pack odds,
-carries a price premium of its own.</p>
-<p>A field study bears directly on our liquidity assumptions. Heck et al.
-(2026) listed 300 Pokémon cards on eBay for one year. Of these
-cards, 73 % sold, holo cards sold faster than others, and posted prices acted
-as a ceiling on realised prices. We use these figures to anchor one robustness
-scenario (R10). Because they come from a different sample and platform, we
-label them as transferred evidence.</p>
-<h2>2.3 Booster packs, loot boxes and odds disclosure</h2>
-<p>Booster packs belong to the family of randomised products, and several papers
-model the design and pricing of such products: Chen et al. (2021)
-for loot boxes, Gan (2021) for gacha games, and Hu, Qin and Sekar
-(2024) for blind boxes.</p>
-<p>A public-health literature links spending on loot boxes and on physical
-booster packs to problem gambling (Zendle and Cairns 2018; Zendle et al. 2021; Xiao et al. 2025). Odds-disclosure rules are not always followed: Xiao et al.
-(2023) report poor compliance with the UK industry's self-regulation
-on loot-box probability disclosure. For the English sets we study, the
-official product description gives only the number of cards per pack. We
-therefore estimate pull rates from community openings and treat them as
-uncertain (§3, §4).</p>
-<h2>2.4 Practitioner tools</h2>
-<p>Online guides and calculators already compute the expected value of a pack
-from a price snapshot and published odds, and some also simulate the
-distribution of a pack's value with fixed odds (S1 review,
-<code>research/protocol/literature_review.md</code>). A pack-level Monte Carlo is
-therefore not a contribution in itself, and neither is the observation that
-the mean of a skewed value distribution exceeds its median.</p>
-<p>The closest formal treatment is Mota (2026), which we read in
-full. It models a sealed Magic: The Gathering product slot by slot, defines
-the expected value of opening it, and calls the difference between the sealed
-price and that expected value the "sealed-opened spread". Under perfect
-markets the spread is zero. The paper then lists the frictions that move it
-away from zero: a proportional transaction cost, a minimum value below which a
-card is not worth selling, a liquidity factor per card, variance and risk
-aversion, the irreversibility of opening, and a gambling premium. Its
-numerical example uses a hypothetical set.</p>
-<p>Our model shares its starting point, namely the slot-level expected value, a
-threshold below which cards are not sold, and a liquidity discount, but it
-differs in four ways. First, it uses real data: pull rates measured on
-community openings and dated market prices for three sets. Second, the slot
-probabilities are uncertain, whereas Mota treats them as known and leaves a
-Bayesian treatment of this uncertainty to future work. Third, our model
-reports the whole distribution of outcomes and its tail, not only the expected
-value and the variance. Finally, it compares opening with buying the same
-value directly, at equal budget and for a target card, while Mota compares the
-sealed price with the expected value of the contents.</p>
-<h2>2.5 Risk measures and nested simulation</h2>
-<p>We report the 5 % conditional value-at-risk (CVaR, or expected shortfall), a
-coherent risk measure (Artzner et al. 1999). Rockafellar and Uryasev
-(2000, 2002) study its optimisation and its
-extension to general loss distributions.</p>
-<p>Our simulated profits are discrete, with masses at a few values; a one-pack
-budget, for example, often yields the same loss in many runs. Acerbi and
-Tasche (2002) show that a suitably defined expected shortfall
-is coherent for any distribution with a finite mean loss, discrete or not
-(their Prop. 3.1), and that minus the average of the ⌊nα⌋ worst simulated
-outcomes converges to it (Prop. 4.1). With α = 5 % and 20,000 runs, this
-average is our estimator, and it rests on 1,000 tail samples.</p>
-<p>For the pull rates, we separate the uncertainty on the rates themselves
-(epistemic) from the randomness of the packs (aleatory)
-(Der Kiureghian and Ditlevsen 2009). Rates follow Beta and Dirichlet posteriors under
-a Jeffreys prior (Jeffreys 1946), and Jeffreys intervals perform well
-for binomial proportions (Brown et al. 2001).</p>
-<p>On nested simulation, Gordy and Juneja (2010) study a design that
-estimates a risk measure of a conditional expectation. They show that, as the
-budget grows, the inner sample size should grow only as its cube root, and the
-number of outer scenarios as its two-thirds power.</p>
-<p>Our design answers a different question, since we do not estimate a risk
-measure of the conditional mean. Every metric is computed <em>within</em> one draw of
-the rates, on 20,000 simulated runs, and the draws are used only to obtain its
-posterior interval. Within-draw tail estimates need many inner runs, whereas
-the interval needs only enough outer draws for stable 2.5 % and 97.5 %
-quantiles. This is why we use a 200 × 20,000 design, and robustness test R7
-checks its stability (§7).</p>
-<h2>2.6 Position of this paper</h2>
-<p>To our knowledge, no published study of the Pokémon TCG combines:</p>
-<ol>
-<li>Bayesian uncertainty on community-estimated pull rates, propagated through
-   a nested Monte Carlo;</li>
-<li>typed market prices converted into net realisable values with explicit
-   fees and liquidity scenarios;</li>
-<li>coherent tail-risk measures;</li>
-<li>two pre-registered comparisons with direct purchase: spending an equal
-   budget, and acquiring a target card.</li>
-</ol>
-<p>This statement rests on the works listed above. The closest of them, Mota
-(2026), was read in full; most of the others were read at
-abstract level.</p>
-<h1>3. Data</h1>
-<p>Pull-rate figures in this section come from the Poké Life registry snapshot
-dated 2026-11-13 and catalogue figures from TCGdex responses fetched on
-2026-11-15; all are reproducible from the committed snapshot and data-audit
-outputs.</p>
-<h2>3.1 Sources</h2>
-<p>Per-pack rarity rates are taken from the Poké Life pull-rate evidence
-registry, which aggregates published openings (case breaks, store tallies,
-streamed box openings and the TCGplayer Authentication Center). We use the
-immutable dated version 2026-11-13. It contains 234 rarity rows covering 36
-English-language sets, together with a companion file describing 75 reviewed
-openings, of which 53 are flagged as qualifying. The registry is published
-under CC BY 4.0 and is redistributed in the replication package with the
-required attribution: Poké Life, "Pokémon TCG pull-rate evidence registry,"
-https://www.poke-life.com/data/ (accessed 2026-11-15), CC BY 4.0. Its
-intervals are Beta posteriors under a Jeffreys prior (Jeffreys 1946).
-Curation is largely automated and only a sample is reviewed by hand; the
-operator is not named, and the licence of the underlying openings is not
-stated. We therefore treat the registry as a documented secondary compilation
-rather than as primary evidence.</p>
-<p>The catalogue (card lists, numbers and rarities) comes from TCGdex, whose card
-database is released under the MIT licence. We do not commit the raw TCGdex
-responses, because they embed price fields and image URLs whose rights are
-unclear; they can be re-fetched by script.</p>
-<p>TCGdex also exposes price fields from two providers: TCGplayer (USD; low, mid
-and high listing prices and a market price) and Cardmarket (EUR; a low listing
-price, a trend price and averages). In the typology of the protocol, these are
-<em>active listings</em> and <em>provider-market aggregates</em>. None is a realised-sale
-price, and we identified no open source of realised sales. Each value is
-attached to one printing (normal, reverse or holo) by a fixed rule (ADR 0008);
-values that cannot be attributed to a single printing are discarded and
-counted in the ingestion manifest rather than guessed. Both TCGdex and the
-secondary provider PkmnPrices authorised their use for this non-commercial
-project (ADR 0009).</p>
-<p>Prices are labelled by type, never presented as transaction values and always
-combined with liquidity-haircut scenarios; only derived statistics are
-published, never raw prices. Field evidence
-supports this caution: in a one-year study of 300 Pokémon cards listed on
-eBay, 73 % sold and posted prices acted as a ceiling on realised prices
-(Heck et al. 2026). The permission we received does not extend to the terms of
-the originating marketplaces, which were not reviewed, and this is one more
-reason not to redistribute raw prices. Attribution: price data from TCGdex
-(tcgdex.dev), relaying TCGplayer and Cardmarket prices, used with permission.
-This section uses price <em>coverage</em> only.</p>
-<h2>3.2 Set selection</h2>
-<p>The protocol requires one to three sets chosen by a data-coverage audit. The
-selection rule (ADR 0005) was committed before the snapshot and the catalogue
-were analysed and before any price value was inspected. A set is eligible if
-(1) it is an English-language set in the snapshot; (2) it belongs to the
-Scarlet &amp; Violet series or later, with a single 10-card booster whose
-composition is publicly documented; (3) at least 5,000 packs were measured
-(maximum of <code>packs</code> over its rarity rows); (4) every row from Double Rare
-upwards has non-missing hits, packs and interval; (5) its TCGdex catalogue is
-complete, with a rarity for every card; and (6) at least 90 % of its cards of
-rarity Rare and above have at least one price field. Eligible sets are ranked
-lexicographically by the share of rows with non-reconstructed counts, the
-share of rows with high confidence, packs measured, and release date (older
-first). The top three are selected by script.</p>
-<p>Of the 36 sets, 15 are eligible. Of the 21 others, 12 belong to earlier series
-and 9 have fewer than 5,000 packs. Two criteria do not discriminate: no
-eligible set has a non-reconstructed row, and all reach 100 % price coverage.
-The ranking is thus decided by the share of high-confidence rows, then by
-packs. Among the nine sets with only high-confidence rows, the three with the
-most packs are Destined Rivals (sv10), Surging Sparks (sv08) and Stellar Crown
-(sv07). Chaos Rising (me04) has more packs (13,819) but ranks eleventh, as
-only 80 % of its rows are high confidence. Next in line are Journey Together
-(sv09), Scarlet &amp; Violet (sv01) and Paradox Rift (sv04).</p>
-<p><strong>Table 1.</strong> Coverage and quality of the selected sets.</p>
+USD. Without any fee, shipping or haircut it is still 3.44 to 4.29 USD.
+Second, buying is the better way to acquire cards. Opening 36 boosters
+loses 111 to 125 USD on average; buying and reselling the same value loses
+46 to 51 USD. Buying is decisively better on the mean, the median and the
+CVaR in 35 of 36 budget comparisons. Third, chasing one valuable card by
+opening rarely pays: opening until the set's most valuable card appears is
+cheaper than buying it in only 4 % to 14 % of simulated runs. These results
+survive sixteen pre-registered robustness variants and two pre-registered
+extensions. On seven further sets, opening still loses on average and buying
+still wins for every budget of ten boosters or more, although for two sets a
+pack's gross market value exceeds its retail price. At European sale prices,
+opening still loses on average under central costs.</p>
+<p><strong>Related literature.</strong> Studies of collectibles as assets measure long-run
+returns and stress transaction costs (Burton and Jacobsen 1999; Dimson and Spaenjers 2011; Mei and Moses 2002; Renneboog and Spaenjers 2013), and recent work covers
+LEGO sets, sealed trading-card products and video-game items
+(Dobrynskaya and Kishilova 2022; Wang and Langelett 2023; Dobrynskaya and Strelnikov 2025). These
+papers ask whether holding a collectible pays; I ask an earlier question,
+what it costs to obtain one. Work on Pokémon cards concerns price
+determinants, grading and market efficiency (Danz 2026; Baro 2026; Sharma 2026), and a field study of 300 cards listed
+on eBay for a year found that 73 % sold and that posted prices acted as a
+ceiling on realised prices (Heck et al. 2026); I use it to anchor one liquidity
+scenario. Booster packs belong to the family of randomised products studied
+as loot boxes, gacha and blind boxes (Chen et al. 2021; Gan 2021; Hu et al. 2024), with a public-health literature linking them to problem
+gambling (Zendle and Cairns 2018; Zendle et al. 2021). The closest formal work,
+Mota (2026), models a sealed Magic: The Gathering product slot
+by slot and lists the frictions that separate its price from the expected
+value of its contents, with a hypothetical numerical example. I share the
+slot-level expected value and the sale threshold, but use measured pull rates
+and dated prices, treat the rates as uncertain, report the full distribution
+and its tail, and compare opening with buying. The risk measure is the
+expected shortfall (Artzner et al. 1999; Acerbi and Tasche 2002), and the
+separation of epistemic and aleatory uncertainty follows Der Kiureghian and
+Ditlevsen (2009).</p>
+<p>The paper proceeds as follows. Section 2 describes the data and how each
+input was checked. Section 3 sets out the model and the simulation. Section 4
+reports the results, Section 5 the robustness tests and extensions, and
+Section 6 concludes. The appendix lists the source of every input, the
+validation of the engine and the pre-registration record.</p>
+<h1>2. Data</h1>
+<p>Every input of the model has a dated source, listed in Appendix A. This
+section describes the three kinds of data (pull rates, catalogue and prices),
+the cost parameters, and the checks each input passed.</p>
+<h2>2.1 Pull rates</h2>
+<p>Per-pack rarity rates come from the Poké Life pull-rate evidence registry,
+version 2026-11-13 (CC BY 4.0). It holds 234 rarity rows for 36 English sets,
+compiled from 75 reviewed openings, of which 53 are flagged as qualifying.
+Each row gives hits, packs, a rate and a 95 % interval for one hit rarity
+(Double Rare and above, and ACE SPEC Rare). The rows of the selected sets pool
+two openings: the TCGplayer Authentication Center (8,300 to 9,000 packs per
+rarity row, reconstructed from its published margins) and one YouTube opening
+series.</p>
+<p>Two features of the registry matter for the model. First, its counts are
+reconstructed: hits and packs were back-calculated from a published rate and
+margin rather than tallied, for all 17 rows of the selected sets. If the
+published margins were not binomial, posteriors built on these counts
+overstate precision, so one robustness test halves their weight. Second, the
+rarest outcomes rest on few hits: 64 to 86 Hyper Rares and 121 to 138 Special
+Illustration Rares per set. This is why the uncertainty on the rates is
+propagated rather than fixed at point estimates.</p>
+<p>I checked the registry in three ways (Section 5.4 gives the details). Its
+rates match the tables printed in the TCGplayer articles, read on 2026-11-15,
+for all 33 single-source rows of the seven sets added in Section 5.2. Pooling
+the two openings is not rejected by a χ² homogeneity test in any of the 16
+testable rows (Holm–Bonferroni, 5 %). And in a held-out test, the TCGplayer
+counts alone predict the second opening's hits inside the 95 % predictive
+interval in 20 of 20 rows.</p>
+<h2>2.2 Sets and catalogue</h2>
+<p>The set selection rule (ADR 0005) was committed before any data were
+analysed. A set is eligible if it is an English set of the Scarlet &amp; Violet
+series or later, with at least 5,000 packs measured, complete rarity rows, a
+complete catalogue and at least 90 % price coverage of its Rare-and-above
+cards. Of the 36 sets, 15 are eligible. They are ranked by data quality, and
+the top three are Destined Rivals (sv10), Surging Sparks (sv08) and Stellar
+Crown (sv07). The other twelve are used in Section 5.2.</p>
+<p>The catalogue comes from TCGdex (MIT licence), fetched on 2026-11-15. For the
+three sets, the number of cards in each hit rarity matches the registry
+exactly, and the ingestion rejects any snapshot where the two sources
+disagree. Table 1 summarises the selected sets.</p>
+<p><strong>Table 1.</strong> Selected sets.</p>
 <table>
 <thead>
 <tr>
 <th></th>
-<th>Destined Rivals</th>
-<th>Surging Sparks</th>
 <th>Stellar Crown</th>
+<th>Surging Sparks</th>
+<th>Destined Rivals</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>TCGdex id</td>
-<td>sv10</td>
-<td>sv08</td>
-<td>sv07</td>
+<td>TCGdex id, release</td>
+<td>sv07, 2024-09-13</td>
+<td>sv08, 2024-11-08</td>
+<td>sv10, 2025-05-30</td>
 </tr>
 <tr>
-<td>Release date (TCGdex)</td>
-<td>2025-05-30</td>
-<td>2024-11-08</td>
-<td>2024-09-13</td>
+<td>Packs measured, maximum over rows</td>
+<td>10,800</td>
+<td>11,254</td>
+<td>12,446</td>
 </tr>
 <tr>
-<td>Packs, maximum over rows (range)</td>
-<td>12,446 (8,655–12,446)</td>
-<td>11,254 (10,828–11,254)</td>
-<td>10,800 (10,581–10,800)</td>
+<td>Rarity rows (high confidence)</td>
+<td>6 (6)</td>
+<td>6 (6)</td>
+<td>5 (5)</td>
 </tr>
 <tr>
-<td>Rarity rows</td>
-<td>5</td>
-<td>6</td>
-<td>6</td>
-</tr>
-<tr>
-<td>High-confidence rows</td>
-<td>5/5</td>
-<td>6/6</td>
-<td>6/6</td>
-</tr>
-<tr>
-<td>Rows with reconstructed counts</td>
-<td>5/5</td>
-<td>6/6</td>
-<td>6/6</td>
-</tr>
-<tr>
-<td>Qualifying datasets pooled</td>
-<td>2</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr>
-<td>Catalogue size (TCGdex = official total)</td>
-<td>244</td>
-<td>252</td>
+<td>Catalogue size</td>
 <td>175</td>
-</tr>
-<tr>
-<td>Hit-rarity cards, TCGdex = Poké Life</td>
-<td>79</td>
-<td>87</td>
-<td>50</td>
-</tr>
-<tr>
-<td>Rare-and-above cards with a price field</td>
-<td>97/97</td>
-<td>103/103</td>
-<td>65/65</td>
+<td>252</td>
+<td>244</td>
 </tr>
 </tbody>
 </table>
-<p><em>Notes.</em> Hit rarities are Double Rare, Illustration Rare, Ultra Rare, Special
-Illustration Rare and Hyper Rare, plus ACE SPEC Rare for sv08 and sv07.
-"Hit-rarity cards" sums the per-rarity card counts; the TCGdex and Poké Life
-counts agree rarity by rarity. In Destined Rivals the Double Rare row draws on
-one dataset only; the other rows pool two. A third Destined Rivals opening
-(the registry operator's own) is flagged non-qualifying and not pooled. Price
-coverage counts the presence of a positive price field, not its value.
-Sources: <code>data/raw/pokelife/2026-11-13/</code>, <code>research/reports/data_audit_*.csv</code>.</p>
-<h2>3.3 Pull-rate data: characteristics and limitations</h2>
-<p>For the three sets, the registry reports per-pack rates (hits divided by
-packs) for hit rarities only. Common, Uncommon and Rare have no row, although
-they account for 165 of 244, 165 of 252 and 125 of 175 catalogue cards
-respectively. Nor are the rates slot distributions. A hit rarity may appear in
-more than one physical position (rare and reverse-holo slots), and the
-official product description gives only the card count, one Basic Energy and
-one code card. The card-count match with TCGdex validates the number of cards
-per rarity, but not the assumption that cards are equally likely within a
-rarity, which the registry cannot test. The ingestion pipeline re-checks the
-per-rarity card counts and rejects any snapshot in which the two sources
-disagree. For the methodology, this means that the slot structure must be
-documented from community sources and treated as scenarios where uncertain,
-that per-pack rates are modelled with one Beta posterior per rarity (the
-Dirichlet case being reserved for slots whose outcomes are documented as
-mutually exclusive), and that the treatment of low-value cards is specified
-separately.</p>
-<p>The counts themselves are reconstructed. All 17 rows of the selected sets
-carry <code>counts_reconstructed = true</code> (174 of 234 rows registry-wide), which
-means that hits and packs were back-calculated from a published rate and
-margin rather than tallied. If the published margins were not binomial,
-posteriors built from these counts overstate precision. Rows within a set also
-have different denominators (Table 1), so rarities do not share a common
-sample of packs. As a result, the pre-registered robustness test that excludes
-reconstructed rows would leave no data. We replace it with a widened-posterior
-check (for example, halving the effective sample size), to be recorded as a
-deviation.</p>
-<p>At the top of the distribution, counts are small. The rarest outcomes rest on
-few hits: Hyper Rare counts are 86, 64 and 76 (rates 0.691 % [0.557, 0.848],
-0.570 % [0.443, 0.722] and 0.712 % [0.565, 0.885], 95 % intervals as
-reported), and Special Illustration Rare counts are 130, 138 and 121. Because
-jackpot cards concentrate in these rarities, we propagate the uncertainty in
-their rates rather than fixing the rates at point estimates.</p>
-<p>Finally, each selected rate pools heterogeneous openings, namely two
-qualifying datasets: the TCGplayer Authentication Center and one YouTube
-opening series. Surging Sparks and Stellar Crown share the same
-store-affiliated channel, while Destined Rivals uses a different one.
-Registry-wide, rows pool one, two or three datasets (166, 48 and 20 rows). The
-openings were published at or around release (2024-09-13 to 2025-05-30), so
-the rates describe early product. We observe neither their stability across
-later print runs nor the representativeness of openings that were chosen for
-publication. Where per-dataset counts can be recovered, we test homogeneity
-between datasets before pooling; otherwise pooling is stated as an
-assumption.</p>
-<h2>3.4 Price snapshot</h2>
-<p>The main analysis values cards with the TCGplayer market price (USD) of a
-single snapshot, relayed by TCGdex on 2026-11-15; every observation carries the
-provider's update time (2026-11-14, 22:22 to 22:24 UTC), and none is later
-than the reference date. The market price is a provider aggregate: it is
-neither an asking price nor a realised sale observed by this study, and the
-listing statistics stored alongside it are never used as transaction values.
-Of the 1,126 printings that a pack of the three sets can contain, 1,119 have a
-market price. The seven exceptions are all in Stellar Crown (one Hyper Rare,
-three Rares and their reverse holos), whose TCGdex records carry no TCGplayer
-block at all. They are imputed at the median of their pool in the central
-scenario and valued at zero in the adverse one; targets and baskets are chosen
-among observed prices only. Coverage and price distributions by pool are in
-<code>research/reports/valuation.md</code>.</p>
-<h2>3.5 Exclusions and licensing</h2>
-<p>Japanese sets, which the registry keeps in a separate section, are excluded:
-the protocol restricts the main analysis to English products, and an English
-and a Japanese card are distinct observations. Sets from series before
-Scarlet &amp; Violet are excluded by criterion 2; they use different booster
-formats and series-specific rarity labels (for example Rainbow Rare or Trainer
-Gallery). Sets below 5,000 measured packs, including several special sets, are
-excluded by criterion 3.</p>
-<p>No card image is used or redistributed: the rights to TCGdex images are not
-stated, and card names and numbers are used as facts only, without
-affiliation with the rights holder. Raw prices are never committed or
-redistributed (ADRs 0006, 0007 and 0009); only derived statistics are
-published. The replication package contains the pull-rate snapshot (CC BY 4.0,
-with attribution) and the scripts that re-fetch the catalogue. We examined
-other sources but did not use them: the Pokémon TCG API (deprecated, no stated
-licence), the TCGplayer and Cardmarket APIs (closed to new access) and eBay
-sold-price history (restricted).</p>
-<h1>4. Methodology</h1>
-<p>Figure 1 shows how the data, the model and the simulation produce each
-result. Each step is implemented in the repository, and each source box
-gives the version or date of its data.</p>
-<p><img alt="Figure 1. Data and simulation architecture: sources (left), model and card values, nested Monte Carlo, and outputs, with the section that describes each step." src="figures/fig1_pipeline.png" /></p>
-<h2>4.1 Booster model</h2>
-<p>A booster is a sequence of slots s = 1, …, S. Each slot draws one rarity
-R_s from a categorical distribution, then one printing uniformly from the pool
-of that rarity in that slot. The probability that printing c appears in slot s
-is</p>
-<p>P(C_s = c) = P(R_s = r(c)) / |pool_s(r(c))|,</p>
-<p>and, if slots are independent, the probability that one pack contains c is</p>
-<p>p_hit(c) = 1 − ∏_s (1 − P(C_s = c)).</p>
-<p>The fixed slots (Commons and Uncommons) have a single outcome. Within one pack,
-the four Commons are distinct, and so are the three Uncommons (assumption
-A-CU); the random slots are drawn with replacement. Assumptions, slot layout
-and their sources are listed in §5.1 and in the model specification.</p>
-<p>Figure 2 shows the resulting slot structure for Surging Sparks, with the
-posterior-mean probability of each outcome of the random slots.</p>
-<p><img alt="Figure 2. Slot structure of one booster (Surging Sparks), with the posterior-mean outcome probabilities of the three random slots. Rates: Poké Life registry, version 2026-11-13." src="figures/fig2_slots.png" /></p>
-<h2>4.2 Estimation and uncertainty in the pull rates</h2>
-<p>For a slot with k mutually exclusive random outcomes observed x_1, …, x_k times
-in n packs, the posterior of the slot probabilities is
-Dirichlet(x_1 + ½, …, x_k + ½, n − Σx_i + ½) (Jeffreys prior); a single hit
-rate has the Beta marginal. When the rows of one slot rest on different
-numbers of packs, each rate is converted to pseudo-counts on the smallest
-denominator, which never overstates the information. Before two openings are
-pooled, homogeneity is tested row by row (χ², Holm–Bonferroni at 5 %).</p>
-<p>Uncertainty enters at two levels (protocol §4.3). Epistemic uncertainty is
-represented by K draws of all slot probabilities from their posteriors
-(K = 200 in the main analysis). Aleatory uncertainty is represented, for each
-of these draws, by M simulated openings at fixed probabilities (M = 20 000, so
-that 5 % tail metrics rest on at least 1 000 samples). Every metric is
-therefore a distribution over epistemic draws, summarised by its posterior
-mean and its 2.5 %–97.5 % interval, and each per-draw value carries a Monte
-Carlo standard error.</p>
-<h2>4.3 Simulation engine</h2>
-<p>The model is compiled once into integer arrays (one pool of printing indices
-per slot outcome), and we use two sampling paths. The first draws card by
-card. For n packs, each slot draws an outcome by inversion of its cumulative
-probabilities and a printing uniformly within the pool. Commons and Uncommons
-that repeat inside a pack are redrawn until distinct (A-CU). We use this path
-for validation and for the pack that contains the target in E2.</p>
-<p>The second path works in aggregate. For a run of m packs, the number of copies
-of each printing in slot s is multinomial with m trials and probabilities
-P(C_s = ·), and the total value is the inner product of these counts with the
-card values. This is exact in distribution for slots drawn with replacement,
-and it costs O(S × number of printings) per run, independently of m. Ignoring
-A-CU in this path changes the standard deviation of the value of ten packs by
-about 1 % (validation report, §5).</p>
-<p>In experiment E1 (budget), the profit of opening n packs at unit cost b is
-Π = Σ_i ℓ(C_i) − n b, where ℓ is the liquidation value of §5.2.</p>
-<p>In experiment E2 (target), the number of packs needed for the first copy of
-target c* is K ~ Geometric(p_hit) under slot independence. The engine draws K,
-caps it at n_max (the opener then buys c* at its acquisition price a(c*)),
-values the K − 1 packs without the target with the slot distributions
-conditioned on not drawing c*, and values the hit pack with c* forced into
-its slot and the other slots unconditional. The resulting net cost is</p>
-<p>K_net = min(K, n_max) · b − Σ (value of the other cards opened) + 1{K &gt; n_max} a(c*),</p>
-<p>and Π = a(c*) − K_net. This decomposition is exact under slot independence;
-it avoids simulating the hundreds of packs that a Special Illustration Rare
-typically requires.</p>
-<h2>4.4 Metrics and Monte Carlo error</h2>
-<p>For each epistemic draw, the engine reports the mean, median, P(Π &lt; 0), the
-5 %, 25 %, 75 % and 95 % quantiles, and VaR and CVaR at 5 % as positive losses
-(CVaR is minus the mean of the ⌈αN⌉ smallest values). Monte Carlo standard
-errors use 20 batch means. A comparison between strategies is decisive when one
-of them is better in at least 90 % of the epistemic draws, and undetermined
-otherwise (protocol §7.0b).</p>
-<h2>4.5 Reproducibility</h2>
-<p>All random streams derive from one seed through NumPy's <code>SeedSequence.spawn</code>,
-with PCG64 generators: one stream draws the posterior parameters, and each
-epistemic draw has its own aleatory stream, so results do not depend on the
-order of execution. Each run writes a manifest with the seed, the number of
-draws, the model and data snapshot identifiers, the parameters and a SHA-256
-hash of the results; identical seed, data and model give an identical hash.</p>
-<h2>4.6 Validation</h2>
-<p>The engine was checked against closed-form results before any price was used
-(<code>research/reports/validation.md</code>, generated by <code>scripts/validate_engine.py</code>).
-In the simplest case, one slot with two cards, the simulated mean and variance
-lie within Monte Carlo error of the exact values. We compared per-slot card
-frequencies in Surging Sparks with the model probabilities (χ² goodness of
-fit, 10⁶ packs; no rejection), and the number of packs containing a given
-Special Illustration Rare among 100 with the binomial distribution. For
-N = 10³ to 10⁶ packs, the root-mean-square error of the simulated mean has a
-fitted log-log slope of −0.52 (theory −0.5). The aggregate and card-by-card
-paths show no difference (Kolmogorov–Smirnov). For E2, we compared the mean
-number of packs opened and the probability of reaching the cap with the
-truncated geometric distribution. Finally, identical seed, data and model
-reproduce identical output.</p>
-<h1>5. Experimental design</h1>
-<p>All choices in this section were fixed and tagged (<code>prereg-v2</code>) before any
-price value entered an analysis. Departures from the first-stage registration
-(<code>prereg-v1</code>) are listed in §5.6.</p>
-<h2>5.1 Product and booster model</h2>
-<p>The product is one English booster pack of Stellar Crown (sv07), Surging
-Sparks (sv08) or Destined Rivals (sv10). A pack is modelled as ten card slots:
-four Commons, three Uncommons, two reverse-holo slots and one rare slot; the
-Basic Energy and the code card are given no value. The slot of each hit rarity
-follows the publisher of the pull-rate data, the TCGplayer Authentication
-Center: ACE SPEC Rares replace the first reverse holo; Illustration Rares,
-Special Illustration Rares and Hyper Rares replace the second; Double Rares and
-Ultra Rares occupy the rare slot. One earlier source places Hyper Rares in the
-rare slot instead, and we treat this alternative as a robustness scenario.
-Within a slot, outcomes are mutually exclusive. Slots are assumed independent
-and printings within a pool equally likely, an assumption that the TCGplayer
-per-card counts support with one reported exception (a short-printed Double
-Rare in Stellar Crown, tested as a scenario).</p>
-<p>Each random slot has a Dirichlet posterior with a Jeffreys prior on the
-registry counts. Because rows of one set have different denominators, the
-rates of one slot are placed on the smallest of them. The registry intervals
-are reproduced exactly by Jeffreys intervals on its counts, and an
-approximate χ² test does not reject homogeneity between the two pooled
-openings in any of the 16 testable rows (Holm–Bonferroni, 5 %).</p>
-<h2>5.2 Prices and transaction costs</h2>
-<p>Cards are valued at the TCGplayer market price (USD) of the reference
-snapshot, t₀ = 2026-11-15, a provider-market aggregate rather than a
-realised-sale price. A seller receives</p>
-<p>ℓ(c) = max(0, p(c)(1 − h)(1 − f_m − f_p) − f_0 − s),</p>
-<p>and a buyer pays a(c) = p(c)(1 + f_b) + s_b, one card per transaction. Three
-cost scenarios are fixed (all in USD):</p>
+<p><em>Source:</em> Poké Life registry 2026-11-13; TCGdex 2026-11-15;
+<code>research/reports/data_audit.md</code> and <code>valuation.md</code>. Of the 1,126 printings
+a pack of the three sets can contain, 1,119 have a market price. The seven
+others are in Stellar Crown; they take the median price of their pool
+(central) or zero (adverse).</p>
+<h2>2.3 Prices</h2>
+<p>Cards are valued at the TCGplayer market price in USD, relayed by TCGdex on
+2026-11-15, with every observation time-stamped by the provider (2026-11-14,
+22:22 to 22:24 UTC). The market price is a provider aggregate of recent sales
+and listings, not a single transaction, and card condition is not specified.
+Listing prices are never used as transaction values. Prices are used with the
+permission of TCGdex for this non-commercial project; only derived statistics
+are published (ADR 0009). Section 5.3 replaces them with Cardmarket's 30-day
+average sale prices as a check.</p>
+<h2>2.4 Costs</h2>
+<p>A seller receives the net liquidation value</p>
+<p>ℓ(c) = max{0, p(c)(1 − h)(1 − f_m − f_p) − f_0 − s},  (1)</p>
+<p>and a buyer pays the acquisition cost a(c) = p(c)(1 + f_b) + s_b, one card per
+transaction, where p(c) is the market price of printing c. Table 2 gives the
+three cost scenarios and the source of each value.</p>
+<p><strong>Table 2.</strong> Cost scenarios (USD) and sources.</p>
 <table>
 <thead>
 <tr>
-<th>Scenario</th>
-<th>Booster b</th>
-<th>f_m</th>
-<th>f_p</th>
-<th>f_0</th>
-<th>s</th>
-<th>s_b</th>
-<th>h</th>
+<th>Parameter</th>
+<th>Gross</th>
+<th>Central</th>
+<th>Adverse</th>
+<th>Source</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Gross (reference only)</td>
+<td>Booster price b</td>
 <td>4.49</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>Central</td>
 <td>4.49</td>
-<td>10.75 %</td>
-<td>2.5 %</td>
-<td>0.30</td>
-<td>1.00</td>
-<td>1.00</td>
-<td>15 %</td>
-</tr>
-<tr>
-<td>Adverse</td>
 <td>5.49</td>
+<td>Assumption: US retail price at launch; b* is reported so any b can be used</td>
+</tr>
+<tr>
+<td>Marketplace fee f_m</td>
+<td>0</td>
 <td>10.75 %</td>
-<td>2.5 %</td>
+<td>10.75 %</td>
+<td>TCGplayer seller fee page, read 2026-11-15</td>
+</tr>
+<tr>
+<td>Payment fee f_p, fixed fee f_0</td>
+<td>0, 0</td>
+<td>2.5 %, 0.30</td>
+<td>2.5 %, 0.30</td>
+<td>TCGplayer seller fee page, read 2026-11-15</td>
+</tr>
+<tr>
+<td>Shipping per sale s, per purchase s_b</td>
+<td>0, 0</td>
+<td>1.00, 1.00</td>
+<td>4.50, 4.50</td>
+<td>Assumption: untracked (central) or tracked (adverse) letter</td>
+</tr>
+<tr>
+<td>Liquidity haircut h</td>
+<td>0</td>
+<td>0.15</td>
 <td>0.30</td>
-<td>4.50</td>
-<td>4.50</td>
-<td>30 %</td>
+<td>Assumption; anchored on Heck et al. (2026) in robustness test R10</td>
 </tr>
 </tbody>
 </table>
-<p>The fee rates are TCGplayer's published fees for standard sellers. The booster
-price, shipping and liquidity haircut h are assumptions; the break-even
-booster price is reported so that readers can substitute their own b. A card
-without a market price takes the median price of its pool (central) or zero
-(adverse).</p>
-<h2>5.3 Strategies and estimands</h2>
-<p>Experiment E1 concerns budget liquidation. With budgets of 1, 10, 36 and 100
-packs, Strategy A opens the packs and sells every card, while Strategy B buys,
-at t₀, the most expensive printings of the set that fit the same budget
-(greedy rule in decreasing order of a(c)) and sells them back.</p>
-<p>Experiment E2 concerns target acquisition. For two targets per set (the most
-expensive printing and the most expensive Special Illustration Rare at t₀),
-Strategy A opens packs until the target appears, capped at
-n_max = ⌈3 / p_hit⌉ (a failure then buys the target), and sells every other
-card. Strategy B simply buys the target.</p>
-<h2>5.4 Simulation and metrics</h2>
-<p>Two nested loops separate the two kinds of uncertainty: 200 draws of the slot
-probabilities from their posteriors (epistemic) and, for each, 20,000 simulated
-runs (aleatory), so that every 5 % tail rests on 1,000 samples. Metrics are
-those of §4: mean, median, P(loss), quantiles, VaR and CVaR at 5 % (reported as
-positive losses), break-even booster price, P(target in n packs) and expected
-packs, each with its Monte Carlo standard error and its 95 % interval over
-epistemic draws. The random seed is fixed (20261115). Table 2 (Appendix D)
-lists every simulation parameter.</p>
-<h2>5.5 Robustness</h2>
-<p>The robustness checks are defined as follows. R1 uses an alternative price
-statistic, R2 haircuts of 30 % and 50 %, and R3 fees and shipping ± 50 %. R4 sets the pull rates at their interval bounds, R5 excludes
-the 1 % most valuable printings, R6 compares sets, R7 varies the number of
-simulated runs and R8 uses a uniform prior. R9b halves the effective sample
-size. R10 anchors haircuts on observed sell-through (transferred evidence),
-R11 models the short-printed Double Rare and R12 places the Hyper Rare in the
-rare slot. R13, TCGplayer-only rates, was planned only if pooling were
-rejected; it was not. Hypothesis H4 compares the three sets and a second price
-snapshot (2026-12-13).</p>
-<h2>5.6 Deviations from the first-stage registration</h2>
-<ol>
-<li>The pre-registered test excluding reconstructed counts is replaced by R9b:
-   every row of the selected sets has reconstructed counts.</li>
-<li>Valuation uses TCGplayer prices only. Cardmarket is exploratory, because
-   its fee schedule cannot be verified from an official page.</li>
-<li>The booster price is a scenario, not an observation.</li>
-</ol>
-<h1>6. Results</h1>
-<p>All figures are in USD and are conditional on the TCGplayer market prices of
-2026-11-15 and on the cost scenarios of §5.2. Intervals are 95 % intervals
-over 200 posterior draws of the pull rates, and each draw rests on 20,000
-simulated openings.</p>
-<h2>6.1 Break-even booster price</h2>
-<p>The expected liquidation value of one booster sets the price below which
-opening has a positive expected net profit. In the gross reference, which
-leaves out fees and shipping, this break-even price is 4.29 [4.18, 4.39] for
-Stellar Crown, 3.44 [3.31, 3.56] for Surging Sparks and 3.78 [3.65, 3.91]
-for Destined Rivals, so that all three lie below the assumed price of 4.49.
-In the central scenario it falls to 1.42, 1.03 and 1.13. The fixed cost of
-selling a single card (fee and shipping, 1.30) exceeds the market value of
-most cards, which means that commons, uncommons, rares and most reverse holos
-contribute nothing. In the adverse scenario the break-even price lies between
-0.52 and 0.78.</p>
-<p>Figure 3 shows why. In the central scenario, 79 % to 86 % of simulated packs
-contain no card worth selling, and the value of opening comes from a thin
-tail of rare hits. Figure 5 translates this into a probability of loss as a
-function of the booster price: even at 2 USD a pack, opening 36 packs loses
-money in most runs.</p>
-<p><img alt="Figure 3. Distribution of the value of one pack (complementary CDF, log scales), at the posterior-mean pull rates. Left: gross market values; right: central net values. Packs with zero net value are not shown on the right." src="figures/fig3_pack_value.png" /></p>
-<p><img alt="Figure 5. Probability that opening n packs loses money, as a function of the booster price, central costs. Dashed line: 4.49 USD." src="figures/fig5_ploss_price.png" /></p>
-<h2>6.2 E1: opening a budget and selling everything</h2>
-<p>In the central scenario, opening loses money on average. For every set and
-budget the mean net profit of opening is negative, and its 95 % interval
-excludes zero. Opening 36 boosters (161.64) loses between 110.56 (Stellar
-Crown) and 124.56 (Surging Sparks) on average. The median loss is larger
-still, and the probability of a loss lies between 0.87 and 1.00.</p>
-<p>Buying cards directly also loses money, because of the round-trip cost.
-Strategy B buys the most expensive cards that fit the budget and sells them
-back, which costs 46 to 51 for the same 36-booster budget. That is less than
-half the expected loss of opening.</p>
-<p><strong>Table 3.</strong> Central scenario, budget of 36 boosters (161.64 USD) and
-break-even price. Posterior mean [95 % interval] over 200 pull-rate draws.
-Verdicts on mean / median / CVaR 5 %.</p>
+<p>The gross scenario is a reference without frictions, never the main result.
+Under central costs a card is worth selling only if its price exceeds about
+1.76 USD, since the fixed fee and shipping alone cost 1.30 USD.</p>
+<h1>3. Model and simulation</h1>
+<h2>3.1 The booster pack</h2>
+<p>A pack is a sequence of slots s = 1, …, S. Slot s draws a rarity r with
+probability π_s(r), then one printing uniformly from the pool P_s(r) of that
+rarity. The probability that printing c appears in slot s is</p>
+<p>q_s(c) = π_s(r(c)) / |P_s(r(c))|.  (2)</p>
+<p>The modelled pack has ten slots: four Commons and three Uncommons, which are
+fixed, and three random slots taken from the TCGplayer pull-rate articles.
+The first reverse-holo slot can be replaced by an ACE SPEC Rare; the second
+by an Illustration Rare, a Special Illustration Rare or a Hyper Rare; and the
+rare slot holds a Rare, a Double Rare or an Ultra Rare. Figure 1 shows the
+layout for Surging Sparks. The Basic Energy and the code card have no value.
+Slots are independent, printings are equally likely within a pool, and the
+Commons and Uncommons of one pack are distinct cards. Robustness tests move
+the Hyper Rare to the rare slot (R12) and add a documented short print (R11).</p>
+<figure><img src="figures/fig2_slots.png" alt=""><figcaption><strong>Figure 1.</strong> Slot structure of one booster (Surging Sparks) with the posterior-mean probability of each outcome of the three random slots. Rates: Poké Life registry, version 2026-11-13.</figcaption></figure>
+<h2>3.2 Uncertainty on the pull rates</h2>
+<p>For a random slot whose k hit rarities were observed x_1, …, x_k times in n
+packs, the posterior of the slot probabilities under a Jeffreys prior is</p>
+<p>(π_s(r_1), …, π_s(r_k), π_s(rest)) ~ Dirichlet(x_1 + ½, …, x_k + ½, n − Σ x_i + ½).  (3)</p>
+<p>When the rows of one slot rest on different numbers of packs, each rate is
+converted to pseudo-counts on the smallest of them, which never overstates
+the information. The registry's own intervals are Jeffreys intervals on its
+counts, so the posterior reproduces them.</p>
+<h2>3.3 Strategies and profit</h2>
+<p>With liquidation values ℓ from (1), the profit of opening n packs at price b
+is</p>
+<p>Π_A = Σ_{i=1}^{10n} ℓ(C_i) − n b,  (4)</p>
+<p>where C_i are the cards drawn. In E1, strategy B spends the same budget nb on
+the most expensive printings of the set, in decreasing order of a(c), and
+sells them back: Π_B = Σ_c [ℓ(c) − a(c)], a deterministic amount. The
+budgets are 1, 10, 36 and 100 boosters (36 is one booster box).</p>
+<p>In E2, strategy A opens packs until the target c* appears, sells every other
+card, and buys c* if it has not appeared after n_max = ⌈3 / p_hit(c*)⌉
+packs, where p_hit(c*) = 1 − ∏_s (1 − q_s(c*)) is its per-pack probability.
+Its profit is Π_A = a(c*) − K_net, where K_net is the cost of the packs
+opened net of the other cards sold. Strategy B buys the target, so Π_B = 0.
+The targets are each set's most expensive printing and its most expensive
+Special Illustration Rare.</p>
+<p>Because (4) is linear, the expected profit of opening has a closed form. The
+break-even booster price,</p>
+<p>b* = Σ_c P(c in a pack) ℓ(c) = Σ_c Σ_s q_s(c) ℓ(c),  (5)</p>
+<p>is the price at which E[Π_A] = 0. It does not depend on b, so a reader can
+compare it with any booster price.</p>
+<h2>3.4 Nested Monte Carlo</h2>
+<p>The other metrics have no closed form. Algorithm 1 estimates them with two
+nested loops that keep the two sources of uncertainty apart: the outer loop
+draws pull rates from (3) (epistemic uncertainty), and the inner loop draws
+packs at fixed rates (aleatory uncertainty).</p>
+<pre><code class="language-text">Algorithm 1. Nested Monte Carlo (seed 20261115, K = 200, M = 20,000)
+
+for k = 1..K:                                   # epistemic loop
+    draw π^(k) from the Dirichlet posteriors (3), one per random slot
+    compute q_s^(k)(c) by (2) and b*^(k) by (5)
+    for m = 1..M:                               # aleatory loop
+        E1: for each slot s, draw the counts of each printing in n packs
+            from Multinomial(n, q_s^(k)); value them with l; Π_A by (4)
+        E2: draw the number of packs K ~ Geometric(p_hit^(k)(c*)),
+            capped at n_max; value the other cards; Π_A = a(c*) − K_net
+    compute, over the M runs: mean, median, P(Π &lt; 0), quantiles,
+        VaR 5 %, CVaR 5 %, and their Monte Carlo standard errors
+report, for each metric: its mean and 2.5–97.5 % quantiles over the K draws
+compare A and B: &quot;decisive&quot; if one is better in ≥ 90 % of the K draws
+</code></pre>
+<p>The multinomial step draws all copies of a slot at once, so a run of n packs
+costs the same as a run of one pack. It is exact for slots drawn with
+replacement; the distinctness of Commons within a pack, which it ignores,
+changes the standard deviation of the value of ten packs by about 1 %. The E2
+step is exact under slot independence: the K − 1 packs before the hit are
+drawn conditional on not containing c*, and the hit pack with c* in its
+slot. CVaR 5 % is minus the mean of the ⌈0.05 M⌉ = 1,000 worst runs, a
+consistent estimator of expected shortfall for discrete as well as
+continuous outcomes (Acerbi and Tasche 2002). Monte Carlo standard errors use
+20 batch means. All random streams derive from one seed through NumPy's
+<code>SeedSequence</code> (PCG64), one stream per draw, so results do not depend on the
+order of execution, and every run writes a manifest with a SHA-256 hash of
+its results.</p>
+<h2>3.5 What the simulation shows</h2>
+<p>Figure 2 runs the inner loop of Algorithm 1 for 100,000 runs of 36 boosters
+at the posterior-mean rates. The running mean converges to the closed-form
+mean of (5): after 100,000 runs it lies 0.13 to 0.48 standard errors from it
+in each set, while after 100 runs it can be more than 5 USD off. The CVaR
+settles more slowly, because it rests on the worst 5 % of runs only: with
+1,000 runs it is within 0.4 USD of its 100,000-run value, but its tail holds
+just 50 runs. The main run uses M = 20,000 runs per draw so that every tail
+estimate rests on at least 1,000 runs.</p>
+<figure><img src="figures/fig8_mc_convergence.png" alt=""><figcaption><strong>Figure 2.</strong> Monte Carlo convergence for opening 36 boosters, central scenario. Left: running mean with its 95 % Monte Carlo band; dashed lines are the exact means from equation (5). Right: running CVaR 5 %.</figcaption></figure>
+<p>Figure 3 shows the outer loop: the 200 posterior draws of b*. The spread
+across draws is the epistemic uncertainty that a fixed-rate calculator
+ignores. It is small relative to the gap with the booster price: for the
+mean profit of 36 boosters, the standard deviation across draws (1.45 to
+1.81 USD) is about five times the Monte Carlo error within a draw (0.31 to
+0.34 USD), so the reported intervals are dominated by what is unknown about
+the rates, not by simulation noise.</p>
+<figure><img src="figures/fig9_breakeven_draws.png" alt=""><figcaption><strong>Figure 3.</strong> Break-even booster price b* in each of the 200 posterior draws of the pull rates. Bars: 95 % interval; ticks: mean. The dashed line is the retail price.</figcaption></figure>
+<p>The engine was also checked against exact results before any price was used
+(Appendix C): per-slot card frequencies pass χ² tests, the root-mean-square
+error of the mean falls with a log-log slope of −0.52 against −0.5 in theory,
+the multinomial and card-by-card samplers agree (Kolmogorov–Smirnov p = 0.91),
+and the same seed reproduces the same output.</p>
+<h2>3.6 Pre-registered hypotheses and decision rule</h2>
+<p>Four hypotheses were registered before any price was analysed. H1: the mean,
+the median and the CVaR can rank the strategies differently. H2: a verdict
+that is decisive at the posterior-mean rates can become undetermined once
+rate uncertainty is propagated. H3: fees and liquidity costs reduce the
+advantage of opening. H4: the winner differs across sets or price dates. A
+strategy is decisively better on a metric if it is better in at least 90 % of
+the 200 posterior draws; otherwise the comparison is undetermined.</p>
+<h1>4. Results</h1>
+<p>All amounts are in USD, conditional on the TCGplayer market prices of
+2026-11-15 and on the cost scenarios of Table 2. Brackets give 95 % intervals
+over the 200 posterior draws of the pull rates.</p>
+<h2>4.1 The value of a pack</h2>
+<p>Without any fee, shipping or haircut, the break-even booster price b* is
+4.29 [4.18, 4.39] for Stellar Crown, 3.44 [3.31, 3.56] for Surging Sparks and
+3.78 [3.65, 3.91] for Destined Rivals: all below the retail price of 4.49.
+Under central costs it falls to 1.42, 1.03 and 1.13, and under adverse costs
+to between 0.52 and 0.78. The fall comes from the fixed cost of a sale. In
+79 % to 86 % of simulated packs no card is worth more than its selling cost,
+so the net value of the pack is zero and the value of opening sits in a thin
+tail of rare hits (Figure 4).</p>
+<figure><img src="figures/fig3_pack_value.png" alt=""><figcaption><strong>Figure 4.</strong> Distribution of the value of one pack (complementary CDF, log scales) at the posterior-mean pull rates. Left: gross market values. Right: central net values; packs with zero net value are not shown.</figcaption></figure>
+<h2>4.2 Spending a budget (E1)</h2>
+<p>Under central costs, opening loses money on average for every set and
+budget, with every 95 % interval below zero. Table 3 reports the budget of 36
+boosters. Opening loses 110.56 to 124.56 on average and more in the median
+run, and it loses money in 95.5 % to 98 % of runs. Buying the most expensive
+cards the budget allows and selling them back also loses money, through
+round-trip fees and shipping, but 46 to 51: less than half as much.</p>
+<p><strong>Table 3.</strong> Budget of 36 boosters (161.64 USD), central scenario.</p>
 <table>
 <thead>
 <tr>
@@ -719,127 +417,89 @@ Verdicts on mean / median / CVaR 5 %.</p>
 <td>1.13 [1.04, 1.22]</td>
 </tr>
 <tr>
-<td>A: mean Π</td>
+<td>A, open: mean Π</td>
 <td>−110.56 [−113.33, −107.88]</td>
 <td>−124.56 [−127.74, −121.32]</td>
 <td>−120.97 [−124.35, −117.55]</td>
 </tr>
 <tr>
-<td>A: median Π</td>
+<td>A, open: median Π</td>
 <td>−128.39 [−131.93, −124.88]</td>
 <td>−139.55 [−140.94, −138.12]</td>
 <td>−138.36 [−140.12, −136.25]</td>
 </tr>
 <tr>
-<td>A: P(loss)</td>
+<td>A, open: P(Π &lt; 0)</td>
 <td>0.980 [0.975, 0.984]</td>
 <td>0.955 [0.946, 0.963]</td>
 <td>0.957 [0.949, 0.966]</td>
 </tr>
 <tr>
-<td>A: CVaR 5 %</td>
+<td>A, open: CVaR 5 % (loss)</td>
 <td>157.33 [156.86, 157.78]</td>
 <td>159.39 [159.01, 159.71]</td>
 <td>160.15 [159.90, 160.45]</td>
 </tr>
 <tr>
-<td>B: Π (buy and resell)</td>
+<td>B, buy and resell: Π</td>
 <td>−48.55</td>
 <td>−50.60</td>
 <td>−46.48</td>
 </tr>
 <tr>
-<td>Verdict</td>
+<td>Decisive winner (mean / median / CVaR)</td>
 <td>B / B / B</td>
 <td>B / B / B</td>
 <td>B / B / B</td>
 </tr>
 </tbody>
 </table>
-<p>The complete tables, for every budget and scenario, are in
-<code>research/reports/results.md</code>. Figure 4 shows the whole distribution for this
-budget and Figure 7 the trade-off between mean and tail risk across budgets.</p>
-<p><img alt="Figure 4. Cumulative distribution of the net profit of opening 36 boosters (central scenario), against the fixed profit of buying with the same budget." src="figures/fig4_profit_cdf.png" /></p>
-<p><img alt="Figure 7. Mean net profit against CVaR 5 % for each budget, central scenario. A: posterior mean over 200 draws; B: deterministic. Up and left is better." src="figures/fig7_mean_cvar.png" /></p>
-<p>Turning to the verdicts, the direct purchase is decisively better on the
-mean, the median and the CVaR 5 % in 35 of the 36 central comparisons. The
-one exception is the mean for Stellar Crown at a one-booster budget, which is
-undetermined. Under the gross reference, opening still loses on average for
-every set and budget, and B is decisively better on all three metrics.</p>
-<h2>6.3 E2: acquiring the most valuable card</h2>
-<p>The targets are each set's most expensive printing: an Illustration Rare for
-Stellar Crown and a Special Illustration Rare for the two other sets. In the
-latter two sets, the top-price target and the top Special Illustration Rare
-are the same card.</p>
-<p>These targets are rare. Their per-pack probabilities correspond to one pack
-in 168 [158, 179] for Stellar Crown, one in 904 [765, 1,072] for Surging
-Sparks and one in 1,008 [875, 1,174] for Destined Rivals.</p>
-<p>Opening is rarely cheaper than buying. In the central scenario, opening until
-the target appears is cheaper than buying it in 4 % to 14 % of simulated
-runs, depending on set and target, and the mean extra cost of opening ranges
-from 468 to 3,145. Buying the target is decisively better on the mean, the
-median and the CVaR 5 % for every set and target, under all three cost
-scenarios. The one exception is the median for Stellar Crown under the gross
-reference, where opening is cheaper in 52 % of runs and the verdict is
-undetermined.</p>
-<h2>6.4 Pre-registered hypotheses</h2>
-<p>H1 is supported, but only in the adverse scenario at a one-booster budget.
-There, for Stellar Crown and Surging Sparks, opening one booster has a higher
-mean than buying one card, yet a lower median and a higher CVaR. The reason
-is mechanical: a single direct purchase pays 4.50 of shipping. The evidence
-for H1 is therefore narrow, and elsewhere the mean, the median and the CVaR
-rank the strategies the same way.</p>
-<p>H2 is supported in one comparison. For Stellar Crown's top-price target under
-the gross reference, the median favours opening at the posterior-mean pull
-rates, but the verdict becomes undetermined once rate uncertainty is
-propagated. No comparison in the central scenario changes.</p>
-<p>H3 is supported. For every set and every budget of 10 boosters or more, fees
-and liquidity costs reduce the advantage of opening over buying, with a 95 %
-interval above zero. In E2 they lower the probability that opening beats
-buying by 0.12 to 0.38. At a one-booster budget the change has the opposite
-sign, because a one-card basket bears the whole fixed cost of one sale.</p>
-<p>H4 is not supported across sets. The decisive winner is B in every set, for
-every budget and target, except where the verdict is undetermined. The half
-of H4 that compares price dates awaits the 2026-12-13 snapshot.</p>
-<h2>6.5 Gate G7</h2>
-<p>The roadmap allows a profitability conclusion only if credible net prices
-are integrated. Here, net values combine the seller fees published by
-TCGplayer with explicit assumptions on shipping and liquidity haircut. The
-main conclusion does not rest on those assumptions, since opening loses on
-average even in the gross reference, without fees, shipping or haircut. It
-does rest on the market price, which is a provider aggregate rather than an
-observed sale price, and §7 tests its sensitivity to that price.</p>
-<h1>7. Robustness</h1>
-<p>The robustness tests were registered at <code>prereg-v2</code> and defined
-operationally before any of them was run (ADR 0012). Each test changes one
-assumption of the main run and keeps the seed, the 200 pull-rate draws and
-the 20,000 runs per draw. Variants that change only card values are valued
-on the same simulated openings as the main run (common random numbers), so
-any difference is due to the assumption and not to simulation noise. As a
-check, the baseline of these variants reproduces the main run exactly
-(largest difference 0.00 USD).</p>
-<p>We check three conclusions in each variant:</p>
-<ul>
-<li>C1, opening loses on average: the 95 % interval of the mean profit of
-  opening is below zero, for every set and budget;</li>
-<li>C2, the break-even price is below the booster price: the upper 95 % bound
-  of the break-even booster price is below 4.49 USD, central and gross;</li>
-<li>C3, buying is decisively better: it wins on the mean, the median and the
-  CVaR 5 %, for every budget of 10 boosters or more and every target.</li>
-</ul>
-<p>All three use the central scenario.</p>
-<h2>7.1 Results</h2>
-<p>Table 4 summarises the 16 variants and the baseline. C1 and C3 hold in all
-17 rows, and C2 holds in 16. It fails once, for the gross break-even price of
-Stellar Crown when cards are valued at the median of TCGplayer's listing and
-market statistics (R1). In that variant the posterior mean is still below the
-booster price (4.42 USD), but the upper bound is 4.53 USD. The central
-break-even price of the same variant is 1.51 [1.44, 1.59] USD.</p>
-<p>Over all variants and sets, the central break-even booster price ranges from
-0.54 to 1.74 USD and is never more than 39 % of the retail price.</p>
-<p><strong>Table 4.</strong> Central break-even booster price b* (USD, posterior mean),
-change in the mean advantage of opening over buying at 36 boosters relative
-to the baseline (Δ, USD), and checks C1–C3.</p>
+<p><em>Source:</em> <code>research/reports/results.md</code>, which gives every budget and
+scenario.</p>
+<p>Across all budgets and sets, buying is decisively better on the mean, the
+median and the CVaR in 35 of the 36 central comparisons. The exception is the
+mean for Stellar Crown at a one-booster budget, which is undetermined: there
+the two strategies differ by less than 0.40. Figure 5 shows the whole
+distribution for 36 boosters, and Figure 6 the probability of a loss as a
+function of the booster price. Even at 2 USD a pack, opening 36 packs loses
+money in most runs.</p>
+<figure><img src="figures/fig4_profit_cdf.png" alt=""><figcaption><strong>Figure 5.</strong> Cumulative distribution of the net profit of opening 36 boosters (central scenario), against the fixed profit of buying with the same budget.</figcaption></figure>
+<figure><img src="figures/fig5_ploss_price.png" alt=""><figcaption><strong>Figure 6.</strong> Probability that opening n packs loses money, as a function of the booster price, central costs. Dashed line: 4.49 USD.</figcaption></figure>
+<h2>4.3 Chasing one card (E2)</h2>
+<p>The most valuable printings are rare: one pack in 168 [158, 179] for Stellar
+Crown's top card, one in 904 [765, 1,072] for Surging Sparks' and one in
+1,008 [875, 1,174] for Destined Rivals'. Under central costs, opening until
+the target appears is cheaper than buying it in only 4 % to 14 % of runs, and
+costs 468 to 3,145 more than buying on average. In the worst 5 % of runs it
+costs 1,755 to 10,731 more (CVaR 5 %). Buying is decisively better on all
+three metrics for every set and target, in all three cost scenarios, with
+one exception: under gross prices, opening for Stellar Crown's top card is
+cheaper in 52 % of runs and the median verdict is undetermined.</p>
+<h2>4.4 Hypotheses</h2>
+<p>H1 is supported, narrowly. Only under adverse costs at a one-booster budget,
+for Stellar Crown and Surging Sparks, does the mean favour opening while the
+median and the CVaR favour buying: a single direct purchase pays 4.50 of
+shipping. Elsewhere the three metrics agree. H2 is supported once: for
+Stellar Crown's top card under gross prices, the median favours opening at
+the posterior-mean rates but becomes undetermined once rate uncertainty is
+propagated. H3 is supported: for every set and every budget of ten boosters
+or more, costs reduce the advantage of opening, and in E2 they lower the
+probability that opening beats buying by 0.12 to 0.38. H4 is not supported
+across the three sets, since buying wins in each.</p>
+<h1>5. Robustness and extensions</h1>
+<p>I check three conclusions, all under central costs. C1: the 95 % interval of
+the mean profit of opening is below zero for every set and budget. C2: the
+upper 95 % bound of b* is below 4.49, both central and gross. C3: buying is
+decisively better on the mean, the median and the CVaR for every budget of
+ten boosters or more and every target.</p>
+<h2>5.1 Pre-registered robustness tests</h2>
+<p>Each of the sixteen variants changes one assumption and keeps the seed, the
+draws and the runs. Variants that change only card values reuse the
+simulated openings of the main run, so differences come from the assumption,
+not from simulation noise; the baseline reproduces the main run exactly.
+Table 4 reports the central b* and the checks.</p>
+<p><strong>Table 4.</strong> Robustness variants: central break-even price b* (posterior
+mean) and conclusions C1–C3.</p>
 <table>
 <thead>
 <tr>
@@ -847,9 +507,6 @@ to the baseline (Δ, USD), and checks C1–C3.</p>
 <th>b* sv07</th>
 <th>b* sv08</th>
 <th>b* sv10</th>
-<th>Δ sv07</th>
-<th>Δ sv08</th>
-<th>Δ sv10</th>
 <th>C1</th>
 <th>C2</th>
 <th>C3</th>
@@ -861,141 +518,60 @@ to the baseline (Δ, USD), and checks C1–C3.</p>
 <td>1.42</td>
 <td>1.03</td>
 <td>1.13</td>
-<td>(−62.0)</td>
-<td>(−74.0)</td>
-<td>(−74.5)</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
 <tr>
-<td>R1 median of statistics (indicative)</td>
+<td>R1 median of price statistics</td>
 <td>1.51</td>
 <td>1.12</td>
 <td>1.26</td>
-<td>+5.3</td>
-<td>+2.1</td>
-<td>+4.7</td>
 <td>yes</td>
-<td><strong>no</strong></td>
+<td>no</td>
 <td>yes</td>
 </tr>
 <tr>
-<td>R2 haircut 0.30</td>
-<td>1.12</td>
-<td>0.81</td>
-<td>0.90</td>
-<td>+9.8</td>
-<td>+12.7</td>
-<td>+12.4</td>
+<td>R2 haircut 0.30 / 0.50</td>
+<td>1.12 / 0.73</td>
+<td>0.81 / 0.54</td>
+<td>0.90 / 0.60</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
 <tr>
-<td>R2 haircut 0.50</td>
-<td>0.73</td>
-<td>0.54</td>
-<td>0.60</td>
-<td>+23.5</td>
-<td>+29.9</td>
-<td>+29.3</td>
+<td>R3 selling costs × 0.5 / × 1.5</td>
+<td>1.74 / 1.17</td>
+<td>1.25 / 0.85</td>
+<td>1.34 / 0.95</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
 <tr>
-<td>R3 selling costs × 0.5</td>
-<td>1.74</td>
-<td>1.25</td>
-<td>1.34</td>
-<td>−0.6</td>
-<td>−5.2</td>
-<td>−3.2</td>
+<td>R4 rates at lower / upper bounds</td>
+<td>1.30 / 1.54</td>
+<td>0.91 / 1.17</td>
+<td>0.99 / 1.28</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
 <tr>
-<td>R3 selling costs × 1.5</td>
-<td>1.17</td>
-<td>0.85</td>
-<td>0.95</td>
-<td>+2.0</td>
-<td>+4.8</td>
-<td>+4.5</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>R4 rates at lower bounds</td>
-<td>1.30</td>
-<td>0.91</td>
-<td>0.99</td>
-<td>−4.4</td>
-<td>−3.7</td>
-<td>−4.9</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>R4 rates at upper bounds</td>
-<td>1.54</td>
-<td>1.17</td>
-<td>1.28</td>
-<td>+4.2</td>
-<td>+5.1</td>
-<td>+4.8</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>R5 top 1 % excluded (E1)</td>
+<td>R5 top 1 % of printings excluded</td>
 <td>0.59</td>
 <td>0.57</td>
 <td>0.64</td>
-<td>−19.6</td>
-<td>−8.7</td>
-<td>−11.5</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
 <tr>
-<td>R7 1,000 runs</td>
+<td>R7 1,000 / 10,000 / 100,000 runs</td>
 <td>1.42</td>
 <td>1.03</td>
 <td>1.13</td>
-<td>+0.1</td>
-<td>−0.1</td>
-<td>−0.1</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>R7 10,000 runs</td>
-<td>1.42</td>
-<td>1.03</td>
-<td>1.13</td>
-<td>0.0</td>
-<td>+0.1</td>
-<td>0.0</td>
-<td>yes</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>R7 100,000 runs</td>
-<td>1.42</td>
-<td>1.03</td>
-<td>1.13</td>
-<td>0.0</td>
-<td>+0.1</td>
-<td>0.0</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
@@ -1005,294 +581,199 @@ to the baseline (Δ, USD), and checks C1–C3.</p>
 <td>1.42</td>
 <td>1.03</td>
 <td>1.13</td>
-<td>0.0</td>
-<td>+0.1</td>
-<td>+0.1</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
 <tr>
-<td>R9b half sample size</td>
+<td>R9b half effective sample size</td>
 <td>1.42</td>
 <td>1.03</td>
 <td>1.13</td>
-<td>+0.1</td>
-<td>+0.2</td>
-<td>+0.1</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
 <tr>
-<td>R10 haircut 0.27 (transferred)</td>
+<td>R10 haircut 0.27 (Heck et al.)</td>
 <td>1.18</td>
 <td>0.86</td>
 <td>0.95</td>
-<td>+7.8</td>
-<td>+10.2</td>
-<td>+10.0</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
 <tr>
-<td>R11 short print (sv07)</td>
+<td>R11 short-printed Double Rare</td>
 <td>1.42</td>
 <td>n/a</td>
 <td>n/a</td>
-<td>0.0</td>
-<td>n/a</td>
-<td>n/a</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
 <tr>
-<td>R12 Hyper Rare in rare slot</td>
+<td>R12 Hyper Rare in the rare slot</td>
 <td>1.42</td>
 <td>1.03</td>
 <td>1.13</td>
-<td>+0.1</td>
-<td>+0.1</td>
-<td>+0.1</td>
 <td>yes</td>
 <td>yes</td>
 <td>yes</td>
 </tr>
 </tbody>
 </table>
-<p>The complete table, with intervals, is in <code>research/reports/robustness.md</code>.</p>
-<p><img alt="Figure 8. Tornado plot: change from the baseline of the central break-even price (top) and of the mean advantage of opening at 36 boosters (bottom). Paired tests show both settings." src="../reports/figures/tornado.png" /></p>
-<h2>7.2 What moves the results</h2>
-<p>The liquidation assumptions dominate. Doubling the liquidity haircut from
-0.15 to 0.30 lowers the break-even price by about a fifth (R2), and a haircut
-of 0.50 roughly halves it. When the haircut is anchored on sell-through, the
-value of 0.27 derived from the sell-through rates of Heck et al. (R10) gives
-results between the central and the doubled haircut. Halving the selling and
-shipping costs raises the break-even price by about 0.2 to 0.3 USD (R3).</p>
-<p>Higher costs also narrow the gap between the strategies, because they hurt
-buying too: the buyer resells its cards. With a 50 % haircut, the gap at 36
-boosters shrinks by about 24 to 30 USD, yet it stays above 38 USD in every
-variant.</p>
-<p>Excluding the most valuable cards matters as much as the largest haircut.
-Removing the 1 % most valuable printings of each set (R5) lowers the central
-break-even price by 0.46 to 0.83 USD and widens the gap at 36 boosters by 9
-to 20 USD. Much of the value of opening sits in a few cards, but the
-conclusions hold with or without them.</p>
-<p>The pull-rate assumptions, by contrast, barely matter. Changing the prior
-(R8), halving the effective sample size (R9b, which widens the intervals),
-changing the slot of Hyper Rares (R12) or adding the documented short print
-(R11) leaves the central break-even price unchanged at two decimals and
-moves the gap by no more than 0.2 USD. Setting every hit rate at a bound of
-its 95 % interval at once (R4) is an extreme case; it moves the central
-break-even price by 0.12 to 0.15 USD, which is comparable to the width of the
-intervals of the main run. Figure 6 shows these pull-rate variants set by
-set.</p>
-<p><img alt="Figure 6. Central break-even booster price under the pull-rate assumptions: posterior mean and 95 % interval over the draws (R4: single models at the bounds of every rate). The retail price, 4.49 USD, is off the scale." src="figures/fig6_breakeven_rates.png" /></p>
-<h2>7.3 Simulation precision (R7)</h2>
-<p>With 1,000, 10,000 or 100,000 runs per draw instead of 20,000, every metric
-stays within its uncertainty interval. Three verdicts change, all at a
-one-booster budget, where the two strategies differ by less than 0.40 USD.
-The first is the mean for Stellar Crown. It is undetermined in the main run,
-where opening beats buying in 89.5 % of the draws, just under the 90 %
-threshold, and it becomes decisive for opening with 100,000 runs (97.5 %).
-The posterior share in the main run is diluted by within-draw simulation
-noise, and with more runs per draw the advantage of opening on the mean at
-one booster, 0.09 USD, is resolved. The other two are the means for Surging
-Sparks and Destined Rivals, which become undetermined with 1,000 runs. No
-other verdict changes with the number of runs, and none of the three is part
-of C1–C3.</p>
-<p>This has a consequence for H2, which asks whether a verdict that is decisive
-at the posterior-mean rates becomes undetermined once their uncertainty is
-propagated. Its status depends on the precision of the simulation. With
-1,000 runs per draw it is no longer supported, while with 10,000 runs it has
-a second instance (Stellar Crown, one booster, mean). Both instances are
-comparisons near a tie, and we therefore report H2 as supported, but
-fragile.</p>
-<h2>7.4 Status of the hypotheses</h2>
-<p>H1, H2 and H3 keep their status in every variant except the one above (R7
-with 1,000 runs, H2). They are not evaluated under R4, which has no
-posterior draws. H4 is tested across the three sets (R6) and is not
-supported: buying wins in every set. Its second half, across price dates,
-awaits the second snapshot. R13 was not run, as registered: the homogeneity
-test did not reject pooling.</p>
-<h2>7.5 Gate G8</h2>
-<p>The protocol (§10) sets six publishability criteria for the analysis freeze.</p>
+<p><em>Source:</em> <code>research/reports/robustness.md</code>, with intervals and the change in
+the gap at 36 boosters. Paired variants (R2, R3, R4, R7) pass every check in
+both settings.</p>
+<p>C1 and C3 hold in every variant. C2 fails once: when cards are valued at the
+median of TCGplayer's listing and market statistics (R1), the gross b* of
+Stellar Crown has a posterior mean of 4.42 but an upper bound of 4.53. Across
+all variants the central b* stays between 0.54 and 1.74, at most 39 % of the
+retail price.</p>
+<p>Figure 7 shows what moves the results. Liquidation assumptions set the size
+of the gap: a haircut of 0.50 roughly halves b*, and excluding the 1 % most
+valuable printings lowers it by 0.46 to 0.83. Pull-rate assumptions barely
+matter: the prior, the effective sample size and the slot of the Hyper Rare
+leave b* unchanged at two decimals, and even setting every rate at a bound
+of its interval at once moves it by at most 0.15. With fewer runs per draw,
+only comparisons at a one-booster budget change verdict, where the
+strategies differ by less than 0.40. H2 depends on such a comparison, so I
+report it as supported but fragile.</p>
+<figure><img src="../reports/figures/tornado.png" alt=""><figcaption><strong>Figure 7.</strong> Change from the baseline of the central break-even price (top) and of the mean advantage of opening over buying at 36 boosters (bottom), by robustness test.</figcaption></figure>
+<h2>5.2 Ten sets</h2>
+<p>ADR 0015 (tag <code>prereg-v4</code>) extends the main experiment to every eligible set
+that fits the main pack layout. Seven of the twelve other eligible sets do:
+Scarlet &amp; Violet, Paldea Evolved, Obsidian Flames, Paradox Rift, Temporal
+Forces, Twilight Masquerade and Journey Together. The four Mega Evolution sets
+have a "Mega Hyper Rare" with no slot in the layout, and 30th Celebration has
+rarities absent from the catalogue; no layout was invented for them. The run
+uses the configuration, seed and price snapshot of the main run. Random
+streams are keyed by a set's position in the configuration, so the three main
+sets are re-simulated with new streams; their central and gross b* are
+identical to two decimals.</p>
+<figure><img src="figures/fig10_ten_sets.png" alt=""><figcaption><strong>Figure 8.</strong> Break-even booster price b* in the ten evaluable sets, central costs and gross reference. Posterior mean and 95 % interval over 200 pull-rate draws. Asterisks mark the two sets flagged by the duplicate rule of Section 5.4.</figcaption></figure>
+<p>C1 and C3 hold in all ten sets. Opening loses on average for every budget,
+and buying is decisively better on the mean, the median and the CVaR for
+every budget of ten boosters or more and every target. The central b* ranges
+from 0.60 (Journey Together) to 2.38 (Paldea Evolved) (Figure 8). C2 fails for
+two sets, whose gross b* exceeds the retail price: 5.29 [5.12, 5.48] for
+Paldea Evolved and 5.00 [4.87, 5.18] for Temporal Forces. For these sets a
+pack's expected market value is above its price, and the loss from opening
+comes entirely from selling costs. Without frictions, opening one or ten of
+their boosters has a positive mean but loses money in more than half of the
+runs, a clear case of H1.</p>
+<p>H4 across sets is now supported, but only at a one-booster budget. There,
+opening has the higher mean for Paldea Evolved, Temporal Forces and Stellar
+Crown, by 0.08 to 1.07 USD, and buying for five other sets. For every budget
+of ten boosters or more and every target, buying wins in all ten sets. Stellar
+Crown's one-booster verdict, undetermined in the main run (opening better in
+89.5 % of draws), becomes decisive here (92 %) with different random streams:
+it is the near tie noted in Section 5.1. Every hypothesis keeps its status
+when the two flagged sets are removed. Full results are in
+<code>research/reports/extension_sets.md</code>.</p>
+<h2>5.3 Sale prices</h2>
+<p>The TCGplayer market price is a provider aggregate, not an observed sale. As a
+check, I revalued every card at Cardmarket's 30-day average sale price
+(<code>avg30</code>), which the venue's API documentation defines as the average sale
+price over the last 30 days, relayed by TCGdex for 2026-11-15 and converted
+at the European Central Bank reference rate of 1.1052 USD per EUR
+(2026-11-13). The exact b* of (5) was recomputed in each posterior draw.
+This extension was pre-registered before the values were analysed (ADR 0014,
+tag <code>prereg-v3</code>).</p>
+<p><strong>Table 5.</strong> Break-even booster price b* valued at Cardmarket sale prices,
+2026-11-15 (USD).</p>
 <table>
 <thead>
 <tr>
-<th>Criterion</th>
-<th>Assessment</th>
-<th>Status</th>
+<th></th>
+<th>Stellar Crown</th>
+<th>Surging Sparks</th>
+<th>Destined Rivals</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Question</td>
-<td>Precise and falsifiable: four pre-registered hypotheses with decision rules. H4 is not supported across sets, and H2 is supported but fragile.</td>
-<td>GO</td>
+<td>Central, TCGplayer market price</td>
+<td>1.42 [1.35, 1.49]</td>
+<td>1.03 [0.95, 1.12]</td>
+<td>1.13 [1.04, 1.22]</td>
 </tr>
 <tr>
-<td>Data</td>
-<td>Traceable: dated snapshots, checksums and manifests. Legally usable: CC BY 4.0 rates; prices used with permission, only derived statistics published (ADR 0009). Comparable: one price type, one date, one currency. Limit: a provider aggregate, not realised sales.</td>
-<td>GO, with stated limit</td>
+<td>Central, Cardmarket 30-day sales</td>
+<td>1.16 [1.10, 1.21]</td>
+<td>2.42 [2.32, 2.53]</td>
+<td>1.71 [1.55, 1.86]</td>
 </tr>
 <tr>
-<td>Method</td>
-<td>Explicit slot model (model specification). The engine is validated against exact results (Appendix C).</td>
-<td>GO</td>
-</tr>
-<tr>
-<td>Results</td>
-<td>C1 and C3 hold in every variant. C2 fails only for one set's gross break-even price under indicative asking prices. No conclusion hinges on one rate or one price.</td>
-<td>GO, with stated limit</td>
-</tr>
-<tr>
-<td>Novelty</td>
-<td>Positioned against the literature and practitioner tools (§2). The closest work was read in full; most others at abstract level.</td>
-<td>GO</td>
-</tr>
-<tr>
-<td>Reproducibility</td>
-<td>One command regenerates every table and figure from frozen configurations and seeds. The baseline of the robustness run reproduces the main run exactly. The validation, valuation and results reports regenerate byte for byte.</td>
-<td>GO</td>
+<td>Gross, Cardmarket 30-day sales</td>
+<td>2.89 [2.80, 2.98]</td>
+<td>4.75 [4.61, 4.91]</td>
+<td>3.46 [3.25, 3.68]</td>
 </tr>
 </tbody>
 </table>
-<p>The gate is passed. The analysis is frozen at tag <code>analysis-v1</code>. Later
-changes to the analysis require an ADR and are reported as deviations.</p>
-<h1>8. Discussion</h1>
-<h2>8.1 Why opening loses</h2>
-<p>In the central scenario, selling one card costs at least 1.30 USD (the fixed
-fee and shipping) on top of fees proportional to the price, so a card is worth
-selling only if its market price exceeds about 1.76 USD. Most cards in a pack
-are worth less than that. In 79 % (Stellar Crown) to 86 % (Destined Rivals) of
-simulated packs no card clears the threshold, and the pack's net value is zero
-(Figure 3). The value of opening is concentrated in rare hits, and the most
-valuable cards appear once in 168 to 1,008 packs on average.</p>
-<p>Selling costs are not the only source of the gap. Even without any fee,
-shipping or haircut, the expected market value of a pack is below its retail
-price: 3.44 to 4.29 USD against 4.49 USD. This is a statement about the
-provider's market prices on one date. It does not mean that every pack is sold
-above its value, nor that collectors behave irrationally, because opening has
-a value of its own that the model does not price: the entertainment of the
-draw, and the cards a collector keeps.</p>
-<p>Direct purchase is not free either. Buying and reselling the most expensive
-cards a budget allows costs the shipping of each card and the round-trip fees.
-With a one-booster budget under the adverse scenario, these fixed costs make
-buying worse than opening on the mean, though not on the median or the tail,
-for two of the three sets (H1). The comparison therefore depends on the number
-of cards bought, and not only on their value.</p>
-<h2>8.2 What the risk measures add</h2>
-<p>The mean alone would mislead in two ways. The first concerns the tail. In E2,
-opening until a target appears has a long tail: in the worst 5 % of runs,
-opening costs on average 1,750 to 10,700 USD more than buying the card (CVaR
-5 %, central scenario). The second concerns the typical outcome. In E1, the
-median outcome of opening is worse than its mean, because rare hits pull the
-mean up.</p>
-<p>Reporting the median, the probability of loss and the CVaR does not change the
-verdict here, since buying wins on all three, but it does change the size of
-the gap.</p>
-<h2>8.3 What the uncertainty on pull rates changes</h2>
-<p>Propagating the uncertainty on pull rates widens every interval, yet it
-changes a verdict only once in the main run: for Stellar Crown's top target
-under gross prices, where the median is close to a tie (H2). The conclusions
-do not hinge on the precise rates. This is what we expected, given that the
-gap between opening and buying is large compared with the uncertainty on the
-rates.</p>
-<h2>8.4 What the robustness tests add</h2>
-<p>The robustness tests (§7) separate two kinds of assumption. Assumptions about
-liquidation move the size of the result. The haircut, the selling costs and
-the exclusion of the most valuable cards move the break-even booster price by
-up to 0.83 USD and the gap at 36 boosters by up to 30 USD, but none of them
-reverses a conclusion. Assumptions about pull rates, by contrast, barely move
-the result. The prior, the effective sample size, the slot of Hyper Rares and
-the short print leave the central break-even price unchanged at two decimals,
-and even setting every rate at a bound of its interval moves it by at most
-0.15 USD.</p>
-<p>The only verdicts that depend on the simulation itself are comparisons at a
-one-booster budget, where the two strategies differ by less than 0.40 USD.
-There the decision rule, which is a share of posterior draws, also absorbs
-simulation noise within each draw. A verdict close to the threshold should
-therefore be read as a near tie, whichever side it falls on.</p>
-<h2>8.5 Limits</h2>
-<p>Cards are valued at a provider's market price on a single date (2026-11-15).
-This price is an aggregate of recent sales and listings rather than an
-observed transaction for each card, and card condition is not specified. The
-liquidity haircut is an assumption. One robustness test anchors it on observed
-sell-through rates, but those rates come from another platform and another
-card sample. A second snapshot (2026-12-13) will test whether the conclusions
-hold at another date; until then, H4 is tested across sets only.</p>
-<p>Fees are TCGplayer's published fees for standard sellers, while shipping and
-haircuts are scenarios. Each card is sold or bought alone. A seller who
-bundles cards, or a buyer who orders several cards from one seller, would pay
-less shipping per card. This would raise the value of opening and lower the
-cost of buying, so its net effect on the comparison is not signed a priori.
-The three cost scenarios and the robustness tests on fees bracket part of this
-effect.</p>
-<p>The pull rates come from community openings compiled by a third party. For the
-selected sets, every count is reconstructed from a published rate and sample
-size (R9b halves their weight). The uncertainty on the rates is propagated,
-but a bias common to all openings, such as over-reporting of good packs, would
-not be. The slot layout follows the source of the data, and an alternative
-layout is tested (R12). Three assumptions cannot be tested with the data: that
-slots are independent, that printings are equally likely within a rarity
-except for the one documented short print, and that English packs have no
-special collation.</p>
-<p>The study covers three recent English sets, one product (the booster pack),
-the US market and one price date. Graded cards, sealed products, long holding
-periods and time-varying prices are out of scope. The results do not
-generalise to older sets, other languages or other markets, where prices,
-costs and pull rates differ.</p>
-<p>As for the literature, the closest related work was read in full, but most of
-the others were read at abstract level only (§2).</p>
-<h2>8.6 Implications</h2>
-<p>For a collector who wants specific cards, the results support buying them
-directly, unless the booster price is far below retail. In the central
-scenario, the break-even booster price is roughly a quarter to a third of the
-retail price. For a collector who opens packs for the experience, the results
-put a price on that experience: 3.07 to 3.46 USD per pack, on average, in the
-central scenario.</p>
-<p>The method is general. It needs per-rarity pull rates with sample sizes, a
-documented slot layout, a typed price snapshot and explicit costs. Updating
-the analysis for a new set or a new date means updating the configuration and
-the data snapshots, then rerunning <code>make reproduce</code>.</p>
-<h1>9. Conclusion</h1>
-<p>Is opening Pokémon TCG boosters a competitive way to acquire cards? For three
-recent English sets, valued at the TCGplayer market prices of 2026-11-15,
-under explicit costs and propagated pull-rate uncertainty, the answer is no.
-Opening loses money on average: a booster's expected net resale value is
-about a quarter to a third of its retail price. Buying cards directly also
-costs money, through fees and shipping, but less than half as much for the
-same budget. In the central scenario buying is decisively better on the mean,
-the median and the 5 % conditional value-at-risk, for every budget of ten
-boosters or more and for every target card. Chasing one valuable card is
-rarely cheaper by opening, since opening until it appears costs less than
-buying it in only 4 % to 14 % of simulated runs.</p>
-<p>These conclusions hold in all sixteen pre-registered robustness variants,
-with one exception at the margin: under indicative asking-price statistics,
-the upper bound of one set's gross break-even price exceeds the retail price.</p>
-<p>The results do not show that opening is never worthwhile, because the model
-prices neither the entertainment of opening nor the cards a collector keeps.
-Prices and costs also differ at another date, in another market or for older
-sets, and the prices we use are a provider's market estimate rather than
-observed sales.</p>
-<p>The contribution of the paper is a reproducible and pre-registered framework
-that combines a slot-level booster model, Bayesian uncertainty on community
-pull rates, typed prices converted into net values, and tail-risk measures.
-The same framework can be rerun on new sets, new price snapshots or new cost
-assumptions by editing one configuration file.</p>
-<p>Some work remains. A second price snapshot (2026-12-13) will test the date
-half of H4. If a source with redistribution rights becomes available,
-realised-sale data would replace the market-price assumption. Grading
-(protocol §11) and sealed-product holding returns are natural extensions, but
-they need data this study does not have.</p>
+<p><em>Source:</em> <code>research/reports/sales_benchmark.md</code>. Hit-printing coverage 100 %.</p>
+<p>C1 holds in every set: under central costs, opening still loses on average
+at sale prices. C2 fails for Surging Sparks, whose gross b* of 4.75 exceeds
+4.49; without any friction, its pack would be worth more than its price at
+European sale prices. Over hit printings, the median ratio of the Cardmarket
+sale average to the TCGplayer market price is 0.94 [0.87, 1.03] for Stellar
+Crown and 1.22 [1.14, 1.31] and 1.23 [1.16, 1.33] for the two other sets
+(bootstrap intervals, 49 to 87 printings). The haircut assumed in the central
+scenario is therefore not visible in this comparison, although it mixes two
+markets and two price types. A weekly panel of the same statistics until
+2027-01-10 will test the date half of H4.</p>
+<h2>5.4 Pull-rate checks</h2>
+<p>Three checks were pre-registered for the pull rates (ADR 0015, tag
+<code>prereg-v4</code>). First, the registry was compared with its primary source: for
+the seven added sets, all 33 single-source rows equal the rate printed in the
+TCGplayer article to two decimals. Second, a duplicate check found that the
+Paradox Rift and Paldea Evolved articles print the same Ultra Rare
+(6.64 % ± 0.53 %) and Illustration Rare (7.70 % ± 0.56 %) rates. Two
+independent samples rarely agree this closely on two rarities, so both sets
+are flagged; Section 5.2 shows that removing them changes no conclusion. Third,
+in a held-out test, a Jeffreys posterior on the TCGplayer counts alone
+predicts the hits of the second opening in its own packs. In all 20 pooled
+rows the observed hits fall inside the 95 % beta-binomial predictive
+interval, and the smallest two-sided p-value is 0.161, so no row is rejected
+after Holm correction. Pooling the two openings, as the main analysis does,
+is consistent with the data.</p>
+<h1>6. Conclusion</h1>
+<p>For ten recent English Pokémon sets valued at dated market prices, under explicit
+costs and propagated pull-rate uncertainty, opening boosters is not a
+competitive way to acquire cards. In the three main sets, a pack's expected net resale value is
+about a quarter to a third of its retail price, and buying the same cards directly
+loses less than half as much for the same budget. Buying is decisively better
+on the mean, the median and the tail. Chasing one valuable card by opening is
+rarely cheaper than buying it.</p>
+<p>Two mechanisms drive the result. The fixed cost of selling one card exceeds
+the value of most cards in a pack, so the value of opening rests on a few rare
+hits. And for most sets, even without any friction, the expected market value
+of a pack is below its retail price; for the two sets where it is above
+(Paldea Evolved and Temporal Forces), selling costs alone turn the gain into
+a loss. The uncertainty on
+the pull rates, which a fixed-rate calculator ignores, is real but small
+compared with this gap: it widens every interval and changes no main
+conclusion.</p>
+<p>The results have limits. Prices come from one provider on one date, and
+card condition is not specified; European sale prices give the same main
+conclusion, but a weekly panel is still being collected. The liquidity
+haircut and shipping costs are assumptions, and each card is sold alone,
+whereas bundled sales would lower shipping per card for both strategies. The
+pull rates come from community openings compiled by a third party, with
+reconstructed counts; a bias common to all openings, such as selective
+reporting, would not be detected. Slots are assumed independent and printings
+equally likely within a rarity. Finally, the model prices neither the
+entertainment of opening nor the cards a collector keeps. At the central
+estimate, that experience costs 3.07 to 3.46 USD per pack.</p>
+<p>The framework is general. It needs per-rarity pull rates with sample sizes, a
+documented slot layout, a typed price snapshot and explicit costs, and one
+configuration file reruns it on a new set, date or cost assumption.</p>
 <h1>References</h1>
 <p>Acerbi, Carlo and Tasche, Dirk (2002). On the coherence of expected shortfall. <em>Journal of Banking &amp; Finance, 26(7), 1487–1503</em>. <a href="https://doi.org/10.1016/S0378-4266(02)00283-2">https://doi.org/10.1016/S0378-4266(02)00283-2</a></p>
 <p>Artzner, Philippe, Delbaen, Freddy, Eber, Jean-Marc and Heath, David (1999). Coherent Measures of Risk. <em>Mathematical Finance, 9(3), 203–228</em>. <a href="https://doi.org/10.1111/1467-9965.00068">https://doi.org/10.1111/1467-9965.00068</a></p>
 <p>Baro, Philipp (2026). A Hedonic Pricing Model for Graded Pokémon Trading Cards. <em>SSRN working paper</em>. <a href="https://doi.org/10.2139/ssrn.6677998">https://doi.org/10.2139/ssrn.6677998</a></p>
-<p>Brown, Lawrence D., Cai, T. Tony and DasGupta, Anirban (2001). Interval Estimation for a Binomial Proportion. <em>Statistical Science, 16(2), 101–133</em>. <a href="https://doi.org/10.1214/ss/1009213286">https://doi.org/10.1214/ss/1009213286</a></p>
 <p>Burton, Benjamin J. and Jacobsen, Joyce P. (1999). Measuring Returns on Investments in Collectibles. <em>Journal of Economic Perspectives, 13(4), 193–212</em>. <a href="https://doi.org/10.1257/jep.13.4.193">https://doi.org/10.1257/jep.13.4.193</a></p>
 <p>Chen, Ningyuan, Elmachtoub, Adam N., Hamilton, Michael L. and Lei, Xiao (2021). Loot Box Pricing and Design. <em>Management Science, 67(8), 4809–4825</em>. <a href="https://doi.org/10.1287/mnsc.2020.3748">https://doi.org/10.1287/mnsc.2020.3748</a></p>
 <p>Danz, Thomas (2026). Gotta Catch 'Em All: How Scarcity, Sentiment, and Secondary Markets Influence Pokémon TCG Financial Dynamics. <em>Senior thesis, Princeton University, Department of Economics</em>. <a href="https://theses-dissertations.princeton.edu/handle/88435/dsp01c247dw57w">https://theses-dissertations.princeton.edu/handle/88435/dsp01c247dw57w</a></p>
@@ -1301,88 +782,106 @@ they need data this study does not have.</p>
 <p>Dobrynskaya, Victoria and Kishilova, Julia (2022). LEGO: The toy of smart investors. <em>Research in International Business and Finance, 59, 101539</em>. <a href="https://doi.org/10.1016/j.ribaf.2021.101539">https://doi.org/10.1016/j.ribaf.2021.101539</a></p>
 <p>Dobrynskaya, Victoria and Strelnikov, Vladimir (2025). Videogame Attributes as Alternative Investments. <em>The Quarterly Journal of Finance, 15(4)</em>. <a href="https://doi.org/10.1142/S201013922640001X">https://doi.org/10.1142/S201013922640001X</a></p>
 <p>Gan, Tan (2021). Gacha Game: When Prospect Theory Meets Optimal Pricing. <em>SSRN working paper; arXiv:2208.03602</em>. <a href="https://doi.org/10.2139/ssrn.3790798">https://doi.org/10.2139/ssrn.3790798</a></p>
-<p>Gordy, Michael B. and Juneja, Sandeep (2010). Nested Simulation in Portfolio Risk Measurement. <em>Management Science, 56(10), 1833–1848</em>. <a href="https://doi.org/10.1287/mnsc.1100.1213">https://doi.org/10.1287/mnsc.1100.1213</a></p>
 <p>Heck, Johannes, Schormann, Sarah, Krichevsky, Benjamin, Groh, Adrian, Pape, Thorben, Schröder, Sebastian, Glahn, Alexander, Schumacher, Carsten and Schulze Westhoff, Martin (2026). Sales characteristics of Pokémon trading cards: A prospective one-year field study. <em>PLOS ONE, 21(3), e0334289</em>. <a href="https://doi.org/10.1371/journal.pone.0334289">https://doi.org/10.1371/journal.pone.0334289</a></p>
 <p>Hu, Ming, Qin, Taojie and Sekar, Shreyas (2024). Pricing and Rarity Design of Blind Boxes with Random Items. <em>SSRN working paper</em>. <a href="https://doi.org/10.2139/ssrn.4929281">https://doi.org/10.2139/ssrn.4929281</a></p>
-<p>Hughes, Jonathan E. (2022). Demand for Rarity: Evidence from a Collectible Good. <em>The Journal of Industrial Economics, 70(1), 147–167</em>. <a href="https://doi.org/10.1111/joie.12262">https://doi.org/10.1111/joie.12262</a></p>
-<p>Jeffreys, Harold (1946). An invariant form for the prior probability in estimation problems. <em>Proceedings of the Royal Society of London. Series A, 186(1007), 453–461</em>. <a href="https://doi.org/10.1098/rspa.1946.0056">https://doi.org/10.1098/rspa.1946.0056</a></p>
 <p>Mei, Jianping and Moses, Michael (2002). Art as an Investment and the Underperformance of Masterpieces. <em>American Economic Review, 92(5), 1656–1668</em>. <a href="https://doi.org/10.1257/000282802762024719">https://doi.org/10.1257/000282802762024719</a></p>
-<p>Mota, Arthur (2026). Testing the CAPM in a Collectible: A Market Index, Betas and Optimised Portfolios of Sealed Magic: The Gathering Booster Boxes. <em>SSRN working paper</em>. <a href="https://doi.org/10.2139/ssrn.7603999">https://doi.org/10.2139/ssrn.7603999</a></p>
 <p>Mota, Arthur (2026). A Valuation Framework for Sealed Products in Collectible Card Markets: Expected Value, No-Arbitrage Pricing, and the Sealed-Opened Spread. <em>SSRN working paper</em>. <a href="https://doi.org/10.2139/ssrn.6429278">https://doi.org/10.2139/ssrn.6429278</a></p>
-<p>Mullin, Charles J. and Dunn, Lucia F. (2002). Using Baseball Card Prices to Measure Star Quality and Monopsony. <em>Economic Inquiry, 40(4), 620–632</em>. <a href="https://doi.org/10.1093/ei/40.4.620">https://doi.org/10.1093/ei/40.4.620</a></p>
 <p>Renneboog, Luc and Spaenjers, Christophe (2013). Buying Beauty: On Prices and Returns in the Art Market. <em>Management Science, 59(1), 36–53</em>. <a href="https://doi.org/10.1287/mnsc.1120.1580">https://doi.org/10.1287/mnsc.1120.1580</a></p>
-<p>Rockafellar, R. Tyrrell and Uryasev, Stanislav (2000). Optimization of conditional value-at-risk. <em>The Journal of Risk, 2, 21–41</em>. <a href="https://doi.org/10.21314/JOR.2000.038">https://doi.org/10.21314/JOR.2000.038</a></p>
-<p>Rockafellar, R. Tyrrell and Uryasev, Stanislav (2002). Conditional value-at-risk for general loss distributions. <em>Journal of Banking &amp; Finance, 26(7), 1443–1471</em>. <a href="https://doi.org/10.1016/S0378-4266(02)00271-6">https://doi.org/10.1016/S0378-4266(02)00271-6</a></p>
-<p>Rosen, Sherwin (1974). Hedonic Prices and Implicit Markets: Product Differentiation in Pure Competition. <em>Journal of Political Economy, 82(1), 34–55</em>. <a href="https://doi.org/10.1086/260169">https://doi.org/10.1086/260169</a></p>
 <p>Sharma, Aman (2026). Grading Premiums and Price Volatility in the Pokémon Card Secondary Market: A 2020-2022 Boom-Bust Case Study. <em>SSRN working paper</em>. <a href="https://doi.org/10.2139/ssrn.7515678">https://doi.org/10.2139/ssrn.7515678</a></p>
 <p>Wang, Zhiguang and Langelett, George (2023). Sealed Collectible Card Game Product as Standalone Investment and Portfolio Diversifier. <em>Global Journal of Accounting and Finance, 7(1)</em>. <a href="https://doi.org/10.47177/wwns9y63">https://doi.org/10.47177/wwns9y63</a></p>
-<p>Xiao, Leon Y., Henderson, Laura L. and Newall, Philip W. S. (2023). What are the odds? Poor compliance with UK loot box probability disclosure industry self-regulation. <em>PLOS ONE, 18(9), e0286681</em>. <a href="https://doi.org/10.1371/journal.pone.0286681">https://doi.org/10.1371/journal.pone.0286681</a></p>
-<p>Xiao, Leon Y., Zendle, David, Petrovskaya, Elena, Nielsen, Rune K. L. and Newall, Philip W. S. (2025). Card pack and loot box spending are both positively correlated with problem gambling but not linked to negative mental health. <em>Abstract Proceedings of DiGRA 2025</em>. <a href="https://doi.org/10.26503/dl.v2025i3.2658">https://doi.org/10.26503/dl.v2025i3.2658</a></p>
 <p>Zendle, David and Cairns, Paul (2018). Video game loot boxes are linked to problem gambling: Results of a large-scale survey. <em>PLOS ONE, 13(11), e0206767</em>. <a href="https://doi.org/10.1371/journal.pone.0206767">https://doi.org/10.1371/journal.pone.0206767</a></p>
 <p>Zendle, David, Walasek, Lukasz, Cairns, Paul, Meyer, Rachel and Drummond, Aaron (2021). Links between problem gambling and spending on booster packs in collectible card games: A conceptual replication of research on loot boxes. <em>PLOS ONE, 16(4), e0247855</em>. <a href="https://doi.org/10.1371/journal.pone.0247855">https://doi.org/10.1371/journal.pone.0247855</a></p>
 <h1>Appendix</h1>
-<h2>A. Sources and licences</h2>
+<h2>A. Sources of every input</h2>
+<p><strong>Table A1.</strong> Inputs, sources and status in the replication package.</p>
 <table>
 <thead>
 <tr>
 <th>Input</th>
-<th>Source and version</th>
+<th>Value(s) used</th>
+<th>Source and date</th>
 <th>Licence or permission</th>
-<th>In the replication package</th>
+<th>In the package</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Pull rates</td>
-<td>Poké Life pull-rate evidence registry, version 2026-11-13, accessed 2026-11-15</td>
+<td>Hits, packs, rates of every hit rarity</td>
+<td>Poké Life pull-rate evidence registry, version 2026-11-13</td>
 <td>CC BY 4.0</td>
-<td>Yes: <code>data/raw/pokelife/2026-11-13/</code>, with SHA-256 checksums</td>
+<td>Yes, with SHA-256 checksums</td>
+</tr>
+<tr>
+<td>Primary pull-rate tables</td>
+<td>Printed rates and margins, ten sets</td>
+<td>TCGplayer pull-rate articles, read 2026-11-15</td>
+<td>Facts cited with URLs</td>
+<td><code>research/reports/*tcgplayer_published_rates.csv</code></td>
 </tr>
 <tr>
 <td>Slot layout</td>
-<td>TCGplayer pull-rate articles for the three sets (model specification, <code>research/protocol/model_spec.md</code>)</td>
-<td>Facts cited with sources</td>
-<td>Described, not copied</td>
+<td>Positions of hit rarities</td>
+<td>TCGplayer pull-rate articles; model specification</td>
+<td>Facts cited</td>
+<td>Described</td>
 </tr>
 <tr>
 <td>Catalogue</td>
-<td>TCGdex API, fetched 2026-11-15</td>
+<td>Cards, numbers, rarities, variants</td>
+<td>TCGdex API, 2026-11-15</td>
 <td>MIT</td>
-<td>Re-fetched by script; processed tables are rebuilt</td>
+<td>Re-fetched by script</td>
 </tr>
 <tr>
-<td>Prices</td>
-<td>TCGdex, relaying TCGplayer (USD) market prices, 2026-11-15</td>
+<td>Prices (main)</td>
+<td>TCGplayer market price, USD</td>
+<td>TCGdex relay, provider time 2026-11-14 22:22–22:24 UTC</td>
 <td>Permission for this non-commercial project (ADR 0009)</td>
-<td>No: only derived statistics; the fetch script and checksums are</td>
+<td>No; derived statistics and checksums only</td>
+</tr>
+<tr>
+<td>Prices (check)</td>
+<td>Cardmarket 30-day average sale price, EUR</td>
+<td>TCGdex relay, 2026-11-15; definition from the Cardmarket API 2.0 documentation</td>
+<td>Same as above</td>
+<td>No; derived statistics only</td>
+</tr>
+<tr>
+<td>Exchange rate</td>
+<td>1.1052 USD per EUR</td>
+<td>ECB, series EXR.D.USD.EUR.SP00.A, 2026-11-13</td>
+<td>Public statistics</td>
+<td>Cached request URL</td>
 </tr>
 <tr>
 <td>Seller fees</td>
+<td>10.75 %, 2.5 % + 0.30 USD</td>
 <td>TCGplayer seller fee page, read 2026-11-15</td>
 <td>Facts cited</td>
-<td>In <code>research/experiments/main.yaml</code></td>
+<td><code>research/experiments/main.yaml</code></td>
 </tr>
 <tr>
-<td>Liquidity evidence (R10)</td>
-<td>Heck et al. (2026)</td>
-<td>Open access article</td>
-<td>Cited</td>
+<td>Booster price</td>
+<td>4.49 USD (5.49 adverse)</td>
+<td>Assumption: US retail price at launch; no official price list</td>
+<td>n/a</td>
+<td>Configuration</td>
+</tr>
+<tr>
+<td>Shipping, haircut</td>
+<td>1.00 / 4.50 USD; 0.15 / 0.30</td>
+<td>Assumptions; R10 anchors the haircut on Heck et al. (2026)</td>
+<td>n/a</td>
+<td>Configuration</td>
 </tr>
 </tbody>
 </table>
-<p>Prices are typed. The main analysis uses the provider <em>market</em> price, a
-provider aggregate. Robustness test R1 uses the median of the listing
-statistics (low, mid, high, direct low) and the market price, labelled as an
-indicative estimate. No price is presented as a realised sale.</p>
+<p>Every price observation carries its date, currency, condition (unspecified)
+and type (provider market aggregate or venue sale average). No listing price
+is used as a transaction value, and missing prices are never set to zero
+except in the adverse scenario, where this is stated.</p>
 <h2>B. Definitions</h2>
-<p>Π is the net profit of a run in USD.</p>
-<ul>
-<li>E1: Π = Σ ℓ(C_i) − n·b for opening n boosters at price b.</li>
-<li>E2: Π = a(c*) − K, where K is the cost of opening until the target
-  appears, net of the other cards sold.</li>
-</ul>
-<p>A seller receives ℓ(c) = max(0, p(c)(1 − h)(1 − f_m − f_p) − f_0 − s). A
-buyer pays a(c) = p(c)(1 + f_b) + s_b.</p>
 <table>
 <thead>
 <tr>
@@ -1392,12 +891,8 @@ buyer pays a(c) = p(c)(1 + f_b) + s_b.</p>
 </thead>
 <tbody>
 <tr>
-<td>Mean</td>
-<td>E[Π]</td>
-</tr>
-<tr>
-<td>Median</td>
-<td>q₀.₅(Π)</td>
+<td>Mean, median</td>
+<td>E[Π], q₀.₅(Π)</td>
 </tr>
 <tr>
 <td>P(loss)</td>
@@ -1409,11 +904,11 @@ buyer pays a(c) = p(c)(1 + f_b) + s_b.</p>
 </tr>
 <tr>
 <td>CVaR 5 %</td>
-<td>−E[Π | Π ≤ q₀.₀₅(Π)]; estimator: minus the mean of the ⌈0.05 N⌉ smallest values</td>
+<td>−E[Π | Π ≤ q₀.₀₅(Π)]; estimator: minus the mean of the ⌈0.05 M⌉ smallest of M runs</td>
 </tr>
 <tr>
-<td>Break-even booster price</td>
-<td>b* = E[Σ ℓ(C_i)] for one booster: the mean of E1 is zero when b = b*</td>
+<td>Break-even price b*</td>
+<td>Equation (5); E[Π_A] = n(b* − b) in E1</td>
 </tr>
 <tr>
 <td>P(K &lt; a(c*))</td>
@@ -1421,39 +916,40 @@ buyer pays a(c) = p(c)(1 + f_b) + s_b.</p>
 </tr>
 <tr>
 <td>Interval</td>
-<td>2.5 %–97.5 % quantiles of a metric over the 200 posterior draws</td>
+<td>2.5 % and 97.5 % quantiles over the 200 posterior draws</td>
 </tr>
 <tr>
 <td>Monte Carlo error</td>
-<td>Batch-means standard error within a draw, median over draws</td>
+<td>Batch-means standard error (20 batches) within a draw, median over draws</td>
 </tr>
 <tr>
 <td>Decisive</td>
-<td>One strategy is better in at least 90 % of the posterior draws</td>
+<td>One strategy better in at least 90 % of the posterior draws</td>
 </tr>
 </tbody>
 </table>
 <h2>C. Validation of the engine</h2>
-<p><code>scripts/validate_engine.py</code> checks the engine against exact results, with
-synthetic card values:</p>
+<p><code>scripts/validate_engine.py</code> checks the engine against exact results with
+synthetic card values, before any price was used:</p>
 <ol>
-<li>A one-slot toy case gives a simulated mean 1.76 standard
-   errors from the exact value, with N = 10⁶.</li>
-<li>Simulated card frequencies in the random slots of
-   Surging Sparks pass a χ² test: p = 0.15, 0.64 and 0.54.</li>
-<li>Hit counts for a Special Illustration Rare over 100 packs
-   match the binomial in mean, variance and P(at least one).</li>
-<li>The root-mean-square error falls with a log-log slope of
-   −0.52, against −0.5 in theory, from N = 10³ to 10⁶.</li>
-<li>The aggregate multinomial path agrees with
-   card-by-card simulation (Kolmogorov–Smirnov p = 0.91).</li>
-<li>The capped number of packs to a target matches
-   its closed form.</li>
+<li>A one-slot toy case gives a simulated mean 1.76 standard errors from the
+   exact value with N = 10⁶.</li>
+<li>Simulated card frequencies in the three random slots of Surging Sparks
+   pass a χ² test (p = 0.15, 0.64 and 0.54).</li>
+<li>Hit counts of a Special Illustration Rare over 100 packs match the
+   binomial distribution in mean, variance and P(at least one).</li>
+<li>The root-mean-square error of the mean falls with a log-log slope of
+   −0.52 (theory −0.5) from N = 10³ to 10⁶.</li>
+<li>The multinomial and card-by-card samplers agree (Kolmogorov–Smirnov
+   p = 0.91).</li>
+<li>The capped number of packs to a target matches its closed form.</li>
 <li>The same seed, data and model give identical output.</li>
 </ol>
-<p>The full report is <code>research/reports/validation.md</code>.</p>
-<h2>D. Parameters</h2>
-<p><strong>Table 2.</strong> Simulation parameters of the main run.</p>
+<p>The full report is <code>research/reports/validation.md</code>. The exact b* of
+equation (5) also matches the break-even price computed by the engine within
+a relative tolerance of 10⁻⁶ in the test suite (synthetic data).</p>
+<h2>D. Simulation parameters</h2>
+<p><strong>Table A2.</strong> Parameters of the main run.</p>
 <table>
 <thead>
 <tr>
@@ -1468,11 +964,11 @@ synthetic card values:</p>
 </tr>
 <tr>
 <td>Product</td>
-<td>One English booster pack; 10 modelled slots (layout <code>tcgplayer</code>)</td>
+<td>One English booster; 10 modelled slots (layout <code>tcgplayer</code>)</td>
 </tr>
 <tr>
 <td>Prior</td>
-<td>Jeffreys (a₀ = ½), weight w = 1 on every registry row</td>
+<td>Jeffreys (a₀ = ½), weight 1 on every registry row</td>
 </tr>
 <tr>
 <td>Epistemic draws K</td>
@@ -1480,7 +976,7 @@ synthetic card values:</p>
 </tr>
 <tr>
 <td>Aleatory runs M</td>
-<td>20,000 per draw (1,000 samples in the 5 % tail)</td>
+<td>20,000 per draw (1,000 runs in the 5 % tail)</td>
 </tr>
 <tr>
 <td>Seed</td>
@@ -1492,11 +988,7 @@ synthetic card values:</p>
 </tr>
 <tr>
 <td>E2 targets</td>
-<td>Most expensive printing; most expensive Special Illustration Rare; cap n_max = ⌈3 / p_hit⌉</td>
-</tr>
-<tr>
-<td>Cost scenarios</td>
-<td>Table in §5.2 (gross, central, adverse)</td>
+<td>Most expensive printing; most expensive Special Illustration Rare; cap ⌈3 / p_hit⌉</td>
 </tr>
 <tr>
 <td>Decision threshold</td>
@@ -1504,18 +996,67 @@ synthetic card values:</p>
 </tr>
 <tr>
 <td>Price date</td>
-<td>2026-11-15 (second snapshot for H4: 2026-12-13)</td>
+<td>2026-11-15</td>
 </tr>
 </tbody>
 </table>
-<h2>E. Reproduction</h2>
-<p>From a clone of the repository:</p>
+<h2>E. Pre-registration record</h2>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Content</th>
+<th>Fixed before</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prereg-v1</code></td>
+<td>Question, hypotheses H1–H4, metrics, decision rules</td>
+<td>Any data analysis</td>
+</tr>
+<tr>
+<td><code>prereg-v2</code></td>
+<td>Booster model, sets, budgets, baskets, cost scenarios, robustness list</td>
+<td>Any price value</td>
+</tr>
+<tr>
+<td><code>analysis-v1</code></td>
+<td>Frozen main run and robustness variants (Sections 4, 5.1)</td>
+<td>Writing</td>
+</tr>
+<tr>
+<td><code>prereg-v3</code></td>
+<td>Sale-price benchmark and weekly panel (Section 5.3; ADR 0014)</td>
+<td>Any Cardmarket value of the three sets</td>
+</tr>
+<tr>
+<td><code>prereg-v4</code></td>
+<td>Ten-set extension and pull-rate checks (Sections 5.2, 5.4; ADR 0015)</td>
+<td>Any price or result of the added sets</td>
+</tr>
+</tbody>
+</table>
+<p>Deviations from <code>prereg-v1</code>, each recorded in an ADR: the test excluding
+reconstructed counts is replaced by R9b, since every row of the selected sets
+is reconstructed; valuation uses TCGplayer prices only, Cardmarket being an
+exploratory check; and the booster price is a scenario, not an observation.
+For <code>prereg-v4</code>, the duplicate rule was written after the Paradox Rift and
+Paldea Evolved duplicate had been noticed (ADR 0015).</p>
+<h2>F. Additional figures</h2>
+<figure><img src="figures/fig1_pipeline.png" alt=""><figcaption><strong>Figure A1.</strong> Data and simulation pipeline: sources, model and card values, nested Monte Carlo and outputs.</figcaption></figure>
+<figure><img src="figures/fig6_breakeven_rates.png" alt=""><figcaption><strong>Figure A2.</strong> Central break-even price under the pull-rate assumptions: posterior mean and 95 % interval over the draws (R4: single models at the bounds of every rate).</figcaption></figure>
+<figure><img src="figures/fig7_mean_cvar.png" alt=""><figcaption><strong>Figure A3.</strong> Mean net profit against CVaR 5 % for each budget, central scenario. A: posterior mean over 200 draws; B: deterministic.</figcaption></figure>
+<h2>G. Reproduction</h2>
 <pre><code class="language-bash">uv sync
 make check        # lint, types and tests
 make reproduce    # data, validation, main run, robustness, reports and figures
 </code></pre>
-<p><code>make reproduce</code> needs the TCGdex responses in the local cache. They are
-fetched by <code>pokequant ingest</code> without <code>--offline</code> on first use. It takes about
-three hours on eight cores. Each run writes a manifest with the configuration
-hash, seed, data snapshot identifiers and the SHA-256 of its results.</p>
+<p><code>make reproduce</code> needs the TCGdex responses in the local cache, fetched by
+<code>pokequant ingest</code> on first use, and takes about three hours on eight cores.
+The extensions run with <code>scripts/sales_benchmark.py</code>,
+<code>scripts/pull_rate_checks.py</code> and <code>pokequant run
+research/experiments/extension_sets.yaml</code>. Each run writes a manifest with
+the configuration hash, seed, data snapshot identifiers and the SHA-256 of its
+results.</p>
 </body></html>

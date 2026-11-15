@@ -104,6 +104,19 @@ sources:
     rights: {access: yes, display: yes, redistribution: not_stated}
     use_as: eur_to_usd_conversion (ADR 0014)
 
+  - id: tcgplayer_pull_rate_articles
+    name: "TCGplayer Authentication Center pull-rate articles"
+    urls:
+      - https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Scarlet-Violet-Pull-Rates/a7702fce-dd64-4a58-beb1-0f871c853215/
+    access: public web pages (rendered with JavaScript); read in a browser on 2026-11-15
+    content: "per-pack rate and 95 % margin of each hit rarity; the seven articles read for ADR 0015 state more than 8,000 packs opened"
+    licence: not_stated
+    rights: {access: yes, display: "facts cited", redistribution: not_stated}
+    use_as: primary_source_check (ADR 0015); the printed rates are committed as facts with their URLs
+    files:
+      - research/reports/tcgplayer_published_rates.csv
+      - research/reports/extension/tcgplayer_published_rates.csv
+
   - id: pokemontcg_io
     name: "Pokémon TCG API (pokemontcg.io)"
     urls:

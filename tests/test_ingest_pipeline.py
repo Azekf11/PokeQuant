@@ -118,3 +118,12 @@ def test_processed_tables_read_back_into_records(tmp_path: Path) -> None:
     rates = read_records(out / "pull_rates.parquet", PullRateObservation)
     assert len(printings) == 6 and len(rates) == 2
     assert all(isinstance(r.dataset_ids, tuple) for r in rates)
+
+
+def test_out_name_writes_to_a_separate_folder(tmp_path: Path) -> None:
+    root = build_root(tmp_path)
+    with CachedClient(offline=True) as client:
+        result = pipeline.run(root, PL_VERSION, TD_VERSION, ("zz01",), client, out_name="ext")
+    assert result.out_dir == root / "data/processed/ext"
+    assert (result.out_dir / "manifest.json").exists()
+    assert not pipeline.output_dir(root, PL_VERSION, TD_VERSION).exists()

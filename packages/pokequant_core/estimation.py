@@ -152,3 +152,46 @@ def homogeneity_test(counts: Sequence[tuple[float, float]]) -> HomogeneityTest:
         p_value=float(result.pvalue),
         min_expected=float(np.min(result.expected_freq)),
     )
+
+
+@dataclass(frozen=True)
+class PredictiveCheck:
+    """Held-out check of observed hits against a beta-binomial posterior predictive."""
+
+    expected: float
+    low: int  # central 95 % predictive interval
+    high: int
+    p_value: float  # two-sided mid-p
+    observed: int
+
+    @property
+    def inside(self) -> bool:
+        return self.low <= self.observed <= self.high
+
+
+def predictive_check(posterior: BetaPosterior, hits: int, packs: int) -> PredictiveCheck:
+    """Compare ``hits`` in ``packs`` held-out packs with the posterior predictive of ``posterior``.
+
+    The predictive distribution is BetaBinomial(packs, a, b). The two-sided
+    mid-p value is 2 min(P(X < x) + P(X = x) / 2, P(X > x) + P(X = x) / 2),
+    capped at 1.
+    """
+    _check_counts(hits, packs)
+    dist = stats.betabinom(packs, posterior.a, posterior.b)
+    point = float(dist.pmf(hits))
+    below = float(dist.cdf(hits)) - point
+    above = float(dist.sf(hits))
+    p = min(1.0, 2 * min(below + point / 2, above + point / 2))
+    low, high = (int(v) for v in dist.interval(0.95))
+    return PredictiveCheck(float(dist.mean()), low, high, p, hits)
+
+
+def holm(p_values: Sequence[float], alpha: float) -> list[bool]:
+    """Holm-Bonferroni step-down: True where the hypothesis is rejected."""
+    order = sorted(range(len(p_values)), key=p_values.__getitem__)
+    rejected = [False] * len(p_values)
+    for rank, i in enumerate(order):
+        if p_values[i] > alpha / (len(p_values) - rank):
+            break
+        rejected[i] = True
+    return rejected

@@ -1,9 +1,12 @@
-"""Figures 1-7 of the paper (protocol §8), written to research/paper/figures/.
+"""Figures of the paper (protocol §8), written to research/paper/figures/.
 
 Figures 1-2 are diagrams of the pipeline and of the slot model. Figures 3-5
 re-simulate openings at the posterior-mean pull rates with their own random
 streams (seed, set, 3, k), so they never reuse the streams of the main run.
 Figures 6-7 read the main run and, for Figure 6, its robustness variants.
+Figure 8 shows the convergence of the Monte Carlo estimates against the exact
+mean, and Figure 9 the posterior draws of the break-even price; both also
+write the numbers quoted in the paper to research/reports/simulation_diagnostics.md.
 No per-card price is shown (ADR 0009).
 
 Usage: uv run python scripts/paper_figures.py results/<run_id>
@@ -32,9 +35,11 @@ from pokequant_core.experiment_run import processed_dir
 from pokequant_core.ingest.store import read_records
 from pokequant_core.metrics import epistemic_interval
 from pokequant_core.schemas import CardPrinting, CardSet, PriceObservation, PullRateObservation
-from pokequant_core.simulate import simulate_e1
+from pokequant_core.simulate import simulate_e1, slot_card_probabilities
 
 ROOT = Path(__file__).resolve().parents[1]
+DIAGNOSTICS = ROOT / "research/reports/simulation_diagnostics.md"
+CONVERGENCE_RUNS = 100_000
 OUT = ROOT / "research/paper/figures"
 SERIES = ("#2a78d6", "#eb6834", "#1baf7a")  # categorical slots 1-3 (sets, or A/B)
 INK, INK2, MUTED, GRID = "#0b0b0b", "#52514e", "#898781", "#e1e0d9"
@@ -479,6 +484,139 @@ def figure_7(results: list[dict[str, Any]], names: dict[str, str]) -> None:
     save(fig, "fig7_mean_cvar.png")
 
 
+# --- Figures 8-9: the simulation itself ----------------------------------------------
+
+
+def running_cvar(x: np.ndarray, checkpoints: np.ndarray, alpha: float = 0.05) -> np.ndarray:
+    """CVaR (positive loss) of x[:m] for each m in checkpoints."""
+    out = []
+    for m in checkpoints:
+        k = int(np.ceil(alpha * m))
+        out.append(-np.sort(x[:m])[:k].mean())
+    return np.asarray(out)
+
+
+def figure_8(
+    contexts: list[SetContext], names: dict[str, str], seed: int, cost: float
+) -> list[str]:
+    """Running Monte Carlo estimates against the exact mean, 36 boosters, central."""
+    n = 36
+    checkpoints = np.unique(np.logspace(2, np.log10(CONVERGENCE_RUNS), 60).astype(int))
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.9))
+    lines = [
+        "| Set | Exact mean Π | MC mean, 100 runs | MC mean, 100,000 runs | |error| / SE "
+        "| CVaR 5 %, 1,000 runs | CVaR 5 %, 100,000 runs |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for color, ctx in zip(SERIES, contexts, strict=True):
+        k = ctx.scenarios.index("central")
+        cm = ctx.compile(ctx.posterior.mean_model())
+        exact = n * (float(slot_card_probabilities(cm).sum(axis=0) @ ctx.value_matrix(cm)[:, k]))
+        exact -= n * cost
+        profit = pack_values(ctx, seed, 4, n, CONVERGENCE_RUNS)[:, k] - n * cost
+        m = checkpoints
+        csum = np.cumsum(profit)[m - 1]
+        csq = np.cumsum(profit**2)[m - 1]
+        mean = csum / m
+        se = np.sqrt(np.maximum(csq / m - mean**2, 0) / m)
+        ax = axes[0]
+        ax.fill_between(m, mean - 1.96 * se, mean + 1.96 * se, color=color, alpha=0.18, lw=0)
+        ax.plot(m, mean, color=color, lw=1.4, label=names[ctx.set_id])
+        ax.axhline(exact, color=color, lw=0.8, ls="--")
+        cvar = running_cvar(profit, m)
+        axes[1].plot(m, cvar, color=color, lw=1.4, label=names[ctx.set_id])
+        i100 = int(np.searchsorted(m, 100))
+        i1000 = int(np.searchsorted(m, 1000))
+        lines.append(
+            f"| {names[ctx.set_id]} | {exact:.2f} | {mean[i100]:.2f} | {mean[-1]:.2f} "
+            f"| {abs(mean[-1] - exact) / se[-1]:.2f} | {cvar[i1000]:.2f} | {cvar[-1]:.2f} |"
+        )
+    axes[0].set_xscale("log")
+    axes[0].set_xlabel("Simulated runs m")
+    axes[0].set_ylabel("Mean net profit, USD")
+    axes[0].set_title("Running mean", loc="left")
+    axes[0].legend(fontsize=7, loc="lower right")
+    axes[1].set_xscale("log")
+    axes[1].set_xlabel("Simulated runs m")
+    axes[1].set_ylabel("CVaR 5 %, USD (loss)")
+    axes[1].set_title("Running CVaR 5 %", loc="left")
+    source_note(
+        fig,
+        f"Opening {n} boosters at {cost:.2f} USD, central scenario, posterior-mean pull rates; "
+        f"one stream of {CONVERGENCE_RUNS:,} runs per set.\nLeft: band ±1.96 Monte Carlo SE; "
+        "dashed line: exact mean 36 (sum of P(c in a pack) l(c) - b). " + SOURCE,
+    )
+    save(fig, "fig8_mc_convergence.png")
+    return lines
+
+
+def figure_9(results: list[dict[str, Any]], names: dict[str, str], cost: float) -> list[str]:
+    """Posterior draws of the break-even booster price (epistemic uncertainty)."""
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.6), sharey=True)
+    lines = [
+        "| Set | Scenario | Draws | Mean b* | SD over draws | 2.5 % | 97.5 % "
+        "| Within-draw MC SE of mean Π (36 boosters) | SD over draws of mean Π |",
+        "|---|---|---|---|---|---|---|---|---|",
+    ]
+    for ax, scenario in zip(axes, ("central", "gross"), strict=True):
+        for y, (color, set_id) in enumerate(zip(SERIES, names, strict=True)):
+            res = next(r for r in results if r["set_id"] == set_id and r["job"]["label"] == "n=1")
+            be = np.asarray(res["extra"]["break_even_booster_price"][scenario])
+            jitter = np.random.default_rng(y).uniform(-0.18, 0.18, be.size)
+            ax.plot(be, y + jitter, "o", color=color, ms=2.2, alpha=0.55, mec="none")
+            low, high = epistemic_interval(be)
+            ax.plot([low, high], [y - 0.32, y - 0.32], color=INK2, lw=1.4)
+            ax.plot(be.mean(), y - 0.32, "|", color=INK, ms=8)
+            r36 = next(r for r in results if r["set_id"] == set_id and r["job"]["label"] == "n=36")
+            within = float(np.median(r36["a_se"][scenario]["mean"]))
+            between = float(np.std(r36["a_metrics"][scenario]["mean"], ddof=1))
+            lines.append(
+                f"| {names[set_id]} | {scenario} | {be.size} | {be.mean():.2f} "
+                f"| {be.std(ddof=1):.3f} | {low:.2f} | {high:.2f} | {within:.2f} | {between:.2f} |"
+            )
+        ax.set_yticks(range(len(names)), [names[s] for s in names])
+        ax.invert_yaxis()
+        ax.grid(axis="y", visible=False)
+        ax.set_xlabel("Break-even booster price b*, USD")
+        ax.set_title(f"{scenario.capitalize()} scenario", loc="left")
+    axes[1].axvline(cost, color=INK2, lw=0.9, ls="--")
+    axes[1].set_title(f"Gross scenario (dashed: {cost:.2f} USD)", loc="left")
+    source_note(
+        fig,
+        "Each dot is one of the 200 posterior draws of the pull rates; bar: 95 % interval, "
+        "tick: mean. Dashed: retail booster price. " + SOURCE,
+    )
+    save(fig, "fig9_breakeven_draws.png")
+    return lines
+
+
+def write_diagnostics(run_id: str, convergence: list[str], draws: list[str]) -> None:
+    text = [
+        "# Simulation diagnostics",
+        "",
+        f"Generated by `scripts/paper_figures.py` from run `{run_id}`. Numbers quoted in the",
+        "paper's methods section (Figures 8 and 9).",
+        "",
+        "## Convergence to the exact mean (Figure 8)",
+        "",
+        "Opening 36 boosters, central scenario, posterior-mean pull rates. The exact mean is",
+        "36 (sum over printings of P(printing in a pack) x l(printing) - booster price).",
+        "",
+        *convergence,
+        "",
+        "## Epistemic and aleatory uncertainty (Figure 9)",
+        "",
+        "Break-even booster price over the 200 posterior draws of the main run, and, for the",
+        "mean profit of opening 36 boosters, the within-draw Monte Carlo standard error",
+        "(median over draws) against the standard deviation across draws.",
+        "",
+        *draws,
+        "",
+    ]
+    DIAGNOSTICS.write_text("\n".join(text), encoding="utf-8")
+    print(f"wrote {DIAGNOSTICS}")
+
+
 def contexts_for(cfg: ExperimentConfig) -> tuple[list[SetContext], dict[str, str]]:
     d = processed_dir(ROOT, cfg)
     printings = read_records(d / "printings.parquet", CardPrinting)
@@ -503,6 +641,9 @@ def main(run_dir: Path) -> None:
     figure_5(contexts, names, seed, cost)
     figure_6(run_dir, names, cost)
     figure_7(results, names)
+    convergence = figure_8(contexts, names, seed, cost)
+    draws = figure_9(results, names, cost)
+    write_diagnostics(run_dir.name, convergence, draws)
 
 
 if __name__ == "__main__":
