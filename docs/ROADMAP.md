@@ -145,13 +145,14 @@ PR into `main`.
 **Exit:** no confusion between listed price and realised sale anywhere in code or outputs.
 
 ### S7 — Strategy comparator and risk metrics · branch `week/07-comparator`
-- [ ] Strategy A (open n = ⌊B / b⌋ boosters) and Strategy B (pre-registered target or basket). Strategy C (grading) excluded from main results.
-- [ ] Metrics with MC standard errors: net EV, median, P(loss), quantiles 5/25/75/95 %, VaR 5 %, CVaR 5 %, break-even booster price, P(target hit), expected packs to hit.
-- [ ] Runner: `pokequant run research/experiments/<config>.yaml` → `results/<run_id>/` (JSON + CSV + manifest) — this is also export F06.
+- [x] Strategy A (open n = ⌊B / b⌋ boosters) and Strategy B (pre-registered target or basket). Strategy C (grading) excluded from main results. *`comparator.py`; operational rules fixed before the run in [ADR 0011](decisions/0011-operational-comparison-rules.md).*
+- [x] Metrics with MC standard errors: net EV, median, P(loss), quantiles 5/25/75/95 %, VaR 5 %, CVaR 5 %, break-even booster price, P(target hit), expected packs to hit.
+- [x] Runner: `pokequant run research/experiments/<config>.yaml` → `results/<run_id>/` (JSON + CSV + manifest) — this is also export F06. *Report: [`results.md`](../research/reports/results.md).*
 
 **Deliverable:** reproducible comparison report.
 **Exit:** results exportable; assumptions editable in config only.
 **Gate G7:** if credible net prices cannot be integrated → no profitability conclusion is published.
+*Gate G7 passed (2026-11-15): net values use TCGplayer's published seller fees plus labelled shipping and haircut assumptions; the main conclusion (opening loses on average) already holds in the gross reference. Caveat: market prices are a provider aggregate, not observed sales → tested in S8. See [results.md](../research/reports/results.md) and paper draft §6.5.*
 
 ### S8 — Robustness and sensitivity · branch `week/08-robustness`
 - [ ] The seven robustness tests of protocol §7.2, plus prior sensitivity (Jeffreys vs uniform) and CI-bound scenarios.

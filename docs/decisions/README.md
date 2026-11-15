@@ -29,3 +29,4 @@ File name: `NNNN-short-title.md`. Template:
 | [0008](0008-canonical-identifiers.md) | Canonical identifiers | accepted |
 | [0009](0009-price-data-permission.md) | Price data permission (Gate G2 follow-up) | accepted |
 | [0010](0010-booster-model-and-prereg-v1-deviations.md) | Booster model choices and deviations from prereg-v1 | accepted |
+| [0011](0011-operational-comparison-rules.md) | Operational rules for strategy comparisons | accepted |

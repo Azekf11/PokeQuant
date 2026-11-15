@@ -33,6 +33,11 @@ def p_loss(profit: FloatArray) -> float:
     return float(np.mean(profit < 0))
 
 
+def p_gain(profit: FloatArray) -> float:
+    """P(Π > 0); in E2, P(K < a(c*)): opening was cheaper than buying."""
+    return float(np.mean(profit > 0))
+
+
 def _quantile(q: float) -> Callable[[FloatArray], float]:
     def metric(x: FloatArray) -> float:
         return float(np.quantile(x, q))
@@ -44,10 +49,42 @@ METRICS: dict[str, Callable[[FloatArray], float]] = {
     "mean": lambda x: float(np.mean(x)),
     "median": lambda x: float(np.median(x)),
     "p_loss": p_loss,
+    "p_gain": p_gain,
     **{f"q{int(q * 100):02d}": _quantile(q) for q in QUANTILES},
     "var05": var,
     "cvar05": cvar,
 }
+
+
+# +1: higher is better; -1: lower is better (ADR 0011, item 5).
+DIRECTION: dict[str, int] = {
+    **{name: 1 for name in METRICS},
+    "p_loss": -1,
+    "var05": -1,
+    "cvar05": -1,
+}
+
+
+def constant_metrics(value: float) -> dict[str, float]:
+    """Metrics of a deterministic profit (Strategy B)."""
+    out = {name: value for name in METRICS}
+    out.update(p_loss=float(value < 0), p_gain=float(value > 0), var05=-value, cvar05=-value)
+    return out
+
+
+def compare(a: FloatArray, b: FloatArray | float, direction: int) -> tuple[float, str]:
+    """Share of epistemic draws in which A is strictly better than B, and the verdict."""
+    a = np.asarray(a, dtype=np.float64)
+    b_arr = np.broadcast_to(np.asarray(b, dtype=np.float64), a.shape)
+    if np.array_equal(a, b_arr):
+        return 0.0, "tie"
+    share = float(np.mean(direction * (a - b_arr) > 0))
+    worse = float(np.mean(direction * (a - b_arr) < 0))
+    if share >= 0.90:
+        return share, "decisive: A"
+    if worse >= 0.90:
+        return share, "decisive: B"
+    return share, "undetermined"
 
 
 def batch_se(x: FloatArray, metric: Callable[[FloatArray], float], batches: int = 20) -> float:
