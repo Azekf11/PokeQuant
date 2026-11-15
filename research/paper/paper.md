@@ -1,6 +1,6 @@
 # Opening or Buying? A Probabilistic and Risk-Adjusted Comparison of Pokémon TCG Booster Acquisition and Secondary-Market Purchases
 
-**Azekf11** · Working paper · Code, data and configurations: <https://github.com/Azekf11/PokeQuant>
+**Anh-Vu TA** · Working paper, November 2026 · Code, data and configurations: <https://github.com/Azekf11/PokeQuant>, DOI [10.5281/zenodo.24251050](https://doi.org/10.5281/zenodo.24251050)
 
 # Abstract
 

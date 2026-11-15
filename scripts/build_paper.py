@@ -44,7 +44,8 @@ TITLE = (
     "Opening or Buying? A Probabilistic and Risk-Adjusted Comparison of Pokémon TCG "
     "Booster Acquisition and Secondary-Market Purchases"
 )
-AUTHOR = "Azekf11"
+AUTHOR = "Anh-Vu TA"
+DOI = "10.5281/zenodo.24251050"
 REPOSITORY = "https://github.com/Azekf11/PokeQuant"
 CHROME = (
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
@@ -166,8 +167,8 @@ def assemble() -> str:
             body.append("# References\n\n" + "\n\n".join(reference(e) for e in refs) + "\n")
         body.append(resolve(text, bib, cited).strip() + "\n")
     head = (
-        f"# {TITLE}\n\n**{AUTHOR}** · Working paper · Code, data and configurations: "
-        f"<{REPOSITORY}>\n\n"
+        f"# {TITLE}\n\n**{AUTHOR}** · Working paper, November 2026 · Code, data and "
+        f"configurations: <{REPOSITORY}>, DOI [{DOI}](https://doi.org/{DOI})\n\n"
     )
     return head + "\n".join(body)
 
