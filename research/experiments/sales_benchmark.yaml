@@ -1,0 +1,31 @@
+# Sale-price benchmark and weekly price panel: ADR 0014 (tag prereg-v3).
+# Fixed before any Cardmarket value of the three sets is analysed.
+name: sales_benchmark
+base_experiment: research/experiments/main.yaml   # sets, posterior, seed, cost scenarios
+sale_price:
+  venue: cardmarket
+  currency: EUR
+  statistic: avg30                 # Cardmarket: "average sale price over the last 30 days"
+  trend_statistic: trend           # within-venue comparison (Q2)
+fx:
+  source: ECB Data Portal
+  series: EXR.D.USD.EUR.SP00.A     # USD per EUR, euro reference rate
+  rule: last published day on or before the snapshot date
+q1:
+  booster_cost: 4.49               # USD, C1' and C2' threshold
+  scenarios: [central, gross]
+  min_hit_coverage: 0.80
+q2:
+  hit_pools: [double rare, ace spec rare, illustration rare, ultra rare, special illustration rare, hyper rare]
+  bootstrap_resamples: 10000
+  seed: 20261115
+  min_n: 5
+  haircuts_compared: [0.15, 0.27, 0.30]
+panel:
+  dates: [2026-11-15, 2026-11-22, 2026-11-29, 2026-12-06, 2026-12-13,
+          2026-12-20, 2026-12-27, 2027-01-03, 2027-01-10]
+  bases: [tcgplayer_market, cardmarket_avg30_usd]
+relay_check:
+  official_file: https://downloads.s3.cardmarket.com/productCatalog/priceGuide/price_guide_6.json
+  tolerance_eur: 0.01
+  flag_below: 0.95

@@ -201,6 +201,12 @@ PR into `main`.
 
 **Exit:** publication checklist validated.
 
+### Extension (after v1.0): sale-price benchmark and price panel · branch `feat/sales-benchmark`
+- [x] Pre-register the extension: [ADR 0014](decisions/0014-sale-price-benchmark-and-price-panel.md), tag `prereg-v3`.
+- [x] Benchmark on the 2026-11-15 snapshot: [research/reports/sales_benchmark.md](../research/reports/sales_benchmark.md).
+- [x] Weekly snapshots by GitHub Actions (`.github/workflows/price-panel.yml`), Sundays until 2027-01-10.
+- [ ] After the last snapshot: H4 across dates, paper version 2 with a separate section.
+
 ---
 
 ## 4. Weekly routine
