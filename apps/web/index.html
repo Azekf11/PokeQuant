@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Opening or Buying?</title>
+  <meta name="description" content="Reproducible, risk-adjusted comparison of opening Pokémon TCG boosters and buying cards directly.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <div class="wrap">
+      <p class="eyebrow">PokéQuant · research demo</p>
+      <h1>Opening or Buying?</h1>
+      <p class="lede">What it costs, on average and in bad cases, to open Pokémon TCG boosters
+        instead of buying cards directly. Results of a pre-registered Monte Carlo study.</p>
+    </div>
+  </header>
+
+  <div class="banner" role="note" id="banner">
+    <div class="wrap">
+      <strong>Read this first.</strong>
+      <span id="banner-text">Loading data…</span>
+    </div>
+  </div>
+
+  <main id="main" class="wrap">
+    <noscript><p class="warn">This page needs JavaScript to display the results.
+      The same numbers are in <code>research/reports/results.md</code> of the repository.</p></noscript>
+
+    <section class="step" aria-labelledby="s1">
+      <h2 id="s1"><span class="num">1</span> Choose a set</h2>
+      <div class="seg" role="radiogroup" aria-label="Set" id="set-picker"></div>
+      <p class="hint" id="set-hint"></p>
+    </section>
+
+    <section class="step" aria-labelledby="s2">
+      <h2 id="s2"><span class="num">2</span> Choose a cost scenario</h2>
+      <div class="seg" role="radiogroup" aria-label="Cost scenario" id="scenario-picker"></div>
+      <dl class="params" id="scenario-params"></dl>
+      <p class="hint" id="scenario-hint"></p>
+    </section>
+
+    <section class="step" aria-labelledby="s3">
+      <h2 id="s3"><span class="num">3</span> Break-even booster price</h2>
+      <p>Expected resale value of the cards in one booster, net of costs. Opening has a
+        positive expected profit only if a booster costs less than this.</p>
+      <div class="tiles" id="be-tiles"></div>
+      <details class="calc" id="calc" open>
+        <summary>Change the cost assumptions</summary>
+        <p class="hint">Recomputes the break-even price only (expected value). Risk metrics in steps 4–5
+          exist for the three pre-registered scenarios only.</p>
+        <div class="inputs">
+          <label>Booster price (USD)
+            <input type="number" id="in-booster" min="0" max="20" step="0.01"></label>
+          <label>Seller fee rate, all fees (%)
+            <input type="number" id="in-fee" min="0" max="30" step="0.25"></label>
+          <label>Liquidity haircut (%)
+            <input type="number" id="in-haircut" min="0" max="50" step="1"></label>
+          <label>Fixed cost per card sold, fee + shipping (USD)
+            <input type="number" id="in-fixed" min="0" max="6" step="0.05"></label>
+        </div>
+        <p class="result" id="calc-result" aria-live="polite"></p>
+        <figure class="chart">
+          <figcaption id="be-caption"></figcaption>
+          <div class="legend" id="be-legend"></div>
+          <div class="plot" id="be-chart"></div>
+          <p class="source" id="be-source"></p>
+        </figure>
+      </details>
+    </section>
+
+    <section class="step" aria-labelledby="s4">
+      <h2 id="s4"><span class="num">4</span> Spend a budget: open or buy?</h2>
+      <p><b>A</b> opens <i>n</i> boosters and sells every card worth selling.
+        <b>B</b> spends the same budget on the most expensive single cards that fit, then
+        sells them back. Π is the net profit in USD (negative = loss).</p>
+      <div class="seg" role="radiogroup" aria-label="Budget" id="budget-picker"></div>
+      <div class="table-wrap"><table id="e1-table"></table></div>
+      <figure class="chart">
+        <figcaption id="e1-caption"></figcaption>
+        <div class="legend" id="e1-legend"></div>
+        <div class="plot" id="e1-chart"></div>
+        <p class="source" id="e1-source"></p>
+      </figure>
+    </section>
+
+    <section class="step" aria-labelledby="s5">
+      <h2 id="s5"><span class="num">5</span> Chase one card: open until it appears, or buy it?</h2>
+      <p><b>A</b> opens boosters until the target card appears and sells the other cards;
+        after <i>n</i><sub>max</sub> boosters without it, A gives up and buys the card.
+        Π = price of the card − net cost of opening, so Π &gt; 0 means opening was cheaper.
+        <b>B</b> buys the card directly (Π = 0). Targets are named by rarity; their price is not shown.</p>
+      <div class="table-wrap"><table id="e2-table"></table></div>
+    </section>
+
+    <section class="step" aria-labelledby="s6">
+      <h2 id="s6"><span class="num">6</span> Hypotheses, limits and data</h2>
+      <div id="hyp"></div>
+      <h3>Limits</h3>
+      <ul class="limits">
+        <li>Prices are a provider's market estimate on one date, not observed sales.</li>
+        <li>Shipping costs and liquidity haircuts are assumptions, stated in step 2.</li>
+        <li>Pull rates come from community openings; their uncertainty is propagated (95 % intervals).</li>
+        <li>Three English-language sets, booster packs only, no grading. Results do not
+          generalise to other sets, dates or markets.</li>
+        <li>This is a research result, not financial advice.</li>
+      </ul>
+      <h3>Download</h3>
+      <p class="downloads">
+        <a href="data/results.json" download>All aggregates (JSON)</a>
+        <button type="button" id="dl-csv">Comparison table (CSV)</button>
+      </p>
+      <h3>Provenance</h3>
+      <dl class="params" id="provenance"></dl>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <p>PokéQuant · <a href="https://github.com/Azekf11/PokeQuant">source code, paper and data</a>.
+      Independent fan research project, not affiliated with The Pokémon Company, Nintendo,
+      Creatures or Game Freak.</p>
+  </footer>
+  <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+  <script src="data/results.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

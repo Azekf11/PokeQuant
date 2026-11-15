@@ -31,3 +31,4 @@ File name: `NNNN-short-title.md`. Template:
 | [0010](0010-booster-model-and-prereg-v1-deviations.md) | Booster model choices and deviations from prereg-v1 | accepted |
 | [0011](0011-operational-comparison-rules.md) | Operational rules for strategy comparisons | accepted |
 | [0012](0012-operational-robustness-tests.md) | Operational definitions of the robustness tests | accepted |
+| [0013](0013-static-web-demo.md) | Static web demo instead of a live API | accepted |
