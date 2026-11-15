@@ -2,7 +2,8 @@
 
 Bibliography: [`research/paper/references.bib`](../paper/references.bib)
 (40 verified entries). Each entry's `note` says what was actually read. As of
-2026-11-15 only one paper was read in full (Heck et al. 2026); everything else
+2026-11-15 three texts were read in full: Heck et al. (2026), and preprint
+versions of Acerbi & Tasche (2002) and Gordy & Juneja (2010). Everything else
 is abstract-level. **No claim in the paper may rest on an abstract we have not
 checked against the full text.**
 
@@ -74,9 +75,13 @@ and uncertainty.
 ## 5. To do before freezing the novelty claim
 
 - [ ] Read Mota (2026) in full — closest work (SSRN PDF, normal browser).
+      *2026-11-15: SSRN refuses automated download (HTTP 403); no other copy
+      found. Author action: download it in a browser.*
 - [ ] Read Baro (2026) and Sharma (2026) in full (SSRN).
 - [ ] Danz (2026) is restricted: ask the author for a copy.
 - [ ] Finish the Discussion of Heck et al. (2026).
 - [ ] Read in full at least the core method references used in §4 of the paper:
       Acerbi & Tasche 2002, Rockafellar & Uryasev 2002, Brown et al. 2001,
-      Gordy & Juneja 2010.
+      Gordy & Juneja 2010. *2026-11-15: Acerbi & Tasche (arXiv preprint v5)
+      and Gordy & Juneja (FEDS working paper 2008-21) read in full; the two
+      others are still abstract or landing page only.*

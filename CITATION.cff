@@ -10,7 +10,9 @@ authors:
   - alias: "Azekf11"
 repository-code: "https://github.com/Azekf11/PokeQuant"
 license: MIT
-version: 0.0.1
+version: 1.0.0
+date-released: "2026-11-15"
+url: "https://azekf11.github.io/PokeQuant/"
 keywords:
   - Monte Carlo simulation
   - collectibles

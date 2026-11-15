@@ -20,6 +20,16 @@ opening has a positive expected net profit:
   uncommons, rares and most reverse holos contribute nothing.
 - **Adverse scenario**: between 0.52 and 0.78.
 
+Figure 3 shows why. In the central scenario, 79 % to 86 % of simulated packs
+contain no card worth selling, and the value of opening comes from a thin
+tail of rare hits. Figure 5 turns this into a probability of loss as a
+function of the booster price: even at 2 USD a pack, opening 36 packs loses
+money in most runs.
+
+![Figure 3. Distribution of the value of one pack (complementary CDF, log scales), at the posterior-mean pull rates. Left: gross market values; right: central net values. Packs with zero net value are not shown on the right.](../figures/fig3_pack_value.png)
+
+![Figure 5. Probability that opening n packs loses money, as a function of the booster price, central costs. Dashed line: 4.49 USD.](../figures/fig5_ploss_price.png)
+
 ## 6.2 E1: opening a budget and selling everything
 
 **Opening loses money on average.** In the central scenario, for every set
@@ -32,6 +42,28 @@ still, and the probability of a loss is between 0.87 and 1.00.
 B buys the most expensive cards that fit the budget and sells them back,
 which costs 46 to 51 for the same 36-booster budget. That is less than half
 the expected loss of opening.
+
+**Table 3.** Central scenario, budget of 36 boosters (161.64 USD) and
+break-even price. Posterior mean [95 % interval] over 200 pull-rate draws.
+Verdicts on mean / median / CVaR 5 %.
+
+| | Stellar Crown | Surging Sparks | Destined Rivals |
+|---|---|---|---|
+| Break-even booster price b* | 1.42 [1.35, 1.49] | 1.03 [0.95, 1.12] | 1.13 [1.04, 1.22] |
+| A: mean Π | −110.56 [−113.33, −107.88] | −124.56 [−127.74, −121.32] | −120.97 [−124.35, −117.55] |
+| A: median Π | −128.39 [−131.93, −124.88] | −139.55 [−140.94, −138.12] | −138.36 [−140.12, −136.25] |
+| A: P(loss) | 0.980 [0.975, 0.984] | 0.955 [0.946, 0.963] | 0.957 [0.949, 0.966] |
+| A: CVaR 5 % | 157.33 [156.86, 157.78] | 159.39 [159.01, 159.71] | 160.15 [159.90, 160.45] |
+| B: Π (buy and resell) | −48.55 | −50.60 | −46.48 |
+| Verdict | B / B / B | B / B / B | B / B / B |
+
+The complete tables, for every budget and scenario, are in
+`research/reports/results.md`. Figure 4 shows the whole distribution for this
+budget and Figure 7 the trade-off between mean and tail risk across budgets.
+
+![Figure 4. Cumulative distribution of the net profit of opening 36 boosters (central scenario), against the fixed profit of buying with the same budget.](../figures/fig4_profit_cdf.png)
+
+![Figure 7. Mean net profit against CVaR 5 % for each budget, central scenario. A: posterior mean over 200 draws; B: deterministic. Up and left is better.](../figures/fig7_mean_cvar.png)
 
 **The verdicts:**
 
