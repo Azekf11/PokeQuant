@@ -5,7 +5,9 @@ slot by slot for many runs at a time. Only per-pack *values* are accumulated,
 never the full list of cards, so memory stays linear in the number of packs.
 
 Card values are supplied by the caller as one number per printing (e.g. the
-liquidation value l(c) of S6); the engine itself knows nothing about prices.
+liquidation value l(c) of S6), or as a matrix with one column per cost scenario:
+every column is then valued on the same simulated openings (common random
+numbers). The engine itself knows nothing about prices.
 """
 
 from __future__ import annotations
@@ -104,14 +106,18 @@ def open_packs(cm: CompiledModel, rng: np.random.Generator, n: int) -> IntArray:
 def pack_values(
     cm: CompiledModel, values: FloatArray, rng: np.random.Generator, n: int, chunk: int = 200_000
 ) -> FloatArray:
-    """Total value of each of ``n`` packs."""
-    if values.shape != (len(cm.printing_ids),):
-        raise ValueError("need one value per printing of the compiled model")
-    out = np.empty(n, dtype=np.float64)
+    """Total value of each of ``n`` packs, shape (n,) or (n, k) for k value columns."""
+    _check_values(cm, values)
+    out = np.empty((n, *values.shape[1:]), dtype=np.float64)
     for start in range(0, n, chunk):
         stop = min(start + chunk, n)
         out[start:stop] = values[open_packs(cm, rng, stop - start)].sum(axis=1)
     return out
+
+
+def _check_values(cm: CompiledModel, values: FloatArray) -> None:
+    if values.ndim not in (1, 2) or values.shape[0] != len(cm.printing_ids):
+        raise ValueError("need one value (row) per printing of the compiled model")
 
 
 def slot_card_probabilities(cm: CompiledModel) -> FloatArray:
@@ -137,9 +143,10 @@ def sum_pack_values(
     independent slots drawn with replacement (it ignores A-CU, whose effect is
     checked numerically in the validation report).
     """
+    _check_values(cm, values)
     probs = slot_card_probabilities(cm)
     n_packs = np.asarray(n_packs, dtype=np.int64)
-    out = np.zeros(len(n_packs))
+    out = np.zeros((len(n_packs), *values.shape[1:]))
     for lo in range(0, len(n_packs), chunk_runs):
         m = n_packs[lo : lo + chunk_runs]
         for row in probs:
@@ -166,7 +173,7 @@ def simulate_e1(
     rng: np.random.Generator,
     *,
     n_packs: int,
-    booster_cost: float,
+    booster_cost: float | FloatArray,
     runs: int,
     exact_packs: bool = False,
 ) -> FloatArray:
@@ -178,10 +185,11 @@ def simulate_e1(
     if n_packs < 1 or runs < 1:
         raise ValueError("need at least one pack and one run")
     if exact_packs:
-        totals = pack_values(cm, values, rng, runs * n_packs).reshape(runs, n_packs).sum(axis=1)
+        per_pack = pack_values(cm, values, rng, runs * n_packs)
+        totals = per_pack.reshape(runs, n_packs, *values.shape[1:]).sum(axis=1)
     else:
         totals = sum_pack_values(cm, values, rng, np.full(runs, n_packs, dtype=np.int64))
-    return totals - n_packs * booster_cost
+    return totals - n_packs * np.asarray(booster_cost, dtype=np.float64)
 
 
 # --- E2: target acquisition --------------------------------------------------
@@ -231,8 +239,8 @@ def simulate_e2(
     rng: np.random.Generator,
     *,
     target: str,
-    booster_cost: float,
-    target_price: float,
+    booster_cost: float | FloatArray,
+    target_price: float | FloatArray,
     n_max: int,
     runs: int,
 ) -> tuple[FloatArray, IntArray]:
@@ -258,5 +266,8 @@ def simulate_e2(
         hit_value = values[cards].sum(axis=1) - values[split.target]
         other_value[hit] += hit_value
     opened = np.where(hit, k, n_max)
-    cost = opened * booster_cost - other_value + np.where(hit, 0.0, target_price)
+    shape = (runs,) + (1,) * (values.ndim - 1)  # broadcast over value columns
+    b = np.asarray(booster_cost, dtype=np.float64)
+    a = np.asarray(target_price, dtype=np.float64)
+    cost = opened.reshape(shape) * b - other_value + np.where(hit.reshape(shape), 0.0, a)
     return cost, opened

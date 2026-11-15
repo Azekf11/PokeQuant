@@ -4,10 +4,11 @@
 comparison of Pokémon TCG booster opening versus direct purchase on the
 secondary market.
 
-> **Status: week 7 — strategy comparator.** Protocol pre-registered in two
-> stages (tags `prereg-v1`, `prereg-v2`); booster model specified; Monte Carlo
-> engine validated against closed-form results; valuation model v1 in place;
-> no economic result has been computed yet. See the
+> **Status: week 8 — robustness.** Protocol pre-registered in two stages
+> (tags `prereg-v1`, `prereg-v2`); Monte Carlo engine validated; first results
+> of the main experiment in
+> [research/reports/results.md](research/reports/results.md), before
+> robustness tests. See the
 > [roadmap](docs/ROADMAP.md).
 
 ## Research question

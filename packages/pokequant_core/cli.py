@@ -1,4 +1,4 @@
-"""Command-line entry point: ``pokequant ingest ...``."""
+"""Command-line entry point: ``pokequant ingest ...`` and ``pokequant run <config>``."""
 
 from __future__ import annotations
 
@@ -21,11 +21,33 @@ def _parser() -> argparse.ArgumentParser:
     ingest.add_argument("--sets", required=True, help="comma-separated TCGdex set IDs")
     ingest.add_argument("--offline", action="store_true", help="use only cached raw files")
     ingest.add_argument("--root", type=Path, default=Path.cwd(), help="repository root")
+    run = commands.add_parser("run", help="run an experiment config and write its results")
+    run.add_argument(
+        "config", type=Path, help="experiment YAML, e.g. research/experiments/main.yaml"
+    )
+    run.add_argument("--root", type=Path, default=Path.cwd(), help="repository root")
+    run.add_argument("--out", type=Path, default=Path("results"), help="results folder")
+    run.add_argument("--draws", type=int, help="override epistemic draws (smoke tests)")
+    run.add_argument("--runs", type=int, help="override aleatory runs per draw (smoke tests)")
+    run.add_argument("--workers", type=int, help="worker processes (default: CPU count)")
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(argv)
+    if args.command == "run":
+        from pokequant_core.experiment_run import run_experiment
+
+        out = run_experiment(
+            args.config,
+            root=args.root,
+            out=args.out,
+            draws=args.draws,
+            runs=args.runs,
+            workers=args.workers,
+        )
+        print(f"wrote {out}")
+        return 0
     sets = [s.strip() for s in args.sets.split(",") if s.strip()]
     try:
         with CachedClient(offline=args.offline) as client:
