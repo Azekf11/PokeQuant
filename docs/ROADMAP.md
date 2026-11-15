@@ -168,21 +168,21 @@ PR into `main`.
 *Gate G8 passed (2026-11-15): C1 and C3 hold in every robustness variant; C2 fails once (Stellar Crown, gross break-even price under indicative asking-price statistics, R1). H2 is supported but fragile (lost with 1,000 runs per draw). Assessment against protocol §10 in paper draft §7.5. Analysis frozen at tag `analysis-v1`.*
 
 ### S9 — API and minimal web · branch `week/09-web`
-- [ ] `apps/api/` FastAPI: sets, pull rates, simulate (bounded N), compare, export; OpenAPI contract.
-- [ ] `apps/web/` React + TypeScript + Plotly: the six steps of the minimal user journey; provenance, dates, uncertainty and limitation banners always visible.
-- [ ] Fallback if late: static site reading precomputed results (no live backend).
+- [x] ~~`apps/api/` FastAPI~~ → no live API for v1: a public `simulate` endpoint would expose card prices that ADR 0009 keeps private → [ADR 0013](decisions/0013-static-web-demo.md).
+- [x] `apps/web/`: static page (HTML, CSS, JavaScript; no build step, no third-party script) with the six steps of the minimal user journey; provenance, dates, uncertainty and limitation banner always visible. *Editable costs recompute the break-even price from a grid of derived statistics.*
+- [x] Fallback taken as the plan (ADR 0013): the page reads aggregates exported by `scripts/export_web.py`.
 
-**Deliverable:** documented API + web prototype.
-**Exit:** full MVP user journey works end to end.
+**Deliverable:** web prototype + export script.
+**Exit:** full MVP user journey works end to end. *Checked by the Playwright journey test (S10).*
 
-### S10 — QA, security, documentation · branch `week/10-qa`
-- [ ] Playwright journey test; API tests (validation, limits, errors, no secret leakage).
-- [ ] Rate limiting, CORS, input bounds, dependency audit, secret scanning.
-- [ ] Docker Compose for a local demo; README screenshots.
-- [ ] `research/reports/qa.md`.
+### S10 — QA, security, documentation · branch `week/09-web` (merged with S9)
+- [x] Playwright journey test (system Chrome, in CI). *API tests do not apply: there is no API (ADR 0013).*
+- [x] ~~Rate limiting, CORS~~ (no backend); strict Content-Security-Policy, no third-party script, input bounds, dependency audit (pip-audit, npm audit, in CI), secret scanning (gitleaks).
+- [x] Docker Compose for a local demo (`compose.yaml`); README screenshot.
+- [x] [`research/reports/qa.md`](../research/reports/qa.md).
 
 **Deliverable:** release candidate `v1.0.0-rc1`.
-**Exit:** no secret in client; quotas; errors handled.
+**Exit:** no secret in client; quotas; errors handled. *No quota needed without a backend.*
 **Gate G10:** if security, licences or reproducibility are not satisfactory → delay public release.
 
 ### S11 — Working paper · branch `week/11-paper`

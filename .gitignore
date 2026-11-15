@@ -42,3 +42,8 @@ results/
 
 # Obsidian vault settings (personal)
 .obsidian/
+
+# Web demo test tooling
+apps/web/node_modules/
+apps/web/test-results/
+apps/web/playwright-report/
