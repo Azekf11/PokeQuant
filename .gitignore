@@ -27,6 +27,9 @@ htmlcov/
 data/raw/*
 data/processed/*
 !data/raw/.gitkeep
+# Allow-listed sources (see ADR):
+# ADR 0006 — Poké Life registry, CC BY 4.0
+!data/raw/pokelife/
 !data/processed/.gitkeep
 
 # Simulation outputs (regenerable)
@@ -36,3 +39,6 @@ results/
 .DS_Store
 .idea/
 .vscode/
+
+# Obsidian vault settings (personal)
+.obsidian/

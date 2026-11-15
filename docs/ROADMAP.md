@@ -90,13 +90,14 @@ PR into `main`.
 **Exit:** question, hypotheses, scope and variables frozen → tag `prereg-v1`.
 
 ### S2 — Data audit · branch `week/02-data-audit`
-- [ ] Snapshot the Poké Life registry into `data/raw/pokelife/<YYYY-MM-DD>/` with SHA-256 checksums and attribution (CC BY 4.0 allows redistribution with attribution — confirm, then allow-list it in `.gitignore`).
-- [ ] Compare Pokémon TCG API and TCGdex for coverage of candidate sets → ADR choosing the catalogue source.
-- [ ] Inventory freely accessible price data: which price *types* (listing / provider market / sold / window median), currencies, conditions, dates, display and publication rights.
-- [ ] Coverage matrix per candidate set: pull-rate sample size N, slot documentation, % of cards priced, price type → select 1–3 sets by a rule written *before* looking at prices → ADR.
-- [ ] *(parallel, A3)* `pokequant_core.model`: `Slot`, `BoosterModel` types + a synthetic toy set in `tests/fixtures/`.
+- [x] Snapshot the Poké Life registry into `data/raw/pokelife/2026-11-13/` with SHA-256 checksums and attribution; allow-listed in `.gitignore` → [ADR 0006](decisions/0006-pull-rate-and-catalogue-sources.md).
+- [x] Catalogue source: TCGdex (Pokémon TCG API is shutting down) → ADR 0006.
+- [x] Inventory freely accessible price data: types, currencies, rights (S1 register + presence check; no realised-sale prices available).
+- [x] Coverage matrix and selection by a rule committed *before* looking at data → [ADR 0005](decisions/0005-set-selection-rule.md). **Selected: Destined Rivals (sv10), Surging Sparks (sv08), Stellar Crown (sv07).**
+- [x] *(parallel, A3)* `pokequant_core.model`: `Slot`, `BoosterModel`, closed-form `p_card_in_slot` / `p_hit` + synthetic toy set in `tests/fixtures/`.
+- [x] Author decision on Gate G2: **conditional GO** → [ADR 0007](decisions/0007-gate-g2-price-data.md). Price-rights answers needed by end of S5.
 
-**Deliverable:** `research/reports/data_audit.md` + versioned sample.
+**Deliverable:** [`research/reports/data_audit.md`](../research/reports/data_audit.md) + versioned sample.
 **Exit:** every field has a source, a date and a licence/condition.
 **Gate G2:** if usable, legally reusable price data is insufficient → switch to a simulation study plus a limited case study. Never invent data.
 
@@ -124,6 +125,7 @@ PR into `main`.
 **Gate G4:** if the booster structure is not documented → model only observable slots and present unknowns as scenarios. Never fabricate an exact distribution.
 
 ### S5 — Monte Carlo engine and validation · branch `week/05-monte-carlo`
+- [ ] **ADR 0007 deadline:** record the price-data decision (P1 / P2 / fallback P4) before S6 starts.
 - [ ] Vectorised NumPy engine; `numpy.random.Generator(PCG64)` seeded through `SeedSequence`; nested loops (A5).
 - [ ] Every run writes a `SimulationRun` manifest: seed, N, model version, data snapshot IDs, parameters, timestamp.
 - [ ] Validation: one-slot two-card toy case vs exact mean/variance; simulated frequencies vs theory; hit counts vs binomial; error decay ∝ 1/√N for N = 10³…10⁶; reproducibility (same seed + data + model ⇒ identical output).

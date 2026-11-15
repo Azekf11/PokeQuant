@@ -4,8 +4,9 @@
 comparison of Pokémon TCG booster opening versus direct purchase on the
 secondary market.
 
-> **Status: week 0 — repository bootstrap.** No data has been collected and no
-> result has been computed yet. See the [roadmap](docs/ROADMAP.md).
+> **Status: week 2 — data audit.** Protocol pre-registered (tag `prereg-v1`);
+> sets selected; no economic result has been computed yet. See the
+> [roadmap](docs/ROADMAP.md).
 
 ## Research question
 
@@ -35,7 +36,8 @@ Details: [research protocol](research/protocol/protocol.md) ·
 
 ```
 packages/pokequant_core/   Python engine (importable package)
-tests/                     Automated tests
+tests/                     Automated tests (+ synthetic toy data in tests/fixtures/)
+scripts/                   Reproducible audit and research scripts
 data/                      raw/ (immutable snapshots) · processed/ · manifests/ (provenance, licences)
 research/protocol/         Research protocol, model specification
 research/                  experiments/, reports/, paper/ are added in the week that needs them

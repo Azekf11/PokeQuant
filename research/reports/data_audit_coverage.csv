@@ -1,0 +1,37 @@
+rank,pokelife_id,name,tcgdex_id,release_date,packs,rarity_rows,share_not_reconstructed,share_high_confidence,catalogue_expected,catalogue_found,rare_plus_cards,rare_plus_priced,price_coverage,eligible,failures
+1,destined-rivals,Destined Rivals,sv10,2025-05-30,12446,5,0.00,1.00,244,244,97,97,1.000,True,
+2,surging-sparks,Surging Sparks,sv08,2024-11-08,11254,6,0.00,1.00,252,252,103,103,1.000,True,
+3,stellar-crown,Stellar Crown,sv07,2024-09-13,10800,6,0.00,1.00,175,175,65,65,1.000,True,
+4,journey-together,Journey Together,sv09,2025-03-28,9099,5,0.00,1.00,190,190,63,63,1.000,True,
+5,scarlet-violet,Scarlet & Violet,sv01,2023-03-31,8897,5,0.00,1.00,258,258,93,93,1.000,True,
+6,paradox-rift,Paradox Rift,sv04,2023-11-03,8816,5,0.00,1.00,266,266,131,131,1.000,True,
+7,obsidian-flames,Obsidian Flames,sv03,2023-08-11,8794,5,0.00,1.00,230,230,64,64,1.000,True,
+8,temporal-forces,Temporal Forces,sv05,2024-03-22,8727,6,0.00,1.00,218,218,92,92,1.000,True,
+9,paldea-evolved,Paldea Evolved,sv02,2023-06-09,8706,5,0.00,1.00,279,279,128,128,1.000,True,
+10,twilight-masquerade,Twilight Masquerade,sv06,2024-05-24,8977,6,0.00,0.83,226,226,95,95,1.000,True,
+11,chaos-rising,Chaos Rising,me04,2026-05-22,13819,5,0.00,0.80,122,122,58,58,1.000,True,
+12,phantasmal-flames,Phantasmal Flames,me02,2025-11-14,10329,5,0.00,0.80,130,130,56,56,1.000,True,
+13,pitch-black,Pitch Black,me05,2026-07-17,5940,5,0.00,0.80,120,120,57,57,1.000,True,
+14,mega-evolution,Mega Evolution,me01,2025-09-26,6288,5,0.00,0.60,188,188,78,78,1.000,True,
+15,30th-celebration,30th Celebration,30th,2026-09-16,5409,5,0.00,0.60,161,161,93,93,1.000,True,
+,chilling-reign,Chilling Reign,,,25674,8,1.00,0.88,,0,0,0,,False,C2 not in SV/ME series
+,battle-styles,Battle Styles,,,20195,6,1.00,0.83,,0,0,0,,False,C2 not in SV/ME series
+,brilliant-stars,Brilliant Stars,,,10000,5,0.00,1.00,,0,0,0,,False,C2 not in SV/ME series
+,evolving-skies,Evolving Skies,,,8863,7,0.00,0.86,,0,0,0,,False,C2 not in SV/ME series
+,astral-radiance,Astral Radiance,,,8000,10,0.00,0.90,,0,0,0,,False,C2 not in SV/ME series
+,lost-origin,Lost Origin,,,8000,12,0.00,0.92,,0,0,0,,False,C2 not in SV/ME series
+,silver-tempest,Silver Tempest,,,8000,12,0.00,0.92,,0,0,0,,False,C2 not in SV/ME series
+,perfect-order,Perfect Order,me03,,4969,5,0.00,0.80,,0,0,0,,False,C3 packs < 5000
+,fusion-strike,Fusion Strike,,,4000,7,0.00,0.43,,0,0,0,,False,C2 not in SV/ME series
+,vivid-voltage,Vivid Voltage,,,3696,7,1.00,0.57,,0,0,0,,False,C2 not in SV/ME series
+,ascended-heroes,Ascended Heroes,me02.5,,2248,6,0.00,0.67,,0,0,0,,False,C3 packs < 5000
+,sword-shield,Sword & Shield,,,2160,7,1.00,0.29,,0,0,0,,False,C2 not in SV/ME series
+,delta-reign,Delta Reign,me06,,2152,5,1.00,0.60,,0,0,0,,False,C3 packs < 5000
+,crown-zenith,Crown Zenith,,,1900,11,0.00,0.64,,0,0,0,,False,C2 not in SV/ME series
+,151,151,sv03.5,,1813,6,0.00,0.67,,0,0,0,,False,C3 packs < 5000
+,paldean-fates,Paldean Fates,sv04.5,,1809,7,0.00,0.71,,0,0,0,,False,C3 packs < 5000
+,prismatic-evolutions,Prismatic Evolutions,sv08.5,,1273,7,0.00,0.71,,0,0,0,,False,C3 packs < 5000
+,shrouded-fable,Shrouded Fable,sv06.5,,1008,6,1.00,0.67,,0,0,0,,False,C3 packs < 5000
+,pokemon-go,Pokémon GO,,,1000,9,1.00,0.22,,0,0,0,,False,C2 not in SV/ME series
+,black-bolt,Black Bolt,sv10.5b,,720,6,1.00,0.50,,0,0,0,,False,C3 packs < 5000
+,white-flare,White Flare,sv10.5w,,720,6,1.00,0.50,,0,0,0,,False,C3 packs < 5000

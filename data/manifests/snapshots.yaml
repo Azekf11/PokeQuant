@@ -1,0 +1,22 @@
+# Immutable raw snapshots committed to the repository.
+# Checksums are verified by the ingestion pipeline (S3).
+
+snapshots:
+  - source: pokelife
+    version: "2026-11-13"
+    path: data/raw/pokelife/2026-11-13/
+    licence: CC BY 4.0
+    attribution: >-
+      Poké Life, "Pokémon TCG pull-rate evidence registry,"
+      https://www.poke-life.com/data/ (accessed 2026-11-15). CC BY 4.0.
+    fetched_at: "2026-11-15"
+    files:
+      - name: pull-rates.csv
+        url: https://www.poke-life.com/data/v/2026-11-13/pull-rates.csv
+        sha256: 072420a9f5dba3c0db92a064f746d2099076c27b48f1e6eda2c426b548c91555
+      - name: datasets.csv
+        url: https://www.poke-life.com/data/v/2026-11-13/datasets.csv
+        sha256: a9fc2ac47aa23643db0d7a30601e127a0d5340eb2dc2216f9af294e17fb9c2cb
+      - name: evidence.json
+        url: https://www.poke-life.com/data/evidence.json  # latest URL; no dated version exists
+        sha256: c153a195932489bc1903e78716adeb18f7e2167e77013152378bf40ee3974614

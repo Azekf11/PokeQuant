@@ -1,0 +1,20 @@
+{
+  "_comment": "Synthetic toy booster for tests. Not a real product: names, rarities and probabilities are invented and redistributable.",
+  "product_id": "toy-booster",
+  "set_id": "toy",
+  "version": "toy-1",
+  "assumptions": [
+    "Slots are independent.",
+    "Within a rarity, every card is equally likely."
+  ],
+  "cards_by_rarity": {
+    "common": ["toy-001", "toy-002", "toy-003", "toy-004"],
+    "rare": ["toy-005", "toy-006"],
+    "hit": ["toy-007"]
+  },
+  "slots": [
+    {"slot_id": "common-1", "outcomes": {"common": 1.0}},
+    {"slot_id": "common-2", "outcomes": {"common": 1.0}},
+    {"slot_id": "rare", "outcomes": {"rare": 0.9, "hit": 0.1}}
+  ]
+}

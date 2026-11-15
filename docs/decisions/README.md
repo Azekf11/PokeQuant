@@ -23,3 +23,6 @@ File name: `NNNN-short-title.md`. Template:
 | [0002](0002-code-license.md) | Code licence | accepted |
 | [0003](0003-amendments-to-plan-v1.md) | Amendments to the v1.0 plan | accepted |
 | [0004](0004-publication-route.md) | Publication route | accepted |
+| [0005](0005-set-selection-rule.md) | Set selection rule | accepted |
+| [0006](0006-pull-rate-and-catalogue-sources.md) | Pull-rate and catalogue sources | accepted |
+| [0007](0007-gate-g2-price-data.md) | Gate G2: price data | accepted |

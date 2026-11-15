@@ -1,0 +1,235 @@
+set_id,set_name,rarity_id,rarity,cards_in_rarity,hits,packs,rate,ci95_lower,ci95_upper,confidence,counts_reconstructed,datasets
+151,151,double-rare,Double Rare,12,238,1795,0.1328,0.117498,0.148867,high,true,MEW-001
+151,151,illustration-rare,Illustration Rare,16,153,1795,0.085,0.072986,0.098824,high,true,MEW-001
+151,151,ultra-rare,Ultra Rare,16,117,1813,0.0644,0.053913,0.076543,high,true,MEW-001
+151,151,special-illustration-rare,Special Illustration Rare,7,56,1809,0.0311,0.023709,0.039703,moderate,true,MEW-001
+151,151,hyper-rare,Hyper Rare,3,35,1784,0.0194,0.013937,0.026856,moderate,true,MEW-001
+151,151,holo-energy,Holo Energy,,445,1792,0.2483,0.22874,0.268724,high,true,MEW-001
+30th-celebration,30th Celebration,double-rare,Double Rare,12,1178,5409,0.227957,0.192046,0.267154,high,true,30C-001 30C-002
+30th-celebration,30th Celebration,illustration-rare,Illustration Rare,18,844,4293,0.196599,0.184917,0.20869,high,true,30C-001 30C-002
+30th-celebration,30th Celebration,classic-collection,Classic Collection,30,445,4292,0.103681,0.094829,0.113068,high,true,30C-001 30C-002
+30th-celebration,30th Celebration,special-illustration-rare,Special Illustration Rare,10,229,4309,0.056739,0.041352,0.075804,moderate,true,30C-001 30C-002
+30th-celebration,30th Celebration,futuristic-rare,Futuristic Rare,2,37,4343,0.008519,0.006102,0.011591,moderate,true,30C-001 30C-002
+ascended-heroes,Ascended Heroes,double-rare,Double Rare,39,439,2156,0.2037,0.187024,0.221006,high,true,ASC-001
+ascended-heroes,Ascended Heroes,illustration-rare,Illustration Rare,33,244,2168,0.1125,0.099761,0.126365,high,true,ASC-001
+ascended-heroes,Ascended Heroes,ultra-rare,Ultra Rare,14,104,2171,0.0481,0.039516,0.057497,high,true,ASC-001
+ascended-heroes,Ascended Heroes,mega-attack-rare,Mega Attack Rare,7,75,2170,0.0347,0.027486,0.042878,high,true,ASC-001
+ascended-heroes,Ascended Heroes,special-illustration-rare,Special Illustration Rare,22,31,2181,0.0144,0.009867,0.019847,moderate,true,ASC-001
+ascended-heroes,Ascended Heroes,mega-hyper-rare,Mega Hyper Rare,2,4,2248,0.0019,0.000601,0.004225,limited,true,ASC-001
+astral-radiance,Astral Radiance,pokemon-v,Pokémon V,19,1022,8000,0.1277,0.12057,0.135199,high,true,ASR-001
+astral-radiance,Astral Radiance,vmax-vstar,VMAX or VSTAR,9,278,8000,0.0347,0.030903,0.038933,high,true,ASR-001
+astral-radiance,Astral Radiance,full-art-v,Full-art Pokémon V,15,170,8000,0.0213,0.018261,0.024586,high,true,ASR-001
+astral-radiance,Astral Radiance,full-art-trainer,Full-art Trainer,9,86,8000,0.0108,0.008663,0.01319,high,true,ASR-001
+astral-radiance,Astral Radiance,alt-art-v,Alternate-art Pokémon V,6,59,8000,0.0074,0.005673,0.009433,moderate,true,ASR-001
+astral-radiance,Astral Radiance,rainbow-rare,Rainbow Rare,18,102,8000,0.0128,0.010464,0.015388,high,true,ASR-001
+astral-radiance,Astral Radiance,gold-rare,Gold Rare,9,61,8000,0.0076,0.005892,0.009714,high,true,ASR-001
+astral-radiance,Astral Radiance,trainer-gallery,Trainer Gallery (any),30,1006,8000,0.1258,0.11862,0.133151,high,true,ASR-001
+astral-radiance,Astral Radiance,tg-non-v,Trainer Gallery: non-V Pokémon,12,678,8000,0.0848,0.078797,0.091003,high,true,ASR-001
+astral-radiance,Astral Radiance,tg-v-trainer,"Trainer Gallery: V, VMAX or Trainer",18,328,8000,0.041,0.03682,0.045512,high,true,ASR-001
+battle-styles,Battle Styles,full-art-v,Full-art Pokémon V,12,364,20195,0.018024,0.016258,0.019929,high,false,BST-001
+battle-styles,Battle Styles,full-art-trainer,Full-art Trainer,6,287,20195,0.014211,0.012648,0.015914,high,false,BST-001
+battle-styles,Battle Styles,alt-art-v,Alternate-art Pokémon V,4,129,20195,0.006388,0.005358,0.007558,high,false,BST-001
+battle-styles,Battle Styles,rainbow-rare,Rainbow Rare,12,224,20195,0.011092,0.009717,0.012607,high,false,BST-001
+battle-styles,Battle Styles,alt-art-vmax,Alternate-art Pokémon VMAX,2,29,20195,0.001436,0.000982,0.002032,moderate,false,BST-001
+battle-styles,Battle Styles,gold-rare,Gold Rare,6,191,20195,0.009458,0.008192,0.010864,high,false,BST-001
+black-bolt,Black Bolt,poke-ball-pattern,Poké Ball pattern,80,220,720,0.305556,0.27274,0.339931,high,false,BLK-001
+black-bolt,Black Bolt,double-rare,Double Rare,6,152,720,0.211111,0.182497,0.242042,high,false,BLK-001
+black-bolt,Black Bolt,ultra-rare,Ultra Rare,8,42,720,0.058333,0.042958,0.077249,moderate,false,BLK-001
+black-bolt,Black Bolt,master-ball-pattern,Master Ball pattern,72,37,720,0.051389,0.037026,0.069346,moderate,false,BLK-001
+black-bolt,Black Bolt,illustration-rare,Illustration Rare,69,118,720,0.163889,0.138223,0.19225,high,false,BLK-001
+black-bolt,Black Bolt,special-illustration-rare,Special Illustration Rare,7,9,720,0.0125,0.006203,0.022689,limited,false,BLK-001
+brilliant-stars,Brilliant Stars,full-art-trainer,Full-art Trainer,6,185,10000,0.018519,0.015996,0.021282,high,true,BRS-001
+brilliant-stars,Brilliant Stars,rainbow-rare,Rainbow Rare,8,196,10000,0.019608,0.01702,0.022458,high,true,BRS-001
+brilliant-stars,Brilliant Stars,gold-rare,Gold Rare,6,109,10000,0.01087,0.009004,0.013079,high,true,BRS-001
+brilliant-stars,Brilliant Stars,tg-non-v,Trainer Gallery: non-V Pokémon,12,1250,10000,0.125,0.118627,0.13159,high,true,BRS-001
+brilliant-stars,Brilliant Stars,tg-v-trainer,"Trainer Gallery: V, VMAX or Trainer",18,556,10000,0.055556,0.051237,0.06022,high,true,BRS-001
+chaos-rising,Chaos Rising,double-rare,Double Rare,10,2817,13739,0.205037,0.198348,0.211849,high,true,CRI-001 CRI-002 CRI-003
+chaos-rising,Chaos Rising,illustration-rare,Illustration Rare,11,1509,13796,0.10938,0.104253,0.11467,high,true,CRI-001 CRI-002 CRI-003
+chaos-rising,Chaos Rising,ultra-rare,Ultra Rare,18,1167,13819,0.084449,0.0799,0.089172,high,true,CRI-001 CRI-002 CRI-003
+chaos-rising,Chaos Rising,special-illustration-rare,Special Illustration Rare,6,166,13817,0.012014,0.010298,0.013935,high,true,CRI-001 CRI-002 CRI-003
+chaos-rising,Chaos Rising,mega-hyper-rare,Mega Hyper Rare,1,12,12969,0.000925,0.000506,0.001567,limited,true,CRI-001 CRI-002 CRI-003
+chilling-reign,Chilling Reign,pokemon-v,Pokémon V,15,302,2592,0.116512,0.10459,0.12929,high,false,CRE-002
+chilling-reign,Chilling Reign,pokemon-vmax,Pokémon VMAX,8,313,7592,0.041228,0.036929,0.045876,high,false,CRE-002 CRE-003
+chilling-reign,Chilling Reign,full-art-v,Full-art Pokémon V,16,456,25674,0.017761,0.016199,0.019432,high,false,CRE-001 CRE-002 CRE-003
+chilling-reign,Chilling Reign,alt-art-v,Alternate-art Pokémon V,10,200,25674,0.00779,0.006769,0.008922,high,false,CRE-001 CRE-002 CRE-003
+chilling-reign,Chilling Reign,full-art-trainer,Full-art Trainer,13,329,25674,0.012815,0.011493,0.014246,high,false,CRE-001 CRE-002 CRE-003
+chilling-reign,Chilling Reign,rainbow-rare,Rainbow Rare,20,268,25674,0.010439,0.00925,0.011738,high,false,CRE-001 CRE-002 CRE-003
+chilling-reign,Chilling Reign,alt-art-vmax,Alternate-art Pokémon VMAX,3,42,25674,0.001636,0.001196,0.002188,moderate,false,CRE-001 CRE-002 CRE-003
+chilling-reign,Chilling Reign,gold-rare,Gold Rare,12,191,20674,0.009239,0.008002,0.010612,high,false,CRE-001 CRE-002
+crown-zenith,Crown Zenith,pokemon-v,Pokémon V,17,235,1900,0.1235,0.109456,0.139057,high,true,CRZ-001
+crown-zenith,Crown Zenith,vmax-vstar,VMAX or VSTAR,13,101,1900,0.053,0.043743,0.063933,high,true,CRZ-001
+crown-zenith,Crown Zenith,texture-energy,Textured full-art Energy,8,36,1900,0.019,0.013526,0.025831,moderate,true,CRZ-001
+crown-zenith,Crown Zenith,full-art-trainer,Full-art Trainer,5,18,1900,0.0095,0.005827,0.01461,moderate,true,CRZ-001
+crown-zenith,Crown Zenith,signature-trainer,Signature Trainer,6,145,1900,0.0765,0.065019,0.088902,high,true,CRZ-001
+crown-zenith,Crown Zenith,secret-rare,Secret Rare (Pikachu),1,14,1900,0.0075,0.004229,0.012003,limited,true,CRZ-001
+crown-zenith,Crown Zenith,radiant-rare,Radiant Rare,3,86,1900,0.0455,0.036598,0.055312,high,true,CRZ-001
+crown-zenith,Crown Zenith,galarian-gallery,Galarian Gallery (any),70,669,1900,0.352,0.330867,0.373794,high,true,CRZ-001
+crown-zenith,Crown Zenith,gg-non-v,Galarian Gallery: non-V Pokémon,34,426,1900,0.224,0.205886,0.243374,high,true,CRZ-001
+crown-zenith,Crown Zenith,gg-v-trainer,Galarian Gallery: Pokémon V or Trainer,32,228,1900,0.12,0.105969,0.135188,high,true,CRZ-001
+crown-zenith,Crown Zenith,gg-gold,Galarian Gallery: gold VSTAR,4,15,1900,0.008,0.004622,0.01266,limited,true,CRZ-001
+delta-reign,Delta Reign,double-rare,Double Rare,10,448,2152,0.208178,0.191424,0.225717,high,false,DLR-001 DLR-002 DLR-003
+delta-reign,Delta Reign,illustration-rare,Illustration Rare,14,244,2152,0.113383,0.100508,0.127297,high,false,DLR-001 DLR-002 DLR-003
+delta-reign,Delta Reign,ultra-rare,Ultra Rare,17,171,2152,0.079461,0.068597,0.091455,high,false,DLR-001 DLR-002 DLR-003
+delta-reign,Delta Reign,special-illustration-rare,Special Illustration Rare,6,26,2152,0.012082,0.008095,0.017377,moderate,false,DLR-001 DLR-002 DLR-003
+delta-reign,Delta Reign,mega-hyper-rare,Mega Hyper Rare,1,3,2152,0.001394,0.000393,0.003716,limited,false,DLR-001 DLR-002 DLR-003
+destined-rivals,Destined Rivals,double-rare,Double Rare,17,1716,8655,0.1983,0.189969,0.206766,high,true,DR-001
+destined-rivals,Destined Rivals,illustration-rare,Illustration Rare,23,1041,12282,0.084758,0.07993,0.089782,high,true,DR-001 DR-002
+destined-rivals,Destined Rivals,ultra-rare,Ultra Rare,22,785,12098,0.064887,0.060601,0.06938,high,true,DR-001 DR-002
+destined-rivals,Destined Rivals,special-illustration-rare,Special Illustration Rare,11,130,11924,0.010902,0.009155,0.012887,high,true,DR-001 DR-002
+destined-rivals,Destined Rivals,hyper-rare,Hyper Rare,6,86,12446,0.00691,0.005567,0.008482,high,true,DR-001 DR-002
+evolving-skies,Evolving Skies,pokemon-v,Pokémon V,18,907,8587,0.1056,0.099257,0.112258,high,true,EVS-001
+evolving-skies,Evolving Skies,pokemon-vmax,Pokémon VMAX,15,494,8814,0.056,0.05139,0.060996,high,true,EVS-001
+evolving-skies,Evolving Skies,full-art,Full-art Pokémon V or Supporter,27,236,8475,0.0278,0.024503,0.031512,high,true,EVS-001
+evolving-skies,Evolving Skies,alt-art-v,Alternate-art Pokémon V,11,95,8635,0.011,0.008962,0.013369,high,true,EVS-001
+evolving-skies,Evolving Skies,alt-art-vmax,Alternate-art Pokémon VMAX,6,24,7979,0.003,0.001978,0.004397,moderate,true,EVS-001
+evolving-skies,Evolving Skies,rainbow-rare,Rainbow Rare,16,74,8863,0.0084,0.006612,0.010408,high,true,EVS-001
+evolving-skies,Evolving Skies,gold-rare,Gold Rare,12,79,8660,0.0091,0.00728,0.011292,high,true,EVS-001
+fusion-strike,Fusion Strike,pokemon-vmax,Pokémon VMAX,8,133,4000,0.033333,0.028027,0.039148,high,true,FST-001
+fusion-strike,Fusion Strike,full-art-v,Full-art Pokémon V,8,69,4000,0.017241,0.013556,0.021642,high,true,FST-001
+fusion-strike,Fusion Strike,full-art-trainer,Full-art Trainer,7,63,4000,0.015625,0.012233,0.019967,high,true,FST-001
+fusion-strike,Fusion Strike,alt-art-v,Alternate-art Pokémon V,5,22,4000,0.005556,0.003549,0.008165,moderate,true,FST-001
+fusion-strike,Fusion Strike,alt-art-vmax,Alternate-art Pokémon VMAX,4,12,4000,0.003012,0.001641,0.005075,limited,true,FST-001
+fusion-strike,Fusion Strike,rainbow-rare,Rainbow Rare,11,31,4000,0.007874,0.005375,0.010836,moderate,true,FST-001
+fusion-strike,Fusion Strike,gold-rare,Gold Rare,5,33,4000,0.008333,0.005789,0.011421,moderate,true,FST-001
+journey-together,Journey Together,double-rare,Double Rare,16,1857,9099,0.204088,0.195902,0.212463,high,true,JTG-001 JTG-002
+journey-together,Journey Together,illustration-rare,Illustration Rare,11,778,9083,0.085655,0.080031,0.091542,high,true,JTG-001 JTG-002
+journey-together,Journey Together,ultra-rare,Ultra Rare,11,568,8683,0.0654,0.060359,0.070761,high,true,JTG-001
+journey-together,Journey Together,special-illustration-rare,Special Illustration Rare,6,102,8826,0.011557,0.009484,0.01395,high,true,JTG-001 JTG-002
+journey-together,Journey Together,hyper-rare,Hyper Rare,3,67,9092,0.007369,0.005764,0.009288,high,true,JTG-001 JTG-002
+lost-origin,Lost Origin,pokemon-v,Pokémon V,12,930,8000,0.1163,0.109365,0.123412,high,true,LOR-001
+lost-origin,Lost Origin,vmax-vstar,VMAX or VSTAR,7,354,8000,0.0442,0.039907,0.048922,high,true,LOR-001
+lost-origin,Lost Origin,full-art-v,Full-art Pokémon V,13,158,8000,0.0198,0.016872,0.022975,high,true,LOR-001
+lost-origin,Lost Origin,full-art-trainer,Full-art Trainer,8,114,8000,0.0142,0.011825,0.017026,high,true,LOR-001
+lost-origin,Lost Origin,alt-art-v,Alternate-art Pokémon V,4,40,8000,0.005,0.003627,0.00673,moderate,true,LOR-001
+lost-origin,Lost Origin,rainbow-rare,Rainbow Rare,15,102,8000,0.0128,0.010464,0.015388,high,true,LOR-001
+lost-origin,Lost Origin,gold-rare,Gold Rare,6,61,8000,0.0076,0.005892,0.009714,high,true,LOR-001
+lost-origin,Lost Origin,radiant-rare,Radiant Rare,3,401,8000,0.0501,0.045505,0.05507,high,true,LOR-001
+lost-origin,Lost Origin,trainer-gallery,Trainer Gallery (any),30,985,8000,0.1231,0.116061,0.130461,high,true,LOR-001
+lost-origin,Lost Origin,tg-non-v,Trainer Gallery: non-V Pokémon,11,663,8000,0.0829,0.076984,0.089067,high,true,LOR-001
+lost-origin,Lost Origin,tg-v-trainer,"Trainer Gallery: V, VMAX or Trainer",17,254,8000,0.0317,0.028076,0.035763,high,true,LOR-001
+lost-origin,Lost Origin,tg-gold-vmax,Trainer Gallery: gold-and-black VMAX,2,69,8000,0.0086,0.006772,0.010833,high,true,LOR-001
+mega-evolution,Mega Evolution,double-rare,Double Rare,10,1306,6288,0.207697,0.197807,0.217857,high,true,MEG-001 MEG-002
+mega-evolution,Mega Evolution,illustration-rare,Illustration Rare,22,687,6264,0.109674,0.102117,0.117593,high,true,MEG-001 MEG-002
+mega-evolution,Mega Evolution,ultra-rare,Ultra Rare,22,525,6247,0.08404,0.077353,0.091113,high,true,MEG-001 MEG-002
+mega-evolution,Mega Evolution,special-illustration-rare,Special Illustration Rare,10,51,5165,0.0099,0.007444,0.012853,moderate,true,MEG-001
+mega-evolution,Mega Evolution,mega-hyper-rare,Mega Hyper Rare,2,5,6022,0.00083,0.000317,0.001819,limited,true,MEG-001 MEG-002
+obsidian-flames,Obsidian Flames,double-rare,Double Rare,21,1186,8713,0.1361,0.129039,0.143439,high,true,OBF-001
+obsidian-flames,Obsidian Flames,illustration-rare,Illustration Rare,12,654,8602,0.076,0.07057,0.081773,high,true,OBF-001
+obsidian-flames,Obsidian Flames,ultra-rare,Ultra Rare,12,583,8794,0.0663,0.061237,0.071638,high,true,OBF-001
+obsidian-flames,Obsidian Flames,special-illustration-rare,Special Illustration Rare,6,266,8508,0.0313,0.027725,0.035124,high,true,OBF-001
+obsidian-flames,Obsidian Flames,hyper-rare,Hyper Rare,3,165,8602,0.0192,0.016442,0.022244,high,true,OBF-001
+paldea-evolved,Paldea Evolved,double-rare,Double Rare,17,1171,8533,0.1372,0.130055,0.144655,high,true,PAL-001
+paldea-evolved,Paldea Evolved,illustration-rare,Illustration Rare,36,670,8706,0.077,0.0715,0.082698,high,true,PAL-001
+paldea-evolved,Paldea Evolved,ultra-rare,Ultra Rare,26,563,8478,0.0664,0.061255,0.071856,high,true,PAL-001
+paldea-evolved,Paldea Evolved,special-illustration-rare,Special Illustration Rare,15,273,8613,0.0317,0.028152,0.035555,high,true,PAL-001
+paldea-evolved,Paldea Evolved,hyper-rare,Hyper Rare,9,149,8472,0.0176,0.014951,0.020554,high,true,PAL-001
+paldean-fates,Paldean Fates,double-rare,Double Rare,10,286,1798,0.1589,0.142715,0.176513,high,true,PAF-001
+paldean-fates,Paldean Fates,ultra-rare,Ultra Rare,5,119,1793,0.0661,0.055541,0.078595,high,true,PAF-001
+paldean-fates,Paldean Fates,shiny-rare,Shiny Rare,120,459,1804,0.2544,0.234741,0.274915,high,true,PAF-001
+paldean-fates,Paldean Fates,shiny-ultra-rare,Shiny Ultra Rare,12,140,1809,0.0772,0.06575,0.090383,high,true,PAF-001
+paldean-fates,Paldean Fates,illustration-rare,Illustration Rare,3,129,1787,0.0722,0.060877,0.084883,high,true,PAF-001
+paldean-fates,Paldean Fates,special-illustration-rare,Special Illustration Rare,8,31,1804,0.0172,0.011934,0.02398,moderate,true,PAF-001
+paldean-fates,Paldean Fates,hyper-rare,Hyper Rare,6,29,1809,0.0161,0.010989,0.022618,moderate,true,PAF-001
+paradox-rift,Paradox Rift,double-rare,Double Rare,20,1361,8743,0.1557,0.148183,0.16338,high,true,PAR-001
+paradox-rift,Paradox Rift,illustration-rare,Illustration Rare,34,670,8706,0.077,0.0715,0.082698,high,true,PAR-001
+paradox-rift,Paradox Rift,ultra-rare,Ultra Rare,28,563,8478,0.0664,0.061255,0.071856,high,true,PAR-001
+paradox-rift,Paradox Rift,special-illustration-rare,Special Illustration Rare,15,186,8816,0.0211,0.018253,0.024257,high,true,PAR-001
+paradox-rift,Paradox Rift,hyper-rare,Hyper Rare,7,107,8751,0.0122,0.010083,0.014694,high,true,PAR-001
+perfect-order,Perfect Order,double-rare,Double Rare,9,1030,4913,0.209648,0.198439,0.221199,high,true,POR-001 POR-002
+perfect-order,Perfect Order,illustration-rare,Illustration Rare,11,563,4969,0.113302,0.104715,0.12234,high,true,POR-001 POR-002
+perfect-order,Perfect Order,ultra-rare,Ultra Rare,18,428,4913,0.087116,0.079473,0.095245,high,true,POR-001 POR-002
+perfect-order,Perfect Order,special-illustration-rare,Special Illustration Rare,6,64,4969,0.01288,0.010021,0.016305,high,true,POR-001 POR-002
+perfect-order,Perfect Order,mega-hyper-rare,Mega Hyper Rare,1,3,4967,0.000604,0.00017,0.001611,limited,true,POR-001 POR-002
+phantasmal-flames,Phantasmal Flames,double-rare,Double Rare,10,2136,10295,0.207479,0.199729,0.215394,high,true,PFL-001 PFL-002 PFL-003
+phantasmal-flames,Phantasmal Flames,illustration-rare,Illustration Rare,13,1144,10329,0.110756,0.104813,0.116917,high,true,PFL-001 PFL-002 PFL-003
+phantasmal-flames,Phantasmal Flames,ultra-rare,Ultra Rare,17,838,10317,0.081225,0.076071,0.086614,high,true,PFL-001 PFL-002 PFL-003
+phantasmal-flames,Phantasmal Flames,special-illustration-rare,Special Illustration Rare,5,128,10190,0.012561,0.010535,0.014864,high,true,PFL-001 PFL-002 PFL-003
+phantasmal-flames,Phantasmal Flames,mega-hyper-rare,Mega Hyper Rare,1,9,10054,0.000895,0.000443,0.001633,limited,true,PFL-001 PFL-002 PFL-003
+pitch-black,Pitch Black,double-rare,Double Rare,10,1251,5940,0.210606,0.20038,0.221114,high,true,PBL-001 PBL-002
+pitch-black,Pitch Black,illustration-rare,Illustration Rare,11,661,5936,0.111354,0.103542,0.119546,high,true,PBL-001 PBL-002
+pitch-black,Pitch Black,ultra-rare,Ultra Rare,18,498,5932,0.083951,0.077097,0.091212,high,true,PBL-001 PBL-002
+pitch-black,Pitch Black,special-illustration-rare,Special Illustration Rare,6,78,5938,0.013136,0.010472,0.016274,high,true,PBL-001 PBL-002
+pitch-black,Pitch Black,mega-hyper-rare,Mega Hyper Rare,1,6,5848,0.001026,0.000428,0.002114,limited,true,PBL-001 PBL-002
+pokemon-go,Pokémon GO,pokemon-v,Pokémon V,6,173,1000,0.173,0.150518,0.197371,high,false,PGO-001
+pokemon-go,Pokémon GO,pokemon-vmax,Pokémon VMAX,1,19,1000,0.019,0.011867,0.028906,moderate,false,PGO-001
+pokemon-go,Pokémon GO,pokemon-vstar,Pokémon VSTAR,2,25,1000,0.025,0.016647,0.036093,moderate,false,PGO-001
+pokemon-go,Pokémon GO,radiant-rare,Radiant Rare,3,60,1000,0.06,0.046536,0.076005,high,false,PGO-001
+pokemon-go,Pokémon GO,full-art-v,Full-art Pokémon V,5,47,1000,0.047,0.035167,0.061448,moderate,false,PGO-001
+pokemon-go,Pokémon GO,alt-art-v,Alternate-art Pokémon V,2,1,1000,0.001,0.000108,0.004664,limited,false,PGO-001
+pokemon-go,Pokémon GO,full-art-trainer,Full-art Trainer,1,3,1000,0.003,0.000846,0.007984,limited,false,PGO-001
+pokemon-go,Pokémon GO,rainbow-rare,Rainbow Rare,7,26,1000,0.026,0.017459,0.037275,moderate,false,PGO-001
+pokemon-go,Pokémon GO,gold-rare,Gold Rare,3,16,1000,0.016,0.009552,0.025237,moderate,false,PGO-001
+prismatic-evolutions,Prismatic Evolutions,poke-ball-pattern,Poké Ball pattern,100,416,1258,0.331,0.305099,0.357047,high,true,PRE-001
+prismatic-evolutions,Prismatic Evolutions,double-rare,Double Rare,25,208,1260,0.1651,0.14536,0.186335,high,true,PRE-001
+prismatic-evolutions,Prismatic Evolutions,ultra-rare,Ultra Rare,12,94,1261,0.0746,0.061016,0.090021,high,true,PRE-001
+prismatic-evolutions,Prismatic Evolutions,ace-spec,ACE SPEC Rare,6,59,1252,0.0468,0.036415,0.059924,high,true,PRE-001
+prismatic-evolutions,Prismatic Evolutions,master-ball-pattern,Master Ball pattern,67,62,1269,0.0492,0.038009,0.06176,high,true,PRE-001
+prismatic-evolutions,Prismatic Evolutions,special-illustration-rare,Special Illustration Rare,32,28,1271,0.0222,0.01501,0.031221,moderate,true,PRE-001
+prismatic-evolutions,Prismatic Evolutions,hyper-rare,Hyper Rare,5,7,1273,0.0056,0.002463,0.010766,limited,true,PRE-001
+scarlet-violet,Scarlet & Violet,double-rare,Double Rare,12,1177,8554,0.1376,0.130419,0.145019,high,true,SVI-001
+scarlet-violet,Scarlet & Violet,illustration-rare,Illustration Rare,24,665,8675,0.0767,0.071199,0.082397,high,true,SVI-001
+scarlet-violet,Scarlet & Violet,ultra-rare,Ultra Rare,20,573,8720,0.0657,0.060654,0.071056,high,true,SVI-001
+scarlet-violet,Scarlet & Violet,special-illustration-rare,Special Illustration Rare,10,270,8561,0.0315,0.027993,0.0354,high,true,SVI-001
+scarlet-violet,Scarlet & Violet,hyper-rare,Hyper Rare,6,165,8897,0.0185,0.015897,0.021508,high,true,SVI-001
+shrouded-fable,Shrouded Fable,double-rare,Double Rare,6,170,1008,0.168651,0.146501,0.1927,high,false,SFA-001
+shrouded-fable,Shrouded Fable,ace-spec,ACE SPEC Rare,3,58,1008,0.05754,0.044415,0.073199,high,false,SFA-001
+shrouded-fable,Shrouded Fable,illustration-rare,Illustration Rare,15,82,1008,0.081349,0.065668,0.09943,high,false,SFA-001
+shrouded-fable,Shrouded Fable,ultra-rare,Ultra Rare,10,72,1008,0.071429,0.056749,0.088565,high,false,SFA-001
+shrouded-fable,Shrouded Fable,special-illustration-rare,Special Illustration Rare,5,15,1008,0.014881,0.008725,0.02381,limited,false,SFA-001
+shrouded-fable,Shrouded Fable,hyper-rare,Hyper Rare,5,7,1008,0.006944,0.003111,0.013586,limited,false,SFA-001
+silver-tempest,Silver Tempest,pokemon-v,Pokémon V,15,924,8000,0.1155,0.108635,0.122643,high,true,SIT-001
+silver-tempest,Silver Tempest,vmax-vstar,VMAX or VSTAR,7,298,8000,0.0372,0.033266,0.041569,high,true,SIT-001
+silver-tempest,Silver Tempest,full-art-v,Full-art Pokémon V,14,168,8000,0.021,0.018029,0.024318,high,true,SIT-001
+silver-tempest,Silver Tempest,full-art-trainer,Full-art Trainer,8,81,8000,0.0101,0.008104,0.0125,high,true,SIT-001
+silver-tempest,Silver Tempest,alt-art-v,Alternate-art Pokémon V,4,48,8000,0.006,0.004481,0.007876,moderate,true,SIT-001
+silver-tempest,Silver Tempest,rainbow-rare,Rainbow Rare,14,101,8000,0.0126,0.010351,0.015251,high,true,SIT-001
+silver-tempest,Silver Tempest,gold-rare,Gold Rare,6,75,8000,0.0094,0.007436,0.011668,high,true,SIT-001
+silver-tempest,Silver Tempest,radiant-rare,Radiant Rare,3,364,8000,0.0455,0.041097,0.050232,high,true,SIT-001
+silver-tempest,Silver Tempest,trainer-gallery,Trainer Gallery (any),30,978,8000,0.1223,0.115209,0.129564,high,true,SIT-001
+silver-tempest,Silver Tempest,tg-non-v,Trainer Gallery: non-V Pokémon,11,660,8000,0.0825,0.076622,0.08868,high,true,SIT-001
+silver-tempest,Silver Tempest,tg-v-trainer,"Trainer Gallery: V, VMAX or Trainer",17,246,8000,0.0308,0.027135,0.034704,high,true,SIT-001
+silver-tempest,Silver Tempest,tg-gold-vmax,Trainer Gallery: gold-and-black VMAX,2,72,8000,0.009,0.007104,0.011251,high,true,SIT-001
+stellar-crown,Stellar Crown,double-rare,Double Rare,14,1812,10732,0.168841,0.161843,0.176017,high,true,SCR-001 SCR-002
+stellar-crown,Stellar Crown,ace-spec,ACE SPEC Rare,3,516,10613,0.04862,0.04465,0.052835,high,true,SCR-001 SCR-002
+stellar-crown,Stellar Crown,illustration-rare,Illustration Rare,13,817,10581,0.077214,0.072243,0.082416,high,true,SCR-001 SCR-002
+stellar-crown,Stellar Crown,ultra-rare,Ultra Rare,11,725,10696,0.067782,0.063135,0.072663,high,true,SCR-001 SCR-002
+stellar-crown,Stellar Crown,special-illustration-rare,Special Illustration Rare,6,121,10800,0.011204,0.009347,0.013322,high,true,SCR-001 SCR-002
+stellar-crown,Stellar Crown,hyper-rare,Hyper Rare,3,76,10680,0.007116,0.005652,0.008847,high,true,SCR-001 SCR-002
+surging-sparks,Surging Sparks,double-rare,Double Rare,18,1849,10893,0.169742,0.16278,0.176879,high,true,SSP-001 SSP-002
+surging-sparks,Surging Sparks,ace-spec,ACE SPEC Rare,8,549,10904,0.050348,0.046363,0.054573,high,true,SSP-001 SSP-002
+surging-sparks,Surging Sparks,illustration-rare,Illustration Rare,23,847,10907,0.077657,0.072746,0.082791,high,true,SSP-001 SSP-002
+surging-sparks,Surging Sparks,ultra-rare,Ultra Rare,21,729,10828,0.067325,0.062721,0.072161,high,true,SSP-001 SSP-002
+surging-sparks,Surging Sparks,special-illustration-rare,Special Illustration Rare,11,138,11254,0.012262,0.010352,0.014423,high,true,SSP-001 SSP-002
+surging-sparks,Surging Sparks,hyper-rare,Hyper Rare,6,64,11233,0.005697,0.00443,0.00722,high,true,SSP-001 SSP-002
+sword-shield,Sword & Shield,pokemon-v,Pokémon V,17,307,2160,0.14213,0.127887,0.157331,high,false,SSH-001
+sword-shield,Sword & Shield,pokemon-vmax,Pokémon VMAX,4,50,2160,0.023148,0.017429,0.030143,moderate,false,SSH-001
+sword-shield,Sword & Shield,full-art-v,Full-art Pokémon V,12,62,2160,0.028704,0.02228,0.036389,high,false,SSH-001
+sword-shield,Sword & Shield,full-art-trainer,Full-art Trainer,4,21,2160,0.009722,0.006211,0.014544,moderate,false,SSH-001
+sword-shield,Sword & Shield,rainbow-vmax,Rainbow Rare VMAX,4,10,2160,0.00463,0.002383,0.008197,limited,false,SSH-001
+sword-shield,Sword & Shield,rainbow-trainer,Rainbow Rare Trainer,4,16,2160,0.007407,0.004415,0.011715,moderate,false,SSH-001
+sword-shield,Sword & Shield,gold-rare,Gold Rare,6,21,2160,0.009722,0.006211,0.014544,moderate,false,SSH-001
+temporal-forces,Temporal Forces,double-rare,Double Rare,15,1450,8616,0.1683,0.160504,0.176302,high,true,TEF-001
+temporal-forces,Temporal Forces,ace-spec,ACE SPEC Rare,7,431,8623,0.05,0.045533,0.054734,high,true,TEF-001
+temporal-forces,Temporal Forces,illustration-rare,Illustration Rare,22,674,8727,0.0772,0.071771,0.082973,high,true,TEF-001
+temporal-forces,Temporal Forces,ultra-rare,Ultra Rare,18,568,8513,0.0667,0.061567,0.07217,high,true,TEF-001
+temporal-forces,Temporal Forces,special-illustration-rare,Special Illustration Rare,10,98,8397,0.0117,0.009539,0.01414,high,true,TEF-001
+temporal-forces,Temporal Forces,hyper-rare,Hyper Rare,6,61,8475,0.0072,0.005562,0.00917,high,true,TEF-001
+twilight-masquerade,Twilight Masquerade,double-rare,Double Rare,14,1466,8657,0.1693,0.161553,0.177353,high,true,TWM-001
+twilight-masquerade,Twilight Masquerade,ace-spec,ACE SPEC Rare,6,441,8721,0.0506,0.046117,0.055316,high,true,TWM-001
+twilight-masquerade,Twilight Masquerade,illustration-rare,Illustration Rare,21,675,8737,0.0773,0.071799,0.082996,high,true,TWM-001
+twilight-masquerade,Twilight Masquerade,ultra-rare,Ultra Rare,21,580,8770,0.0661,0.061076,0.071479,high,true,TWM-001
+twilight-masquerade,Twilight Masquerade,special-illustration-rare,Special Illustration Rare,11,98,8397,0.0117,0.009539,0.01414,high,true,TWM-001
+twilight-masquerade,Twilight Masquerade,hyper-rare,Hyper Rare,6,61,8977,0.0068,0.00525,0.008658,moderate,true,TWM-001
+vivid-voltage,Vivid Voltage,pokemon-v,Pokémon V,11,492,3696,0.133117,0.122454,0.144354,high,false,VIV-001 VIV-002
+vivid-voltage,Vivid Voltage,pokemon-vmax,Pokémon VMAX,6,165,3696,0.044643,0.038338,0.051661,high,false,VIV-001 VIV-002
+vivid-voltage,Vivid Voltage,amazing-rare,Amazing Rare,6,206,3696,0.055736,0.048685,0.063482,high,false,VIV-001 VIV-002
+vivid-voltage,Vivid Voltage,full-art-v,Full-art Pokémon V,13,103,3696,0.027868,0.022925,0.03355,high,false,VIV-001 VIV-002
+vivid-voltage,Vivid Voltage,full-art-trainer,Full-art Trainer,7,45,3696,0.012175,0.00901,0.016104,moderate,false,VIV-001 VIV-002
+vivid-voltage,Vivid Voltage,rainbow-rare,Rainbow Rare,12,52,3696,0.014069,0.010642,0.018256,moderate,false,VIV-001 VIV-002
+vivid-voltage,Vivid Voltage,gold-rare,Gold Rare,6,38,3696,0.010281,0.0074,0.013929,moderate,false,VIV-001 VIV-002
+white-flare,White Flare,poke-ball-pattern,Poké Ball pattern,80,220,720,0.305556,0.27274,0.339931,high,false,WHT-001
+white-flare,White Flare,double-rare,Double Rare,6,152,720,0.211111,0.182497,0.242042,high,false,WHT-001
+white-flare,White Flare,ultra-rare,Ultra Rare,8,42,720,0.058333,0.042958,0.077249,moderate,false,WHT-001
+white-flare,White Flare,master-ball-pattern,Master Ball pattern,72,37,720,0.051389,0.037026,0.069346,moderate,false,WHT-001
+white-flare,White Flare,illustration-rare,Illustration Rare,70,118,720,0.163889,0.138223,0.19225,high,false,WHT-001
+white-flare,White Flare,special-illustration-rare,Special Illustration Rare,7,9,720,0.0125,0.006203,0.022689,limited,false,WHT-001

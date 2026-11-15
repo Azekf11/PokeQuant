@@ -1,0 +1,2 @@
+# Raw snapshots are byte-exact copies of the source (checksummed).
+data/raw/** -text

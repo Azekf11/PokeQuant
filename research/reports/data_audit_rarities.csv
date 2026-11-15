@@ -1,0 +1,27 @@
+tcgdex_id,rarity,tcgdex_cards,pokelife_cards,match
+sv10,common,85,,True
+sv10,double rare,17,17,True
+sv10,hyper rare,6,6,True
+sv10,illustration rare,23,23,True
+sv10,rare,18,,True
+sv10,special illustration rare,11,11,True
+sv10,ultra rare,22,22,True
+sv10,uncommon,62,,True
+sv08,ace spec rare,8,8,True
+sv08,common,88,,True
+sv08,double rare,18,18,True
+sv08,hyper rare,6,6,True
+sv08,illustration rare,23,23,True
+sv08,rare,16,,True
+sv08,special illustration rare,11,11,True
+sv08,ultra rare,21,21,True
+sv08,uncommon,61,,True
+sv07,ace spec rare,3,3,True
+sv07,common,71,,True
+sv07,double rare,14,14,True
+sv07,hyper rare,3,3,True
+sv07,illustration rare,13,13,True
+sv07,rare,15,,True
+sv07,special illustration rare,6,6,True
+sv07,ultra rare,11,11,True
+sv07,uncommon,39,,True
