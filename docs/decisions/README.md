@@ -32,3 +32,4 @@ File name: `NNNN-short-title.md`. Template:
 | [0011](0011-operational-comparison-rules.md) | Operational rules for strategy comparisons | accepted |
 | [0012](0012-operational-robustness-tests.md) | Operational definitions of the robustness tests | accepted |
 | [0013](0013-static-web-demo.md) | Static web demo instead of a live API | accepted |
+| [0014](0014-sale-price-benchmark-and-price-panel.md) | Sale-price benchmark and weekly price panel (prereg-v3) | accepted |
