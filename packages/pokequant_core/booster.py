@@ -25,6 +25,7 @@ ILLUSTRATION_RARE, SIR, HYPER_RARE = (
     "special illustration rare",
     "hyper rare",
 )
+MEGA_HYPER_RARE = "mega hyper rare"  # replaces Hyper Rare from Mega Evolution (ADR 0016)
 LOW_RARITIES = (COMMON, UNCOMMON)
 
 
@@ -80,6 +81,29 @@ LAYOUTS: dict[str, Layout] = {
             SlotSpec("rare", RARE, (DOUBLE_RARE, ULTRA_RARE, HYPER_RARE)),
         ),
         ("R12: Hyper Rare in the rare slot", *_ASSUMPTIONS),
+    ),
+    # Mega Evolution sets (ADR 0016): no ACE SPEC; Mega Hyper Rare in place of Hyper Rare.
+    # Central: in the second reverse slot, where the Hyper Rare it replaced was.
+    "mega-in-rev2": Layout(
+        "mega-in-rev2",
+        (
+            *_BASE_SLOTS,
+            SlotSpec("rev1", REVERSE),
+            SlotSpec("rev2", REVERSE, (ILLUSTRATION_RARE, SIR, MEGA_HYPER_RARE)),
+            SlotSpec("rare", RARE, (DOUBLE_RARE, ULTRA_RARE)),
+        ),
+        ("A-MHR: Mega Hyper Rare in rev2", *_ASSUMPTIONS),
+    ),
+    # Paired alternative M1 (ADR 0016): Mega Hyper Rare in the rare slot.
+    "mega-in-rare-slot": Layout(
+        "mega-in-rare-slot",
+        (
+            *_BASE_SLOTS,
+            SlotSpec("rev1", REVERSE),
+            SlotSpec("rev2", REVERSE, (ILLUSTRATION_RARE, SIR)),
+            SlotSpec("rare", RARE, (DOUBLE_RARE, ULTRA_RARE, MEGA_HYPER_RARE)),
+        ),
+        ("M1: Mega Hyper Rare in the rare slot", *_ASSUMPTIONS),
     ),
 }
 

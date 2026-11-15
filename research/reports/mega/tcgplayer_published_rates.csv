@@ -1,0 +1,21 @@
+set_id,dataset_id,rarity,rate_pct,ci95_halfwidth_pct,accessed,source_url
+me01,MEG-001,Double Rare,20.91,1.12,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Mega-Evolution-Pull-Rates/40cbeedc-21ce-473b-aef1-74e3969d9f91/
+me01,MEG-001,Ultra Rare,8.23,0.76,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Mega-Evolution-Pull-Rates/40cbeedc-21ce-473b-aef1-74e3969d9f91/
+me01,MEG-001,Illustration Rare,10.89,0.86,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Mega-Evolution-Pull-Rates/40cbeedc-21ce-473b-aef1-74e3969d9f91/
+me01,MEG-001,Special Illustration Rare,0.99,0.27,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Mega-Evolution-Pull-Rates/40cbeedc-21ce-473b-aef1-74e3969d9f91/
+me01,MEG-001,Mega Hyper Rare,0.08,0.08,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Mega-Evolution-Pull-Rates/40cbeedc-21ce-473b-aef1-74e3969d9f91/
+me02,PFL-001,Double Rare,20.77,1.12,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Phantasmal-Flames-Pull-Rates/9abae60d-b7fb-448f-874e-176f78d6a6ca/
+me02,PFL-001,Ultra Rare,8.06,0.75,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Phantasmal-Flames-Pull-Rates/9abae60d-b7fb-448f-874e-176f78d6a6ca/
+me02,PFL-001,Illustration Rare,10.97,0.86,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Phantasmal-Flames-Pull-Rates/9abae60d-b7fb-448f-874e-176f78d6a6ca/
+me02,PFL-001,Special Illustration Rare,1.25,0.31,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Phantasmal-Flames-Pull-Rates/9abae60d-b7fb-448f-874e-176f78d6a6ca/
+me02,PFL-001,Mega Hyper Rare,0.08,0.08,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Phantasmal-Flames-Pull-Rates/9abae60d-b7fb-448f-874e-176f78d6a6ca/
+me04,CRI-001,Double Rare,20.30,0.85,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Chaos-Rising-Pull-Rates/304e8bfc-175a-4d31-93fe-5bb1be11e5d2/
+me04,CRI-001,Ultra Rare,8.29,0.58,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Chaos-Rising-Pull-Rates/304e8bfc-175a-4d31-93fe-5bb1be11e5d2/
+me04,CRI-001,Illustration Rare,10.66,0.65,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Chaos-Rising-Pull-Rates/304e8bfc-175a-4d31-93fe-5bb1be11e5d2/
+me04,CRI-001,Special Illustration Rare,1.21,0.23,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Chaos-Rising-Pull-Rates/304e8bfc-175a-4d31-93fe-5bb1be11e5d2/
+me04,CRI-001,Mega Hyper Rare,0.10,0.07,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Chaos-Rising-Pull-Rates/304e8bfc-175a-4d31-93fe-5bb1be11e5d2/
+me05,PBL-001,Double Rare,21.02,1.21,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Pitch-Black-Pull-Rates/069a5fda-2d1f-44a1-97de-b6dcdc5abfb8/
+me05,PBL-001,Ultra Rare,8.30,0.82,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Pitch-Black-Pull-Rates/069a5fda-2d1f-44a1-97de-b6dcdc5abfb8/
+me05,PBL-001,Illustration Rare,11.01,0.93,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Pitch-Black-Pull-Rates/069a5fda-2d1f-44a1-97de-b6dcdc5abfb8/
+me05,PBL-001,Special Illustration Rare,1.25,0.33,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Pitch-Black-Pull-Rates/069a5fda-2d1f-44a1-97de-b6dcdc5abfb8/
+me05,PBL-001,Mega Hyper Rare,0.09,0.09,2026-11-16,https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Pitch-Black-Pull-Rates/069a5fda-2d1f-44a1-97de-b6dcdc5abfb8/

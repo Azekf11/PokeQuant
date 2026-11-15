@@ -83,10 +83,38 @@ def test_extension_config_differs_from_main_only_where_adr_0015_says() -> None:
 
 # Frozen configurations: the run id hashes the file bytes, so even a comment edit
 # would give a run id different from the one every report and the paper cite.
-FROZEN = {"main.yaml": "94de09e8", "extension_sets.yaml": "f3420df5"}
+FROZEN = {
+    "main.yaml": "94de09e8",
+    "extension_sets.yaml": "f3420df5",
+    "mega_sets.yaml": "64f9087d",
+    "mega_sets_rare_slot.yaml": "4731b219",
+}
 
 
 @pytest.mark.parametrize("name", sorted(FROZEN))
 def test_frozen_configs_keep_the_hash_of_their_reported_run(name: str) -> None:
     digest = hashlib.sha256((EXPERIMENTS / name).read_bytes()).hexdigest()
     assert digest[:8] == FROZEN[name]
+
+
+def test_mega_configs_differ_from_the_extension_only_where_adr_0016_says() -> None:
+    ext = load_experiment(EXPERIMENTS / "extension_sets.yaml")
+    mega = load_experiment(EXPERIMENTS / "mega_sets.yaml")
+    alt = load_experiment(EXPERIMENTS / "mega_sets_rare_slot.yaml")
+    assert mega.sets == alt.sets == ["me01", "me02", "me04", "me05"]
+    assert (mega.product.layout, alt.product.layout) == ("mega-in-rev2", "mega-in-rare-slot")
+    assert mega.data == alt.data and mega.data.processed != ext.data.processed
+    assert mega.data.model_dump(exclude={"processed"}) == ext.data.model_dump(exclude={"processed"})
+    for field in (
+        "pricing",
+        "cost_scenarios",
+        "estimands",
+        "simulation",
+        "estimation",
+        "robustness",
+    ):
+        assert getattr(mega, field) == getattr(ext, field) == getattr(alt, field), field
+    for cfg in (mega, alt):
+        assert cfg.product.model_dump(exclude={"layout"}) == ext.product.model_dump(
+            exclude={"layout"}
+        )

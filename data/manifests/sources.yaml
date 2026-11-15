@@ -112,10 +112,12 @@ sources:
     content: "per-pack rate and 95 % margin of each hit rarity; the seven articles read for ADR 0015 state more than 8,000 packs opened"
     licence: not_stated
     rights: {access: yes, display: "facts cited", redistribution: not_stated}
-    use_as: primary_source_check (ADR 0015); the printed rates are committed as facts with their URLs
+    use_as: primary_source_check (ADR 0015, ADR 0016); the printed rates are committed as facts with their URLs
+    notes: "the four Mega Evolution articles (ADR 0016) were read in a browser on 2026-11-16; they place Double and Ultra Rare in the rare slot and Illustration and Special Illustration Rare in the second reverse slot, and give no slot for the Mega Hyper Rare"
     files:
       - research/reports/tcgplayer_published_rates.csv
       - research/reports/extension/tcgplayer_published_rates.csv
+      - research/reports/mega/tcgplayer_published_rates.csv
 
   - id: pokemontcg_io
     name: "Pokémon TCG API (pokemontcg.io)"
