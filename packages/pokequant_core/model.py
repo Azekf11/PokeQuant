@@ -103,3 +103,43 @@ def p_hit(model: BoosterModel, card: str) -> float:
     """
     p_miss = math.prod(1.0 - p_card_in_slot(model, slot, card) for slot in model.slots)
     return 1.0 - p_miss
+
+
+def _check_probability(p: float) -> None:
+    if not 0.0 <= p <= 1.0:
+        raise ValueError(f"probability must lie in [0, 1] (got {p})")
+
+
+def p_at_least_one(p: float, n: int) -> float:
+    """P(≥ 1 hit in n independent packs) = 1 - (1 - p)ⁿ (protocol §4.5)."""
+    _check_probability(p)
+    if n < 0:
+        raise ValueError(f"number of packs must be non-negative (got {n})")
+    if p == 1.0:
+        return 1.0 if n > 0 else 0.0
+    return -math.expm1(n * math.log1p(-p))
+
+
+def expected_packs(p: float) -> float:
+    """E[N] = 1 / p for N ~ Geometric(p), the number of packs up to the first hit."""
+    _check_probability(p)
+    if p == 0.0:
+        return math.inf
+    return 1.0 / p
+
+
+def packs_for_probability(p: float, target: float) -> int:
+    """Smallest n with P(≥ 1 hit in n packs) ≥ ``target``; raises if p = 0."""
+    _check_probability(p)
+    if not 0.0 < target < 1.0:
+        raise ValueError(f"target must lie in (0, 1) (got {target})")
+    if p == 0.0:
+        raise ValueError("a hit with probability 0 is never reached")
+    if p == 1.0:
+        return 1
+    n = math.ceil(math.log1p(-target) / math.log1p(-p))
+    while p_at_least_one(p, n) < target:  # guard against rounding in the logarithms
+        n += 1
+    while n > 1 and p_at_least_one(p, n - 1) >= target:
+        n -= 1
+    return n

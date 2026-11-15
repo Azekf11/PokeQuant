@@ -9,12 +9,14 @@ from __future__ import annotations
 import hashlib
 from collections.abc import Callable, Sequence
 from pathlib import Path
-from typing import Any
+from typing import Any, TypeVar
 
 import duckdb
 import pyarrow as pa
 import pyarrow.parquet as pq
 from pydantic import BaseModel
+
+RecordT = TypeVar("RecordT", bound=BaseModel)
 
 
 def write_records(
@@ -42,3 +44,22 @@ def connect(processed_dir: Path) -> duckdb.DuckDBPyConnection:
         literal = str(file).replace("'", "''")
         con.execute(f"CREATE VIEW {file.stem} AS SELECT * FROM read_parquet('{literal}')")
     return con
+
+
+def read_records(path: Path, model: type[RecordT]) -> list[RecordT]:
+    """Read a Parquet table written by ``write_records`` back into schema records."""
+    fields = model.model_fields
+    rows = pq.read_table(path).to_pylist()
+    return [
+        model(
+            **{
+                k: tuple(v) if isinstance(v, list) and _is_tuple_field(fields[k].annotation) else v
+                for k, v in row.items()
+            }
+        )
+        for row in rows
+    ]
+
+
+def _is_tuple_field(annotation: Any) -> bool:
+    return getattr(annotation, "__origin__", None) is tuple or str(annotation).startswith("tuple")

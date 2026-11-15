@@ -1,0 +1,100 @@
+# Main experiment — fixed before any price value is analysed (tag prereg-v2).
+# Schema: pokequant_core.experiment.ExperimentConfig. Spec: research/protocol/model_spec.md.
+name: main
+description: >-
+  Opening vs buying for the three selected English sets, estimands E1 and E2,
+  central / adverse / gross cost scenarios, robustness tests R1-R13.
+sets: [sv07, sv08, sv10]
+data:
+  pokelife: "2026-11-13"
+  tcgdex: "2026-11-15"
+  reference_date: "2026-11-15"          # t0: the TCGdex price snapshot used by the main analysis
+  h4_snapshot_date: "2026-12-13"        # second snapshot for H4 (dates), same pipeline
+product:
+  id: booster-en
+  layout: tcgplayer                     # model_spec §2; R12 uses hyper-in-rare-slot
+  non_card_value: 0.0                   # Basic Energy and code card
+pricing:
+  venue: tcgplayer
+  currency: USD
+  statistic: market
+  price_type: provider_market
+  condition: unspecified
+  missing_price:                        # ADR 0010 item 8
+    central: pool_median
+    adverse: zero
+liquidation_rule: >-
+  l(c) = max(0, p(c) * (1 - haircut) * (1 - marketplace_fee_rate - payment_fee_rate)
+  - selling_fixed_fee - shipping_per_sale); one card per sale.
+acquisition_rule: >-
+  a(c) = p(c) * (1 + buyer_fee_rate) + buyer_shipping; one card per order.
+cost_scenarios:
+  - name: gross
+    currency: USD
+    booster_cost: 4.49
+    marketplace_fee_rate: 0.0
+    payment_fee_rate: 0.0
+    buyer_fee_rate: 0.0
+    liquidity_haircut: 0.0
+    description: Theoretical reference only, never the main result (protocol 6.1).
+  - name: central
+    currency: USD
+    booster_cost: 4.49
+    marketplace_fee_rate: 0.1075
+    payment_fee_rate: 0.025
+    selling_fixed_fee: 0.30
+    shipping_per_sale: 1.00
+    buyer_fee_rate: 0.0
+    buyer_shipping: 1.00
+    liquidity_haircut: 0.15
+    description: >-
+      TCGplayer Level 1-4 seller fees (10.75 % commission, 2.5 % + 0.30 USD
+      transaction fee; TCGplayer fee page, read 2026-11-15). Booster at the US
+      suggested retail price. Shipping 1.00 USD per untracked card and 15 %
+      liquidity haircut are assumptions.
+  - name: adverse
+    currency: USD
+    booster_cost: 5.49
+    marketplace_fee_rate: 0.1075
+    payment_fee_rate: 0.025
+    selling_fixed_fee: 0.30
+    shipping_per_sale: 4.50
+    buyer_fee_rate: 0.0
+    buyer_shipping: 4.50
+    liquidity_haircut: 0.30
+    description: >-
+      Same fees; booster 1 USD above retail, tracked shipping and a 30 %
+      haircut (assumptions).
+estimands:
+  E1:
+    budgets_in_packs: [1, 10, 36, 100]  # budget B = n * booster_cost
+    basket_rule: >-
+      Strategy B buys, at t0, the printings of the set in decreasing order of
+      a(c), skipping any that exceed the remaining budget, until none fits.
+  E2:
+    targets:
+      - top_price: the printing of the set with the highest a(c) at t0
+      - top_sir: the Special Illustration Rare with the highest a(c) at t0
+    cap_rule: n_max = ceil(3 / p_hit(target)) at the posterior-mean model
+simulation:
+  seed: 20261115
+  epistemic_draws: 200                  # outer loop (posterior draws)
+  aleatory_runs: 20000                  # inner loop per draw (>= 1000 tail samples at 5 %)
+  alpha: 0.05
+estimation:
+  prior: 0.5                            # Jeffreys
+  weight: 1.0
+robustness:
+  - {id: R1, test: "median of available price statistics instead of market"}
+  - {id: R2, test: "liquidity haircut 0.30 and 0.50"}
+  - {id: R3, test: "selling and shipping fees +/- 50 %"}
+  - {id: R4, test: "pull rates at 95 % interval bounds"}
+  - {id: R5, test: "exclude the 1 % most valuable printings of each set"}
+  - {id: R6, test: "compare the three sets"}
+  - {id: R7, test: "aleatory runs 1e3, 1e4, 1e5 per draw"}
+  - {id: R8, test: "uniform prior (a0 = 1)"}
+  - {id: R9b, test: "half effective sample size (w = 0.5), replaces prereg-v1 test 9"}
+  - {id: R10, test: "haircuts anchored on Heck et al. (2026) sell-through, transferred evidence"}
+  - {id: R11, test: "Dachsbun ex short print in sv07 (relative rate 0.76 / 1.21)"}
+  - {id: R12, test: "Hyper Rare in the rare slot (layout hyper-in-rare-slot)"}
+  - {id: R13, test: "TCGplayer-only rates (conditional on homogeneity rejection; not triggered)"}

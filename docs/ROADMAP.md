@@ -114,11 +114,11 @@ PR into `main`.
 **Exit:** imports are idempotent (two runs → identical output hash); duplicates and invalid values are detected.
 
 ### S4 — Probabilistic booster model · branch `week/04-booster-model`
-- [ ] `research/protocol/model_spec.md`: slots, P(R_s = r), P(C = c | R_s = r, s, set), exclusivity / replacement / guaranteed-card rules; every unknown rule is a named, parameterised scenario.
-- [ ] Rate estimation: Beta / Dirichlet posteriors with Jeffreys prior (A4); cases x = 0, x = n; reconstructed counts flagged and down-weighted; heterogeneity test across datasets (χ² or hierarchical check).
-- [ ] Analytic functions: P(c in slot), P(hit c) under slot independence, P(≥1 hit in n packs), expected packs to hit (geometric).
-- [ ] Property tests (hypothesis): probabilities ≥ 0, each slot sums to 1, integer card counts, no negative values.
-- [ ] Experiment configs `research/experiments/*.yaml`: sets, product, budgets, **baskets defined ex ante**, central and adverse scenarios, robustness list.
+- [x] `research/protocol/model_spec.md`: slots, P(R_s = r), P(C = c | R_s = r, s, set), exclusivity / replacement / guaranteed-card rules; every unknown rule is a named, parameterised scenario. *Slot layout from the TCGplayer pull-rate articles; conflicting Hyper Rare placement → scenario R12.*
+- [x] Rate estimation: Beta / Dirichlet posteriors with Jeffreys prior (A4); cases x = 0, x = n; reconstructed counts flagged and down-weighted; heterogeneity test across datasets (χ² or hierarchical check). *16 pooled rows tested, none rejected (Holm, 5 %).*
+- [x] Analytic functions: P(c in slot), P(hit c) under slot independence, P(≥1 hit in n packs), expected packs to hit (geometric).
+- [x] Property tests (hypothesis): probabilities ≥ 0, each slot sums to 1, integer card counts, no negative values.
+- [x] Experiment configs `research/experiments/*.yaml`: sets, product, budgets, **baskets defined ex ante**, central and adverse scenarios, robustness list. *Deviations from `prereg-v1` → [ADR 0010](decisions/0010-booster-model-and-prereg-v1-deviations.md).*
 
 **Deliverable:** model spec + tested estimation module.
 **Exit:** slot structure documented; rates coherent → tag `prereg-v2`.

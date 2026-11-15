@@ -107,3 +107,14 @@ def test_cli_reports_success_and_failure(
     out = pipeline.output_dir(root, PL_VERSION, TD_VERSION)
     manifest = json.loads((out / "manifest.json").read_text())
     assert manifest["sets"] == ["zz01"]
+
+
+def test_processed_tables_read_back_into_records(tmp_path: Path) -> None:
+    from pokequant_core.ingest.store import read_records
+    from pokequant_core.schemas import CardPrinting, PullRateObservation
+
+    out = run(build_root(tmp_path)).out_dir
+    printings = read_records(out / "printings.parquet", CardPrinting)
+    rates = read_records(out / "pull_rates.parquet", PullRateObservation)
+    assert len(printings) == 6 and len(rates) == 2
+    assert all(isinstance(r.dataset_ids, tuple) for r in rates)

@@ -4,9 +4,9 @@
 comparison of Pokémon TCG booster opening versus direct purchase on the
 secondary market.
 
-> **Status: week 4 — booster model.** Protocol pre-registered (tag `prereg-v1`);
-> sets selected; ingestion pipeline in place; no economic result has been
-> computed yet. See the
+> **Status: week 5 — Monte Carlo engine.** Protocol pre-registered in two
+> stages (tags `prereg-v1`, `prereg-v2`); booster model specified; no economic
+> result has been computed yet. See the
 > [roadmap](docs/ROADMAP.md).
 
 ## Research question
@@ -40,7 +40,8 @@ packages/pokequant_core/   Python engine (importable package)
 tests/                     Automated tests (+ synthetic toy data in tests/fixtures/)
 scripts/                   Reproducible audit and research scripts
 data/                      raw/ (immutable snapshots) · processed/ · manifests/ (data provenance)
-research/protocol/         Research protocol, model specification
+research/protocol/         Research protocol, booster model specification
+research/experiments/      Pre-registered experiment configurations
 research/reports/          Data audit and other reports
 research/paper/            References and section drafts of the paper
 docs/                      Roadmap, project charter, decision log (ADRs)

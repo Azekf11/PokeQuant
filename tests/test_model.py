@@ -9,7 +9,15 @@ from hypothesis import given
 from hypothesis import strategies as st
 from pydantic import ValidationError
 
-from pokequant_core.model import BoosterModel, Slot, p_card_in_slot, p_hit
+from pokequant_core.model import (
+    BoosterModel,
+    Slot,
+    expected_packs,
+    p_at_least_one,
+    p_card_in_slot,
+    p_hit,
+    packs_for_probability,
+)
 
 FIXTURE = Path(__file__).parent / "fixtures" / "toy_set.json"
 
@@ -85,3 +93,32 @@ class TestAnalyticProbabilities:
         for cards in toy.cards_by_rarity.values():
             for card in cards:
                 assert 0.0 <= p_hit(toy, card) <= 1.0
+
+
+def test_packs_until_hit_closed_forms() -> None:
+    assert p_at_least_one(0.01, 0) == 0.0
+    assert p_at_least_one(0.5, 2) == pytest.approx(0.75)
+    assert p_at_least_one(1.0, 3) == 1.0
+    assert expected_packs(0.0125) == pytest.approx(80.0)
+    assert expected_packs(0.0) == math.inf
+    n = packs_for_probability(0.01, 0.5)
+    assert p_at_least_one(0.01, n) >= 0.5 > p_at_least_one(0.01, n - 1)
+    assert n == 69
+    with pytest.raises(ValueError):
+        packs_for_probability(0.0, 0.5)
+    with pytest.raises(ValueError):
+        p_at_least_one(1.2, 1)
+
+
+@given(p=st.floats(1e-6, 0.999), n=st.integers(0, 2_000))
+def test_p_at_least_one_is_a_monotone_probability(p: float, n: int) -> None:
+    q = p_at_least_one(p, n)
+    assert 0.0 <= q <= 1.0
+    assert p_at_least_one(p, n + 1) >= q
+
+
+@given(p=st.floats(1e-4, 0.99), target=st.floats(0.01, 0.99))
+def test_packs_for_probability_is_minimal(p: float, target: float) -> None:
+    n = packs_for_probability(p, target)
+    assert p_at_least_one(p, n) >= target
+    assert n == 1 or p_at_least_one(p, n - 1) < target
