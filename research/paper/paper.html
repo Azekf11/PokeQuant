@@ -205,18 +205,28 @@ of a pack's value with fixed odds (S1 review,
 <code>research/protocol/literature_review.md</code>). A pack-level Monte Carlo is
 therefore not a contribution in itself. Neither is the observation that the
 mean of a skewed value distribution exceeds its median.</p>
-<p>The closest formal treatment is Mota (2026). According to its
-abstract, it compares the price of a sealed Magic: The Gathering product with
-the expected value of its contents if opened and sold. It defines a
-"sealed-opened spread" with a no-arbitrage condition under perfect-market
-assumptions. It discusses transaction costs, variance and liquidity, with a
-generic numerical example. We could not obtain its full text. What follows
-from its abstract alone is limited:</p>
+<p>The closest formal treatment is Mota (2026), which we read in
+full. It models a sealed Magic: The Gathering product slot by slot, defines
+the expected value of opening it, and calls the difference between the
+sealed price and that expected value the "sealed-opened spread". Under
+perfect markets the spread is zero. The paper then lists the frictions that
+move it away from zero: a proportional transaction cost, a minimum value
+below which a card is not worth selling, a liquidity factor per card,
+variance and risk aversion, the irreversibility of opening, and a gambling
+premium. Its numerical example uses a hypothetical set.</p>
+<p>Our model shares its starting point: the slot-level expected value, a
+threshold below which cards are not sold, and a liquidity discount. It
+differs in four ways:</p>
 <ul>
-<li>it concerns another game;</li>
-<li>it is set under perfect-market assumptions;</li>
-<li>it does not mention a comparison with buying single cards, uncertainty on
-  the odds, or tail risk.</li>
+<li>it uses real data: pull rates measured on community openings and dated
+  market prices for three sets;</li>
+<li>the slot probabilities are uncertain. Mota treats them as known and leaves
+  a Bayesian treatment of this uncertainty to future work;</li>
+<li>it reports the whole distribution of outcomes and its tail, not only the
+  expected value and the variance;</li>
+<li>it compares opening with buying the same value directly, at equal budget
+  and for a target card. Mota compares the sealed price with the expected
+  value of the contents.</li>
 </ul>
 <h2>2.5 Risk measures and nested simulation</h2>
 <p><strong>Risk measures.</strong> We report the 5 % conditional value-at-risk (CVaR, or
@@ -256,9 +266,9 @@ design. Robustness test R7 checks its stability (§7).</p>
 <li>two pre-registered comparisons with direct purchase: spending an equal
    budget, and acquiring a target card.</li>
 </ol>
-<p>This statement rests on the works listed above, most of which we read at
-abstract level. It should be checked against the full texts of the closest
-papers.</p>
+<p>This statement rests on the works listed above. The closest one, Mota
+(2026), was read in full; most of the others were read at
+abstract level.</p>
 <h1>3. Data</h1>
 <p>Pull-rate figures in this section come from the Poké Life registry snapshot
 dated 2026-11-13 and catalogue figures from TCGdex responses fetched on
@@ -1203,8 +1213,8 @@ test did not reject pooling.</p>
 </tr>
 <tr>
 <td>Novelty</td>
-<td>Positioned against the literature and practitioner tools (§2). Most related works were read at abstract level, and the closest one could not be obtained in full.</td>
-<td>GO, to be confirmed before submission</td>
+<td>Positioned against the literature and practitioner tools (§2). The closest work was read in full; most others at abstract level.</td>
+<td>GO</td>
 </tr>
 <tr>
 <td>Reproducibility</td>
@@ -1320,9 +1330,8 @@ read as a near tie, whichever side it falls on.</p>
 <li>The results do not generalise to older sets, other languages or other
   markets, where prices, costs and pull rates differ.</li>
 </ul>
-<p><strong>Literature.</strong> Most related works were read at abstract level only (§2).
-The novelty claim should be checked against the full texts of the closest
-papers.</p>
+<p><strong>Literature.</strong> The closest related work was read in full, but most of the
+others were read at abstract level only (§2).</p>
 <h2>8.6 Implications</h2>
 <p>For a collector who wants specific cards, the results support buying them
 directly, unless the booster price is far below retail. In the central

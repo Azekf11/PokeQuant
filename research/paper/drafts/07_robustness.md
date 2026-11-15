@@ -150,7 +150,7 @@ The protocol (§10) sets six publishability criteria for the analysis freeze.
 | Data | Traceable: dated snapshots, checksums and manifests. Legally usable: CC BY 4.0 rates; prices used with permission, only derived statistics published (ADR 0009). Comparable: one price type, one date, one currency. Limit: a provider aggregate, not realised sales. | GO, with stated limit |
 | Method | Explicit slot model (model specification). The engine is validated against exact results (Appendix C). | GO |
 | Results | C1 and C3 hold in every variant. C2 fails only for one set's gross break-even price under indicative asking prices. No conclusion hinges on one rate or one price. | GO, with stated limit |
-| Novelty | Positioned against the literature and practitioner tools (§2). Most related works were read at abstract level, and the closest one could not be obtained in full. | GO, to be confirmed before submission |
+| Novelty | Positioned against the literature and practitioner tools (§2). The closest work was read in full; most others at abstract level. | GO |
 | Reproducibility | One command regenerates every table and figure from frozen configurations and seeds. The baseline of the robustness run reproduces the main run exactly. The validation, valuation and results reports regenerate byte for byte. | GO |
 
 The gate is passed. The analysis is frozen at tag `analysis-v1`. Later

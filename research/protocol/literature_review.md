@@ -11,7 +11,7 @@ checked against the full text.**
 
 | Reference | What it does | Overlap with PokéQuant | Read |
 |---|---|---|---|
-| Mota (2026), *Valuation Framework for Sealed Products…* | EV of sealed Magic: The Gathering products vs sealed price; "sealed-opened spread" as a no-arbitrage condition; discusses costs, variance and liquidity conceptually. | **Closest method.** Different game; generic numerical example; no visible pull-rate uncertainty or tail risk. | abstract |
+| Mota (2026), *Valuation Framework for Sealed Products…* | EV of sealed Magic: The Gathering products vs sealed price; "sealed-opened spread" as a no-arbitrage condition; discusses costs, variance and liquidity conceptually. | **Closest method.** Different game; hypothetical numerical example, no real data; slot probabilities treated as known (Bayesian treatment left to future work, §9.2); no tail risk; no comparison with buying singles. Introduces a minimum-value threshold and a per-card liquidity factor, both close to our cost model. | full text |
 | Danz (2026), Princeton senior thesis | Hedonic pricing over ~4.77 M observations, 138 sets (2023–2026); scarcity vs character traits; sealed vs raw segmentation; weak-form efficiency. | Same market; no booster or pull-rate model in the abstract. | landing page (restricted) |
 | Baro (2026), SSRN | Log-linear hedonic model of PSA 10 prices for 360 SIR/IR cards (eBay sales). R² ≈ 0.88; PSA 10 / raw elasticity ≈ 0.48. | Graded valuation only. Linked to a commercial product: not independent. | abstract |
 | Sharma (2026), SSRN | Grading premium by segment (vintage/modern × grail/ordinary), 2020–2022 boom-bust. | Grading only; warns against a fixed graded/raw multiplier. | abstract |
@@ -74,9 +74,9 @@ and uncertainty.
 
 ## 5. To do before freezing the novelty claim
 
-- [ ] Read Mota (2026) in full — closest work (SSRN PDF, normal browser).
-      *2026-11-15: SSRN refuses automated download (HTTP 403); no other copy
-      found. Author action: download it in a browser.*
+- [x] Read Mota (2026) in full — closest work (SSRN PDF, 14 pages, read
+      2026-11-15). The novelty claim holds; §2.4 of the paper now states what
+      the two models share.
 - [ ] Read Baro (2026) and Sharma (2026) in full (SSRN).
 - [ ] Danz (2026) is restricted: ask the author for a copy.
 - [ ] Finish the Discussion of Heck et al. (2026).

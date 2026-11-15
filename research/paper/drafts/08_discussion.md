@@ -117,9 +117,8 @@ read as a near tie, whichever side it falls on.
 - The results do not generalise to older sets, other languages or other
   markets, where prices, costs and pull rates differ.
 
-**Literature.** Most related works were read at abstract level only (§2).
-The novelty claim should be checked against the full texts of the closest
-papers.
+**Literature.** The closest related work was read in full, but most of the
+others were read at abstract level only (§2).
 
 ## 8.6 Implications
 

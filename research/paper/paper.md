@@ -210,18 +210,29 @@ of a pack's value with fixed odds (S1 review,
 therefore not a contribution in itself. Neither is the observation that the
 mean of a skewed value distribution exceeds its median.
 
-The closest formal treatment is Mota (2026). According to its
-abstract, it compares the price of a sealed Magic: The Gathering product with
-the expected value of its contents if opened and sold. It defines a
-"sealed-opened spread" with a no-arbitrage condition under perfect-market
-assumptions. It discusses transaction costs, variance and liquidity, with a
-generic numerical example. We could not obtain its full text. What follows
-from its abstract alone is limited:
+The closest formal treatment is Mota (2026), which we read in
+full. It models a sealed Magic: The Gathering product slot by slot, defines
+the expected value of opening it, and calls the difference between the
+sealed price and that expected value the "sealed-opened spread". Under
+perfect markets the spread is zero. The paper then lists the frictions that
+move it away from zero: a proportional transaction cost, a minimum value
+below which a card is not worth selling, a liquidity factor per card,
+variance and risk aversion, the irreversibility of opening, and a gambling
+premium. Its numerical example uses a hypothetical set.
 
-- it concerns another game;
-- it is set under perfect-market assumptions;
-- it does not mention a comparison with buying single cards, uncertainty on
-  the odds, or tail risk.
+Our model shares its starting point: the slot-level expected value, a
+threshold below which cards are not sold, and a liquidity discount. It
+differs in four ways:
+
+- it uses real data: pull rates measured on community openings and dated
+  market prices for three sets;
+- the slot probabilities are uncertain. Mota treats them as known and leaves
+  a Bayesian treatment of this uncertainty to future work;
+- it reports the whole distribution of outcomes and its tail, not only the
+  expected value and the variance;
+- it compares opening with buying the same value directly, at equal budget
+  and for a target card. Mota compares the sealed price with the expected
+  value of the contents.
 
 ## 2.5 Risk measures and nested simulation
 
@@ -268,9 +279,9 @@ To our knowledge, no published study of the Pokémon TCG combines:
 4. two pre-registered comparisons with direct purchase: spending an equal
    budget, and acquiring a target card.
 
-This statement rests on the works listed above, most of which we read at
-abstract level. It should be checked against the full texts of the closest
-papers.
+This statement rests on the works listed above. The closest one, Mota
+(2026), was read in full; most of the others were read at
+abstract level.
 
 # 3. Data
 
@@ -944,7 +955,7 @@ The protocol (§10) sets six publishability criteria for the analysis freeze.
 | Data | Traceable: dated snapshots, checksums and manifests. Legally usable: CC BY 4.0 rates; prices used with permission, only derived statistics published (ADR 0009). Comparable: one price type, one date, one currency. Limit: a provider aggregate, not realised sales. | GO, with stated limit |
 | Method | Explicit slot model (model specification). The engine is validated against exact results (Appendix C). | GO |
 | Results | C1 and C3 hold in every variant. C2 fails only for one set's gross break-even price under indicative asking prices. No conclusion hinges on one rate or one price. | GO, with stated limit |
-| Novelty | Positioned against the literature and practitioner tools (§2). Most related works were read at abstract level, and the closest one could not be obtained in full. | GO, to be confirmed before submission |
+| Novelty | Positioned against the literature and practitioner tools (§2). The closest work was read in full; most others at abstract level. | GO |
 | Reproducibility | One command regenerates every table and figure from frozen configurations and seeds. The baseline of the robustness run reproduces the main run exactly. The validation, valuation and results reports regenerate byte for byte. | GO |
 
 The gate is passed. The analysis is frozen at tag `analysis-v1`. Later
@@ -1067,9 +1078,8 @@ read as a near tie, whichever side it falls on.
 - The results do not generalise to older sets, other languages or other
   markets, where prices, costs and pull rates differ.
 
-**Literature.** Most related works were read at abstract level only (§2).
-The novelty claim should be checked against the full texts of the closest
-papers.
+**Literature.** The closest related work was read in full, but most of the
+others were read at abstract level only (§2).
 
 ## 8.6 Implications
 
