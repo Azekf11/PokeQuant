@@ -1,0 +1,12 @@
+{
+  "title": "Opening or Buying? A Probabilistic and Risk-Adjusted Comparison of Pokémon TCG Booster Acquisition and Secondary-Market Purchases",
+  "upload_type": "software",
+  "description": "<p>Working paper and replication package. The repository contains the code, configurations, pull-rate snapshot, derived results and the paper (research/paper/paper.pdf).</p><p>Three English sets (Stellar Crown, Surging Sparks, Destined Rivals) are modelled slot by slot, with Dirichlet posteriors on community pull rates propagated through a nested Monte Carlo (200 posterior draws × 20,000 runs). Cards are valued at TCGplayer market prices in USD on 2026-11-15 under three pre-registered cost scenarios. Under the central scenario, the break-even booster price is 1.03 to 1.42 USD against a retail price of 4.49 USD, and buying single cards is decisively better than opening in 35 of 36 budget comparisons. Opening loses on average in all sixteen pre-registered robustness variants.</p><p>Interactive demo: https://azekf11.github.io/PokeQuant/</p>",
+  "creators": [{"name": "Azekf11"}],
+  "license": "MIT",
+  "keywords": ["Pokémon TCG", "trading card games", "loot boxes", "Monte Carlo simulation", "Bayesian uncertainty", "conditional value-at-risk", "pre-registration", "reproducibility"],
+  "related_identifiers": [
+    {"identifier": "https://github.com/Azekf11/PokeQuant", "relation": "isSupplementTo", "scheme": "url"},
+    {"identifier": "https://azekf11.github.io/PokeQuant/", "relation": "isDocumentedBy", "scheme": "url"}
+  ]
+}
