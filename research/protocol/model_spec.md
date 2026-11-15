@@ -1,17 +1,17 @@
 # Booster model specification (S4, for `prereg-v2`)
 
 This document fixes the probabilistic model of one English booster pack for
-the three selected sets (Stellar Crown (sv07), Surging Sparks (sv08) and
-Destined Rivals (sv10) before any price value is used in an analysis. It
+the three selected sets — Stellar Crown (sv07), Surging Sparks (sv08) and
+Destined Rivals (sv10) — before any price value is used in an analysis. It
 refines protocol §4 (`prereg-v1`); departures from `prereg-v1` are recorded in
 [ADR 0010](../../docs/decisions/0010-booster-model-and-prereg-v1-deviations.md).
 
 Every rule below is classified:
 
-- **Documented**: stated by the source that produced the pull-rate data
+- **Documented** — stated by the source that produced the pull-rate data
   (TCGplayer Authentication Center articles) and by at least one independent
   source.
-- **Assumed**: not documented; the central value is a named, parameterised
+- **Assumed** — not documented; the central value is a named, parameterised
   assumption, and the alternative enters as a robustness scenario.
 
 ## 1. Sources read for the pack structure (accessed 2026-11-15)
@@ -37,7 +37,7 @@ articles are in that CSV.
 | `rev1` | first reverse holo | ACE SPEC Rare with p_ACE (sv07, sv08); otherwise a reverse-holo printing | Documented (TCGplayer: ACE SPEC "in the first Reverse Holo slot") |
 | `rev2` | second reverse holo | Illustration Rare, Special Illustration Rare or Hyper Rare with p_IR, p_SIR, p_HR; otherwise a reverse-holo printing | Documented (TCGplayer, Bulbapedia) |
 | `rare` | rare slot | Double Rare or Ultra Rare with p_DR, p_UR; otherwise a Rare | Documented (TCGplayer: DR and UR "in the Rare slot") |
-| n/a | Basic Energy, code card | not valued (value 0) | Documented content; value 0 assumed |
+| — | Basic Energy, code card | not valued (value 0) | Documented content; value 0 assumed |
 
 Pools of printings (`pokequant_core.booster.build_pools`):
 
@@ -60,7 +60,7 @@ slot), so each random slot has a Dirichlet posterior (§4).
 | A-IND | Slots are independent of each other | No source reports co-occurrence; layout allows a hit in `rev1`, `rev2` and `rare` together | Not testable with the data; stated as a limit |
 | A-REV | `rev1` and `rev2` draw from the same reverse pool | Not documented | Stated as a limit (small value effect) |
 | A-CU | Commons and Uncommons of one pack are distinct cards (draws without replacement within the 4 C and the 3 U) | Collation practice, not documented | Draws with replacement (numerical check in S5) |
-| A-GOD | No "god pack" or special collation in English packs of these sets | None found in the sources above | n/a |
+| A-GOD | No "god pack" or special collation in English packs of these sets | None found in the sources above | — |
 | A-STAB | Rates measured at release hold for the product analysed | Openings date from release week (2024-09-13 to 2025-05-30) | Stated as a limit |
 
 ## 4. Estimation of the slot probabilities

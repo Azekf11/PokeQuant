@@ -20,7 +20,7 @@ Slots are independent, printings are equally likely within a pool, and the
 Commons and Uncommons of one pack are distinct cards. Robustness tests move
 the Hyper Rare to the rare slot (R12) and add a documented short print (R11).
 
-![Figure 1. Slot structure of one booster (Surging Sparks) with the posterior-mean probability of each outcome of the three random slots. Rates: Poké Life registry, version 2026-11-13.](../figures/fig2_slots.png)
+![Figure 1. Slot structure of one booster (Surging Sparks) with the posterior-mean probability of each outcome of the three random slots. Rates: Poké Life registry, version 2026-11-13.](../figures/fig1_slots.png)
 
 ## 3.2 Uncertainty on the pull rates
 
@@ -111,7 +111,7 @@ settles more slowly, because it rests on the worst 5 % of runs only: with
 just 50 runs. The main run uses M = 20,000 runs per draw so that every tail
 estimate rests on at least 1,000 runs.
 
-![Figure 2. Monte Carlo convergence for opening 36 boosters, central scenario. Left: running mean with its 95 % Monte Carlo band; dashed lines are the exact means from equation (5). Right: running CVaR 5 %.](../figures/fig8_mc_convergence.png)
+![Figure 2. Monte Carlo convergence for opening 36 boosters, central scenario. Left: running mean with its 95 % Monte Carlo band; dashed lines are the exact means from equation (5). Right: running CVaR 5 %.](../figures/fig2_mc_convergence.png)
 
 Figure 3 shows the outer loop: the 200 posterior draws of b\*. The spread
 across draws is the epistemic uncertainty that a fixed-rate calculator
@@ -121,7 +121,7 @@ mean profit of 36 boosters, the standard deviation across draws (1.45 to
 0.34 USD), so the reported intervals are dominated by what is unknown about
 the rates, not by simulation noise.
 
-![Figure 3. Break-even booster price b\* in each of the 200 posterior draws of the pull rates. Bars: 95 % interval; ticks: mean. The dashed line is the retail price.](../figures/fig9_breakeven_draws.png)
+![Figure 3. Break-even booster price b\* in each of the 200 posterior draws of the pull rates. Bars: 95 % interval; ticks: mean. The dashed line is the retail price.](../figures/fig3_breakeven_draws.png)
 
 The engine was also checked against exact results before any price was used
 (Appendix C): per-slot card frequencies pass χ² tests, the root-mean-square

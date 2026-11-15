@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
 from typing import Any
 
@@ -78,3 +79,14 @@ def test_extension_config_differs_from_main_only_where_adr_0015_says() -> None:
         processed_dir(root, main) == root / "data/processed/pokelife-2026-11-13_tcgdex-2026-11-15"
     )
     assert processed_dir(root, ext).name == ext.data.processed
+
+
+# Frozen configurations: the run id hashes the file bytes, so even a comment edit
+# would give a run id different from the one every report and the paper cite.
+FROZEN = {"main.yaml": "94de09e8", "extension_sets.yaml": "f3420df5"}
+
+
+@pytest.mark.parametrize("name", sorted(FROZEN))
+def test_frozen_configs_keep_the_hash_of_their_reported_run(name: str) -> None:
+    digest = hashlib.sha256((EXPERIMENTS / name).read_bytes()).hexdigest()
+    assert digest[:8] == FROZEN[name]

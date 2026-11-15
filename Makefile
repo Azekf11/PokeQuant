@@ -23,14 +23,19 @@ coverage:  ## Line coverage of the package by the test suite
 
 check: lint typecheck test  ## Everything CI runs (except the secret scan)
 
-# --- Analysis (frozen at tag analysis-v1) -------------------------------------
+# --- Analysis (frozen at tag analysis-v1; extensions at prereg-v3 and prereg-v4) ---
 CONFIG := research/experiments/main.yaml
 RUN := results/main-$(shell shasum -a 256 $(CONFIG) | cut -c1-8)-k200-m20000
+EXT_CONFIG := research/experiments/extension_sets.yaml
+EXT_RUN := results/extension_sets-$(shell shasum -a 256 $(EXT_CONFIG) | cut -c1-8)-k200-m20000
+EXT_SETS := sv01,sv02,sv03,sv04,sv05,sv06,sv07,sv08,sv09,sv10
 
 data:  ## Processed tables from the committed pull rates and the local TCGdex cache
 	uv run pokequant ingest --pokelife 2026-11-13 --tcgdex 2026-11-15 --sets sv07,sv08,sv10 --offline
+	uv run pokequant ingest --pokelife 2026-11-13 --tcgdex 2026-11-15 --sets $(EXT_SETS) \
+		--out-name extension-sets_pokelife-2026-11-13_tcgdex-2026-11-15 --offline
 
-reproduce: data  ## Every report, table and figure of the paper (about 3 h on 8 cores)
+reproduce: data  ## Every report, table and figure of the paper (several hours on 8 cores)
 	uv run python scripts/validate_engine.py
 	uv run python scripts/valuation_report.py
 	uv run pokequant run $(CONFIG)
@@ -39,6 +44,10 @@ reproduce: data  ## Every report, table and figure of the paper (about 3 h on 8 
 	uv run python scripts/robustness_report.py $(RUN)
 	uv run python scripts/paper_figures.py $(RUN)
 	uv run python scripts/export_web.py $(RUN)
+	uv run python scripts/sales_benchmark.py --date 2026-11-15 --offline
+	uv run pokequant run $(EXT_CONFIG)
+	uv run python scripts/extension_report.py $(EXT_RUN)
+	uv run python scripts/pull_rate_checks.py
 	uv run python scripts/build_paper.py
 
 paper:  ## Working paper (Markdown, HTML and PDF; the PDF needs a local Chrome)
