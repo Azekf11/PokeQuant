@@ -40,7 +40,8 @@ tests/                     Automated tests (+ synthetic toy data in tests/fixtur
 scripts/                   Reproducible audit and research scripts
 data/                      raw/ (immutable snapshots) · processed/ · manifests/ (provenance, licences)
 research/protocol/         Research protocol, model specification
-research/                  experiments/, reports/, paper/ are added in the week that needs them
+research/reports/          Data audit and other reports
+research/paper/            References and section drafts of the paper
 docs/                      Roadmap, project charter, decision log (ADRs)
 ```
 
@@ -55,6 +56,17 @@ uv sync                 # create the environment from uv.lock
 uv run pre-commit install
 make check              # lint + format check + types + tests
 ```
+
+Build the processed tables (Parquet + DuckDB views, in the git-ignored
+`data/processed/`) from the committed pull-rate snapshot and a local TCGdex
+cache; drop `--offline` to fetch missing raw files politely:
+
+```bash
+uv run pokequant ingest --pokelife 2026-11-13 --tcgdex 2026-11-15 --sets sv07,sv08,sv10 --offline
+```
+
+Each run writes a `manifest.json` with input and output checksums; two runs on
+the same inputs give byte-identical outputs.
 
 ## Data and licences
 

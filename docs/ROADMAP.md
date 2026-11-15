@@ -102,13 +102,13 @@ PR into `main`.
 **Gate G2:** if usable, legally reusable price data is insufficient → switch to a simulation study plus a limited case study. Never invent data.
 
 ### S3 — Data schema and ingestion · branch `week/03-ingestion`
-- [ ] Pydantic models for `Set`, `CardPrinting`, `PullRateObservation`, `BoosterModel`, `PriceObservation`, `CostScenario`, `SimulationRun` (+ liquidity fields from protocol §3.2).
-- [ ] Canonical `printing_id` scheme (set, number, variant, language) → ADR. Two printings are never merged under an ambiguous ID.
-- [ ] Provider adapters behind one interface (httpx, on-disk cache, timeouts, retries with backoff); keys only from environment variables.
-- [ ] Raw snapshots are immutable; transformations write Parquet to `data/processed/`; DuckDB views for analysis.
-- [ ] Validation: duplicates, missing values (**never silently 0**), wrong types, inconsistent currencies, invalid dates, unavailable source — each with a test.
-- [ ] CLI: `pokequant ingest <source> --snapshot <date>`.
-- [ ] *(A6)* Draft paper §3 Data.
+- [x] Pydantic models for `Set`, `CardPrinting`, `PullRateObservation`, `BoosterModel`, `PriceObservation`, `CostScenario`, `SimulationRun` (+ liquidity fields from protocol §3.2). *Liquidity has no open data source (S2 audit): it enters as `CostScenario` fields, not observations.*
+- [x] Canonical `printing_id` scheme (set, number, variant, language) → ADR 0008. Two printings are never merged under an ambiguous ID.
+- [x] Provider adapters behind one interface (httpx, on-disk cache, timeouts, retries with backoff); keys only from environment variables. *Neither source needs a key; a circuit breaker stops calls after repeated failures.*
+- [x] Raw snapshots are immutable; transformations write Parquet to `data/processed/`; DuckDB views for analysis.
+- [x] Validation: duplicates, missing values (**never silently 0**), wrong types, inconsistent currencies, invalid dates, unavailable source — each with a test.
+- [x] CLI: `pokequant ingest --pokelife <date> --tcgdex <date> --sets <ids> [--offline]` (one command for both sources, since set matching needs both).
+- [x] *(A6)* Draft paper §3 Data → `research/paper/drafts/03_data.md`.
 
 **Deliverable:** schema + ingestion pipeline.
 **Exit:** imports are idempotent (two runs → identical output hash); duplicates and invalid values are detected.

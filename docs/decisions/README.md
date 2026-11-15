@@ -26,3 +26,4 @@ File name: `NNNN-short-title.md`. Template:
 | [0005](0005-set-selection-rule.md) | Set selection rule | accepted |
 | [0006](0006-pull-rate-and-catalogue-sources.md) | Pull-rate and catalogue sources | accepted |
 | [0007](0007-gate-g2-price-data.md) | Gate G2: price data | accepted |
+| [0008](0008-canonical-identifiers.md) | Canonical identifiers | accepted |
