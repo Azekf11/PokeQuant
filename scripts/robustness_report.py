@@ -128,6 +128,7 @@ def r7_table(folder: Path, all_variants: Sequence[Variant], sets: list[str]) -> 
         "| P(K < a), top_sir | MC SE | Verdicts changed vs baseline |",
         "|---|---|---|---|---|---|---|---|---|",
     ]
+    changes: list[str] = []
     # One variant per run; "values" stands for the baseline (no replaced column).
     by_run = {v.run: v for v in all_variants if v.id in ("baseline", "R7")}
     base = {(r["set_id"], r["job"]["label"]): r for r in variant_results(folder, by_run["values"])}
@@ -144,15 +145,28 @@ def r7_table(folder: Path, all_variants: Sequence[Variant], sets: list[str]) -> 
                 fmt = "{:.3f}" if m == "p_gain" else "{:.2f}"
                 cells.append(f"{fmt.format(a.mean())} [{fmt.format(lo)}, {fmt.format(hi)}]")
                 cells.append(fmt.format(float(np.median(r["a_se"]["central"][m]))))
-            changed = sum(
-                1
+            diffs = [
+                (key, m)
                 for key, r in res.items()
                 if key[0] == s
                 for m in ("mean", "median", "cvar05")
                 if _verdict(r, m) != _verdict(base[key], m)
-            )
-            lines.append(f"| {s} | {label} | " + " | ".join(cells) + f" | {changed} of 18 |")
+            ]
+            changes += [
+                f"- {label} runs, {key[0]} {key[1]} {m}: {_verdict(res[key], m)} "
+                f"(share of draws A better {_share(res[key], m):.3f}) instead of "
+                f"{_verdict(base[key], m)} ({_share(base[key], m):.3f})."
+                for key, m in diffs
+            ]
+            lines.append(f"| {s} | {label} | " + " | ".join(cells) + f" | {len(diffs)} of 18 |")
+    lines += ["", "Verdicts that differ from the baseline:", ""]
+    lines += changes or ["- None."]
     return lines
+
+
+def _share(r: dict[str, Any], m: str) -> float:
+    a = np.asarray(r["a_metrics"]["central"][m])
+    return compare(a, r["b_metrics"]["central"][m], DIRECTION[m])[0]
 
 
 def _verdict(r: dict[str, Any], m: str) -> str:
@@ -170,12 +184,20 @@ def main(run_dir: Path) -> None:
     all_variants = variants()
 
     data: dict[str, Any] = {}
+    baseline_res = variant_results(folder, all_variants[0])
     for v in all_variants:
         res = variant_results(folder, v)
         c = check_conclusions(res, cost, single_model=v.single_model)
         hyp = {} if v.single_model else hypothesis_statuses(res)
         if v.id == "R11":
             hyp = {h: x for h, x in hyp.items() if h != "H4"}  # one set: H4 not applicable
+        # A variant that runs fewer jobs (R5: E1 only; R11: one set) is compared with
+        # the baseline restricted to the same jobs, so that a hypothesis whose evidence
+        # lies in the jobs it does not run is not reported as changed.
+        keys = {(r["set_id"], r["job"]["label"]) for r in res}
+        hyp_base = hypothesis_statuses(
+            [r for r in baseline_res if (r["set_id"], r["job"]["label"]) in keys]
+        )
         data[name(v)] = {
             "variant": v,
             "checks": c,
@@ -183,6 +205,7 @@ def main(run_dir: Path) -> None:
             "be_ci": c["break_even"],
             "adv": advantage(res, "n=36"),
             "hyp": hyp,
+            "hyp_base": hyp_base,
             "n_jobs": len(res),
         }
 
@@ -264,7 +287,7 @@ def main(run_dir: Path) -> None:
         for h in ("H1", "H2", "H3"):
             st = d["hyp"].get(h)
             cols.append(
-                "n/a" if st is None else "=" if st == base_h[h] or key == "baseline" else st
+                "n/a" if st is None else "=" if st == d["hyp_base"][h] or key == "baseline" else st
             )
         if key == "baseline":
             cols = [base_h[h] for h in ("H1", "H2", "H3")]
@@ -275,8 +298,9 @@ def main(run_dir: Path) -> None:
     lines += [
         "",
         "R4 rows are single models at the bounds of every hit rate (no epistemic",
-        "draws; decisive means |A - B| > 3 Monte Carlo SE). R5 runs E1 only. R11",
-        "concerns sv07 only. `n/a`: not applicable.",
+        "draws; decisive means |A - B| > 3 Monte Carlo SE). R5 runs E1 only and R11",
+        "concerns sv07 only; their hypothesis statuses are compared with the baseline",
+        "restricted to the same jobs. `n/a`: not applicable.",
         "",
         "## 2. Where a conclusion fails",
         "",
