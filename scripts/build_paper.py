@@ -30,14 +30,11 @@ DRAFTS = PAPER / "drafts"
 ORDER = (
     "00_abstract.md",
     "01_introduction.md",
-    "02_literature.md",
-    "03_data.md",
-    "04_methodology.md",
-    "05_design.md",
-    "06_results.md",
-    "07_robustness.md",
-    "08_discussion.md",
-    "09_conclusion.md",
+    "02_data.md",
+    "03_model.md",
+    "04_results.md",
+    "05_robustness.md",
+    "06_conclusion.md",
 )
 APPENDIX = "10_appendix.md"
 TITLE = (
@@ -45,6 +42,8 @@ TITLE = (
     "Booster Acquisition and Secondary-Market Purchases"
 )
 AUTHOR = "Anh-Vu TA"
+VERSION = "2"
+DATE = "November 2026"
 DOI = "10.5281/zenodo.24251050"
 REPOSITORY = "https://github.com/Azekf11/PokeQuant"
 CHROME = (
@@ -167,32 +166,56 @@ def assemble() -> str:
             body.append("# References\n\n" + "\n\n".join(reference(e) for e in refs) + "\n")
         body.append(resolve(text, bib, cited).strip() + "\n")
     head = (
-        f"# {TITLE}\n\n**{AUTHOR}** · Working paper, November 2026 · Code, data and "
-        f"configurations: <{REPOSITORY}>, DOI [{DOI}](https://doi.org/{DOI})\n\n"
+        f"# {TITLE}\n\n"
+        f'<p class="author">{AUTHOR}</p>\n\n'
+        f'<p class="meta">Working paper, version {VERSION}, {DATE}<br>'
+        f'Code, data and configurations: <a href="{REPOSITORY}">{REPOSITORY}</a> · '
+        f'DOI <a href="https://doi.org/{DOI}">{DOI}</a></p>\n\n'
     )
     return head + "\n".join(body)
 
 
 CSS = """
-body { font: 11pt/1.5 Georgia, "Times New Roman", serif; color: #111; max-width: 46em;
-       margin: 2em auto; padding: 0 1em; }
-h1 { font-size: 1.45em; margin: 1.6em 0 .5em; } h1:first-child { font-size: 1.7em; }
-h2 { font-size: 1.15em; margin: 1.3em 0 .4em; } h3 { font-size: 1em; }
-table { border-collapse: collapse; margin: .8em 0; font-size: .86em; }
-th, td { border-bottom: 1px solid #ccc; padding: .25em .5em; text-align: left;
-         vertical-align: top; }
-th { border-bottom: 1.5px solid #333; }
-img { max-width: 100%; display: block; margin: .6em auto 0; }
-code, pre { font-size: .85em; } pre { background: #f5f5f3; padding: .6em; overflow-x: auto; }
-p > em:only-child { display: block; font-size: .9em; color: #333; margin-bottom: 1em; }
-@page { size: A4; margin: 2cm 2cm; }
-@media print { body { margin: 0; max-width: none; } h1 { break-after: avoid; }
-  h2, h3 { break-after: avoid; } table, img { break-inside: avoid; } }
+body { font: 11pt/1.45 "Latin Modern Roman", "CMU Serif", "Times New Roman", Times, serif;
+       color: #111; max-width: 44em; margin: 2em auto; padding: 0 1em; text-align: justify;
+       hyphens: auto; }
+h1 { font-size: 1.2em; margin: 1.8em 0 .6em; text-align: left; }
+h1:first-child { font-size: 1.55em; text-align: center; line-height: 1.3; margin: .5em 0 .8em; }
+h2 { font-size: 1.02em; margin: 1.4em 0 .4em; text-align: left; } h3 { font-size: 1em; }
+p.author { text-align: center; font-size: 1.1em; margin: 0; }
+p.meta { text-align: center; font-size: .85em; color: #333; margin: .4em 0 1.6em; }
+div.abstract { margin: 0 2.5em 2em; font-size: .92em; }
+div.abstract h1 { font-size: 1em; text-align: center; margin: 0 0 .4em; }
+table { border-collapse: collapse; margin: .6em auto 1.2em; font-size: .84em;
+        border-top: 1.5px solid #111; border-bottom: 1.5px solid #111; text-align: left; }
+th, td { padding: .22em .55em; vertical-align: top; }
+th { border-bottom: .8px solid #111; font-weight: 600; }
+figure { margin: 1em 0 1.3em; break-inside: avoid; }
+figure img { max-width: 100%; display: block; margin: 0 auto; }
+figcaption { font-size: .86em; margin-top: .4em; text-align: left; }
+code, pre { font-size: .82em; } pre { background: #f6f6f4; padding: .7em; overflow-x: auto;
+  border-top: 1px solid #111; border-bottom: 1px solid #111; text-align: left; }
+@page { size: letter; margin: 2.4cm 2.5cm; }
+@media print { body { margin: 0; max-width: none; } h1, h2, h3 { break-after: avoid; }
+  table, figure, pre { break-inside: avoid; } }
 """
+
+
+FIGURE = re.compile(r'<p><img alt="([^"]*)" src="([^"]*)" ?/?></p>')
+ABSTRACT = re.compile(r"(<h1>Abstract</h1>.*?)(?=<h1>)", re.S)
 
 
 def to_html(md_text: str) -> str:
     body = markdown.markdown(md_text, extensions=["tables", "fenced_code", "sane_lists"])
+    body = FIGURE.sub(
+        lambda m: (
+            f'<figure><img src="{m[2]}" alt=""><figcaption>'
+            + re.sub(r"^(Figure [A-Z]?\d+\.)", r"<strong>\1</strong>", m[1])
+            + "</figcaption></figure>"
+        ),
+        body,
+    )
+    body = ABSTRACT.sub(r'<div class="abstract">\1</div>\n', body, count=1)
     return (
         '<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
         f"<title>{html.escape(TITLE)}</title><style>{CSS}</style></head>"

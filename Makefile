@@ -1,4 +1,4 @@
-.PHONY: install lint format typecheck test check data reproduce paper web-test
+.PHONY: install lint format typecheck test coverage check data reproduce paper web-test
 
 install:  ## Create the environment and install git hooks
 	uv sync
@@ -17,6 +17,9 @@ typecheck:
 
 test:
 	uv run pytest
+
+coverage:  ## Line coverage of the package by the test suite
+	uv run pytest --cov=pokequant_core --cov-report=term
 
 check: lint typecheck test  ## Everything CI runs (except the secret scan)
 

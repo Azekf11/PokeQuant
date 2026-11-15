@@ -207,6 +207,14 @@ PR into `main`.
 - [x] Weekly snapshots by GitHub Actions (`.github/workflows/price-panel.yml`), Sundays until 2027-01-10.
 - [ ] After the last snapshot: H4 across dates, paper version 2 with a separate section.
 
+### Extension (after v1.0): other eligible sets, pull-rate checks, paper version 2 · branch `feat/extension-sets`
+- [x] Pre-register: [ADR 0015](decisions/0015-extension-to-eligible-sets-and-pull-rate-checks.md), tag `prereg-v4`.
+- [x] Pull-rate checks against the primary TCGplayer articles, duplicate flag, held-out predictive test: [research/reports/pull_rate_checks.md](../research/reports/pull_rate_checks.md).
+- [x] Main experiment on the ten evaluable sets: [research/reports/extension_sets.md](../research/reports/extension_sets.md).
+- [x] Test coverage measured in CI (`make coverage`).
+- [x] Paper version 2: shorter working-paper format, a source for every input (Appendix A), Monte Carlo convergence and posterior-draw figures, extensions in Section 5.
+- [ ] Mega Evolution sets (me01, me02, me04, me05): need a documented pack layout for "Mega Hyper Rare" (new ADR).
+
 ---
 
 ## 4. Weekly routine

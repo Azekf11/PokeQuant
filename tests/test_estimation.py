@@ -132,3 +132,25 @@ def test_slot_posterior_mean_is_a_distribution(counts: list[int], packs: int) ->
     post = slot_posterior({f"r{i}": (x, packs) for i, x in enumerate(counts)}, "rest")
     assert math.isclose(math.fsum(post.mean.values()), 1.0)
     assert all(v > 0 for v in post.mean.values())
+
+
+def test_predictive_check_centres_on_the_posterior_rate() -> None:
+    from pokequant_core.estimation import predictive_check
+
+    post = beta_posterior(100, 1000)
+    near = predictive_check(post, 50, 500)
+    assert near.expected == pytest.approx(500 * 100.5 / 1001)
+    assert near.inside and near.p_value > 0.5
+    far = predictive_check(post, 120, 500)
+    assert not far.inside and far.p_value < 1e-6
+    assert predictive_check(post, 0, 500).p_value < predictive_check(post, 30, 500).p_value
+
+
+@given(st.lists(st.floats(0.0, 1.0), min_size=1, max_size=30))
+def test_holm_rejects_no_more_than_bonferroni_step_down_allows(ps: list[float]) -> None:
+    from pokequant_core.estimation import holm
+
+    rejected = holm(ps, 0.05)
+    assert all(p <= 0.05 for p, r in zip(ps, rejected, strict=True) if r)
+    bonferroni = [p <= 0.05 / len(ps) for p in ps]
+    assert all(r for r, b in zip(rejected, bonferroni, strict=True) if b)

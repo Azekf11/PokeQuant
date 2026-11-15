@@ -1,0 +1,21 @@
+set_id,rarity,datasets,tcgplayer_hits,tcgplayer_packs,heldout_hits,heldout_packs,predicted_mean,pi95_low,pi95_high,inside_pi95,p_value,holm_reject_at_0.05
+sv07,Double Rare,SCR-001 SCR-002,1461,8644,351,2088,353.0,316,391,True,0.9236,False
+sv07,Ultra Rare,SCR-001 SCR-002,581,8608,144,2088,141.0,117,167,True,0.8045,False
+sv07,ACE SPEC Rare,SCR-001 SCR-002,421,8525,95,2088,103.2,82,126,True,0.4626,False
+sv07,Illustration Rare,SCR-001 SCR-002,662,8493,155,2088,162.9,137,190,True,0.5729,False
+sv07,Special Illustration Rare,SCR-001 SCR-002,97,8712,24,2088,23.4,14,35,True,0.8713,False
+sv07,Hyper Rare,SCR-001 SCR-002,63,8592,13,2088,15.4,8,25,True,0.6066,False
+sv08,Double Rare,SSP-001 SSP-002,1467,8661,382,2232,378.1,340,418,True,0.8398,False
+sv08,Ultra Rare,SSP-001 SSP-002,579,8596,150,2232,150.5,125,177,True,0.986,False
+sv08,ACE SPEC Rare,SSP-001 SSP-002,436,8672,113,2232,112.3,90,136,True,0.9386,False
+sv08,Illustration Rare,SSP-001 SSP-002,665,8675,182,2232,171.2,144,199,True,0.4404,False
+sv08,Special Illustration Rare,SSP-001 SSP-002,104,9022,34,2232,25.8,16,38,True,0.1612,False
+sv08,Hyper Rare,SSP-001 SSP-002,48,9001,16,2232,12.0,5,20,True,0.306,False
+sv10,Ultra Rare,DR-001 DR-002,543,8498,242,3600,230.2,197,265,True,0.4959,False
+sv10,Illustration Rare,DR-001 DR-002,720,8682,321,3600,298.7,261,338,True,0.2593,False
+sv10,Special Illustration Rare,DR-001 DR-002,88,8324,42,3600,38.3,25,54,True,0.592,False
+sv10,Hyper Rare,DR-001 DR-002,59,8846,27,3600,24.2,14,36,True,0.6052,False
+sv09,Double Rare,JTG-001 JTG-002,1745,8599,112,500,101.5,84,120,True,0.2576,False
+sv09,Illustration Rare,JTG-001 JTG-002,730,8583,48,500,42.6,30,56,True,0.3933,False
+sv09,Special Illustration Rare,JTG-001 JTG-002,97,8326,5,500,5.9,2,11,True,0.7836,False
+sv09,Hyper Rare,JTG-001 JTG-002,63,8592,4,500,3.7,0,8,True,0.8144,False

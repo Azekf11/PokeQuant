@@ -38,7 +38,8 @@ from pokequant_core.schemas import (
 
 
 def processed_dir(root: Path, cfg: ExperimentConfig) -> Path:
-    return root / f"data/processed/pokelife-{cfg.data.pokelife}_tcgdex-{cfg.data.tcgdex}"
+    name = cfg.data.processed or f"pokelife-{cfg.data.pokelife}_tcgdex-{cfg.data.tcgdex}"
+    return root / "data/processed" / name
 
 
 @cache

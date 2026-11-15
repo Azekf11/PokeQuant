@@ -63,3 +63,18 @@ def test_unknown_layout_is_rejected() -> None:
     data["product"]["layout"] = "made-up"
     with pytest.raises(ValidationError, match="layout"):
         ExperimentConfig.model_validate(data)
+
+
+def test_extension_config_differs_from_main_only_where_adr_0015_says() -> None:
+    from pokequant_core.experiment_run import processed_dir
+
+    main = load_experiment(EXPERIMENTS / "main.yaml")
+    ext = load_experiment(EXPERIMENTS / "extension_sets.yaml")
+    assert set(main.sets) < set(ext.sets) and len(ext.sets) == 10
+    for field in ("product", "pricing", "cost_scenarios", "estimands", "simulation", "estimation"):
+        assert getattr(ext, field) == getattr(main, field), field
+    root = Path("/repo")
+    assert (
+        processed_dir(root, main) == root / "data/processed/pokelife-2026-11-13_tcgdex-2026-11-15"
+    )
+    assert processed_dir(root, ext).name == ext.data.processed

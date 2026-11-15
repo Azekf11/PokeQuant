@@ -33,3 +33,4 @@ File name: `NNNN-short-title.md`. Template:
 | [0012](0012-operational-robustness-tests.md) | Operational definitions of the robustness tests | accepted |
 | [0013](0013-static-web-demo.md) | Static web demo instead of a live API | accepted |
 | [0014](0014-sale-price-benchmark-and-price-panel.md) | Sale-price benchmark and weekly price panel (prereg-v3) | accepted |
+| [0015](0015-extension-to-eligible-sets-and-pull-rate-checks.md) | Extension to the other eligible sets and pull-rate checks (prereg-v4) | accepted |

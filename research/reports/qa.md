@@ -9,10 +9,15 @@ error handling) do not apply.
 
 | Job | What it checks | Result |
 |---|---|---|
-| Lint, types, tests | ruff, ruff format, mypy (strict), pytest | 144 tests pass |
+| Lint, types, tests | ruff, ruff format, mypy (strict), pytest with line coverage | 159 tests pass; 91 % of the package's lines covered (2026-11-15) |
 | Secret scan | gitleaks over the full git history | no finding |
 | Web demo journey test | Playwright, system Chrome (`apps/web/tests/journey.spec.js`) | 3 tests pass |
 | Dependency audit | `pip-audit` on the locked Python dependencies; `npm audit` on the test tooling | no known vulnerability |
+
+**Coverage.** `make coverage` reports line coverage by module. The lowest are
+`experiment_run.py` (38 %) and `robustness.py` (64 %): their process-pool
+entry points are exercised by the full runs, not by unit tests. The engine,
+estimation, valuation and ingestion modules are at 94 % or more.
 
 **Journey test.** It follows the six steps of the demo:
 
