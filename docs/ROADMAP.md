@@ -195,7 +195,7 @@ PR into `main`.
 
 ### S12 — Review, release, publication · branch `week/12-release`
 - [ ] Address review; write answers to the ten defence questions (protocol §14) in `docs/FAQ.md`. *FAQ written; review pending (author action).*
-- [ ] Tag `v1.0.0`, Zenodo DOI, update `CITATION.cff`. *Tag `v1.0.0` and `CITATION.cff` done; Zenodo DOI is an author action.*
+- [x] Tag `v1.0.0`, Zenodo DOI, update `CITATION.cff`. *Tags `v1.0.0` and `v1.0.1`; DOI [10.5281/zenodo.24251050](https://doi.org/10.5281/zenodo.24251050) in `CITATION.cff` and the README.*
 - [ ] Deploy site; 5–8 min presentation and demo video. *Site deployed at <https://azekf11.github.io/PokeQuant/>; video is an author action.*
 - [ ] Submit preprint. *Author action.*
 

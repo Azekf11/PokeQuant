@@ -11,6 +11,7 @@ authors:
 repository-code: "https://github.com/Azekf11/PokeQuant"
 license: MIT
 version: 1.0.1
+doi: 10.5281/zenodo.24251050
 date-released: "2026-11-15"
 url: "https://azekf11.github.io/PokeQuant/"
 keywords:

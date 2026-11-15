@@ -1,5 +1,7 @@
 # PokéQuant
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24251050.svg)](https://doi.org/10.5281/zenodo.24251050)
+
 **Opening or buying?** A reproducible, probabilistic and risk-adjusted
 comparison of Pokémon TCG booster opening versus direct purchase on the
 secondary market.
@@ -113,4 +115,7 @@ make reproduce
 ## Contributing and citation
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow and
-[CITATION.cff](CITATION.cff) to cite the software.
+[CITATION.cff](CITATION.cff) to cite the work. Archived on Zenodo:
+[10.5281/zenodo.24251050](https://doi.org/10.5281/zenodo.24251050) (all
+versions; v1.0.1 is
+[10.5281/zenodo.24251051](https://doi.org/10.5281/zenodo.24251051)).
