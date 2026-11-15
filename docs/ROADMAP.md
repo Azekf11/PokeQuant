@@ -125,7 +125,7 @@ PR into `main`.
 **Gate G4:** if the booster structure is not documented → model only observable slots and present unknowns as scenarios. Never fabricate an exact distribution.
 
 ### S5 — Monte Carlo engine and validation · branch `week/05-monte-carlo`
-- [ ] **ADR 0007 deadline:** record the price-data decision (P1 / P2 / fallback P4) before S6 starts.
+- [x] **ADR 0007 deadline:** record the price-data decision (P1 / P2 / fallback P4) before S6 starts → P1, [ADR 0009](decisions/0009-price-data-permission.md) (decided early, 2026-11-15).
 - [ ] Vectorised NumPy engine; `numpy.random.Generator(PCG64)` seeded through `SeedSequence`; nested loops (A5).
 - [ ] Every run writes a `SimulationRun` manifest: seed, N, model version, data snapshot IDs, parameters, timestamp.
 - [ ] Validation: one-slot two-card toy case vs exact mean/variance; simulated frequencies vs theory; hit counts vs binomial; error decay ∝ 1/√N for N = 10³…10⁶; reproducibility (same seed + data + model ⇒ identical output).

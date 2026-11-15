@@ -63,12 +63,13 @@ sources:
     licence: "MIT (card database)"
     rights:
       catalogue: {access: yes, display: yes, redistribution: yes}
-      prices: {access: yes, display: unclear, redistribution: unclear}
+      prices: {access: yes, display: "yes, with permission (ADR 0009)", redistribution: "derived statistics only (ADR 0009)"}
       images: {access: yes, display: unclear, redistribution: not_stated}
     key_quote: "The Database is licensed under the MIT License."
-    use_as: catalogue
+    use_as: catalogue_and_prices
+    permission: "Price use authorised by the maintainers for this non-commercial project (reported by the author 2026-11-15; ADR 0009)."
     actions:
-      - Ask TCGdex maintainers about the status of price fields and images.
+      - Images: status still not asked; images are not used.
 
   - id: pokemontcg_io
     name: "Pokémon TCG API (pokemontcg.io)"
@@ -91,11 +92,11 @@ sources:
     access: "API key; free plan 500 credits/day, 60 req/min, English cards only"
     price_types: [provider_market, "listing (paid plans)", "sold (paid plans, eBay comps)"]
     licence: "none granted (terms updated 2026-04-14)"
-    rights: {access: "yes, via API only", display: not_stated, redistribution: not_stated}
+    rights: {access: "yes, via API only", display: "yes, with permission (ADR 0009)", redistribution: "derived statistics only (ADR 0009)"}
     key_quote: "Not included: Commercial use"  # free-plan limits, /pricing
-    use_as: prices_only_with_written_permission
-    actions:
-      - Email support to ask whether derived statistics and a frozen snapshot may be published.
+    use_as: secondary_prices_not_planned
+    permission: "Price use authorised for this non-commercial project (reported by the author 2026-11-15; ADR 0009)."
+    actions: []
 
   - id: tcgdb
     name: "TCGdb (beta)"
@@ -142,13 +143,13 @@ sources:
 
 summary: >-
   Redistributable: Poké Life pull rates (CC BY 4.0) and the TCGdex catalogue
-  (MIT). No price source can currently be redistributed without written
-  permission. This is the main input for Gate G2 (end of S2).
+  (MIT). TCGdex and PkmnPrices authorised the use of their prices for this
+  non-commercial project (ADR 0009): derived statistics are published, raw
+  prices are not redistributed.
 
 open_questions:
   - Does Poké Life's CC BY 4.0 cover the underlying third-party openings? Which feed produces `rate`?
-  - Licence of TCGdex images and of its TCGplayer / Cardmarket price fields.
-  - Will PkmnPrices allow publishing derived statistics or a snapshot?
+  - Licence of TCGdex images.
   - Do TCGplayer / Cardmarket terms restrict republication of their prices via aggregators?
   - eBay API License Agreement terms (not read).
   - pokemon.com fan-content page could not be read (bot check, not bypassed).

@@ -36,16 +36,17 @@ is a realised-sale price, and no open source of realised sales was identified.
 Each value is attached to one printing (normal, reverse or holo) by a fixed
 rule (ADR 0008); values that cannot be attributed to a single printing are
 discarded and counted in the ingestion manifest rather than guessed.
-Their use is governed by ADR 0007 (Gate G2, conditional GO): prices are used
-locally only, labelled by type, never presented as transaction values, and
-always combined with liquidity-haircut scenarios. Field evidence supports this
+Both TCGdex and the secondary provider PkmnPrices authorised their use for
+this non-commercial project (ADR 0009). Prices are labelled by type, never
+presented as transaction values, and always combined with liquidity-haircut
+scenarios; only derived statistics are published, never raw prices. Field evidence supports this
 caution: in a one-year study of 300 Pokémon cards listed on eBay, 73 % sold
 and posted prices acted as a ceiling on realised prices [@heck2026sales].
-**[TO CONFIRM: price-use permission, ADR 0009]** Without permission to
-publish statistics derived from these prices, the valuation relies on price
-scenarios and a limited case study, and the paper makes no claim about
-observed market profitability. This section uses price *coverage* only; no
-price value was inspected.
+The permission does not extend to the terms of the originating marketplaces,
+which were not reviewed; this is one more reason not to redistribute raw
+prices. Attribution: price data from TCGdex (tcgdex.dev), relaying TCGplayer
+and Cardmarket prices, used with permission. This section uses price
+*coverage* only.
 
 ## 3.2 Set selection
 
@@ -157,8 +158,8 @@ excluded by criterion 3.
 No card image is used or redistributed: the rights to TCGdex images are not
 stated, and card names and numbers are used as facts only, without
 affiliation with the rights holder. Raw prices are never committed or
-redistributed (ADRs 0006 and 0007); at most, derived statistics are published,
-subject to the permission marked above. The replication package contains the
+redistributed (ADRs 0006, 0007 and 0009); only derived statistics are
+published. The replication package contains the
 pull-rate snapshot (CC BY 4.0, with attribution) and the scripts that re-fetch
 the catalogue. Other sources were examined but not used: the Pokémon TCG API
 (deprecated, no stated licence), the TCGplayer and Cardmarket APIs (closed to

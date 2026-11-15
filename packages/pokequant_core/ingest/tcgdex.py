@@ -19,7 +19,7 @@ from pokequant_core.schemas import CardPrinting, CardSet, PriceObservation, Pric
 API = "https://api.tcgdex.net/v2/en"
 SOURCE = "tcgdex"
 LANGUAGE = "en"
-LICENSE_NOTE = "TCGdex pricing field; publication of derived statistics governed by ADR 0007"
+LICENSE_NOTE = "TCGdex pricing field, used with permission; derived statistics only (ADR 0009)"
 
 # TCGplayer statistic -> price type
 TCGPLAYER_FIELDS: dict[str, tuple[str, PriceType]] = {
