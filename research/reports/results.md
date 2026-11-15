@@ -31,7 +31,7 @@ has a positive expected net profit only if a booster costs less than b*.
 | sv08 | 3.44 [3.31, 3.56] | 1.03 [0.95, 1.12] | 0.52 [0.45, 0.58] |
 | sv10 | 3.78 [3.65, 3.91] | 1.13 [1.04, 1.22] | 0.64 [0.57, 0.71] |
 
-## 2.1 E1 — budget, central scenario (main result)
+## 2.1 E1: budget, central scenario (main result)
 
 | Set | Packs | Budget | A: mean Π | A: median Π | A: P(loss) | A: CVaR 5 % | B: Π | Verdict mean / median / CVaR |
 |---|---|---|---|---|---|---|---|---|
@@ -48,7 +48,7 @@ has a positive expected net profit only if a booster costs less than b*.
 | sv10 | 36 | 161.64 | -120.97 [-124.35, -117.55] | -138.36 [-140.12, -136.25] | 0.957 [0.949, 0.966] | 160.15 [159.90, 160.45] | -46.48 | **B** / **B** / **B** |
 | sv10 | 100 | 449.00 | -335.99 [-345.84, -326.63] | -363.84 [-371.24, -355.55] | 0.994 [0.992, 0.997] | 428.32 [426.36, 430.44] | -125.16 | **B** / **B** / **B** |
 
-## 2.2 E1 — budget, adverse scenario (prudent)
+## 2.2 E1: budget, adverse scenario (prudent)
 
 | Set | Packs | Budget | A: mean Π | A: median Π | A: P(loss) | A: CVaR 5 % | B: Π | Verdict mean / median / CVaR |
 |---|---|---|---|---|---|---|---|---|
@@ -65,7 +65,7 @@ has a positive expected net profit only if a booster costs less than b*.
 | sv10 | 36 | 197.64 | -174.64 [-177.07, -172.18] | -190.15 [-190.76, -189.13] | 0.994 [0.992, 0.996] | 197.64 [197.64, 197.64] | -97.81 | **B** / **B** / **B** |
 | sv10 | 100 | 549.00 | -485.07 [-492.04, -478.32] | -509.57 [-514.32, -504.60] | 1.000 [1.000, 1.000] | 547.30 [546.62, 547.97] | -250.78 | **B** / **B** / **B** |
 
-## 2.3 E1 — budget, gross scenario (reference only)
+## 2.3 E1: budget, gross scenario (reference only)
 
 | Set | Packs | Budget | A: mean Π | A: median Π | A: P(loss) | A: CVaR 5 % | B: Π | Verdict mean / median / CVaR |
 |---|---|---|---|---|---|---|---|---|
@@ -82,7 +82,7 @@ has a positive expected net profit only if a booster costs less than b*.
 | sv10 | 36 | 161.64 | -25.58 [-30.40, -20.69] | -48.28 [-51.09, -45.28] | 0.818 [0.792, 0.842] | 84.06 [83.40, 84.85] | 0.00 | **B** / **B** / **B** |
 | sv10 | 100 | 449.00 | -70.99 [-84.79, -57.22] | -107.69 [-118.20, -95.69] | 0.798 [0.762, 0.833] | 203.57 [200.41, 207.54] | 0.00 | **B** / **B** / **B** |
 
-## 3.1 E2 — target, central scenario
+## 3.1 E2: target, central scenario
 
 | Set | Target | p_hit (1 in …) | n_max | P(K < a(c*)) | A: mean Π | A: median Π | A: CVaR 5 % | Verdict mean / median / CVaR |
 |---|---|---|---|---|---|---|---|---|
@@ -93,7 +93,7 @@ has a positive expected net profit only if a booster costs less than b*.
 | sv10 | top_price (special illustration rare) | 1008 [875, 1174] | 3016 | 0.076 [0.064, 0.089] | -3143.28 [-3672.12, -2697.78] | -2210.97 [-2659.62, -1843.81] | 10727.17 [10143.22, 11097.82] | **B** / **B** / **B** |
 | sv10 | top_sir (special illustration rare) | 1008 [875, 1174] | 3016 | 0.076 [0.063, 0.089] | -3144.69 [-3655.54, -2688.07] | -2210.07 [-2665.51, -1840.16] | 10731.40 [10210.63, 11095.05] | **B** / **B** / **B** |
 
-## 3.2 E2 — target, adverse scenario
+## 3.2 E2: target, adverse scenario
 
 | Set | Target | p_hit (1 in …) | n_max | P(K < a(c*)) | A: mean Π | A: median Π | A: CVaR 5 % | Verdict mean / median / CVaR |
 |---|---|---|---|---|---|---|---|---|
@@ -104,7 +104,7 @@ has a positive expected net profit only if a booster costs less than b*.
 | sv10 | top_price (special illustration rare) | 1008 [875, 1174] | 3016 | 0.055 [0.047, 0.064] | -4526.58 [-5232.67, -3932.47] | -3221.46 [-3830.19, -2739.93] | 15064.53 [14446.22, 15373.81] | **B** / **B** / **B** |
 | sv10 | top_sir (special illustration rare) | 1008 [875, 1174] | 3016 | 0.055 [0.046, 0.064] | -4528.67 [-5209.28, -3926.32] | -3220.25 [-3829.95, -2722.01] | 15070.14 [14561.94, 15376.79] | **B** / **B** / **B** |
 
-## 3.3 E2 — target, gross scenario
+## 3.3 E2: target, gross scenario
 
 | Set | Target | p_hit (1 in …) | n_max | P(K < a(c*)) | A: mean Π | A: median Π | A: CVaR 5 % | Verdict mean / median / CVaR |
 |---|---|---|---|---|---|---|---|---|

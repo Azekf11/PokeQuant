@@ -68,10 +68,10 @@ E2 targets and E1 baskets are chosen among observed prices only.
 
 | Set | Pool | n | Median | Q1 | Q3 | P90 | Share ≥ 1 USD |
 |---|---|---|---|---|---|---|---|
-| sv07 | ace spec rare | 3 | — | — | — | — | 0% |
+| sv07 | ace spec rare | 3 | n/a | n/a | n/a | n/a | 0% |
 | sv07 | common | 71 | 0.17 | 0.14 | 0.20 | 0.22 | 1% |
 | sv07 | double rare | 14 | 1.10 | 0.66 | 1.42 | 1.69 | 57% |
-| sv07 | hyper rare | 2 | — | — | — | — | 100% |
+| sv07 | hyper rare | 2 | n/a | n/a | n/a | n/a | 100% |
 | sv07 | illustration rare | 13 | 7.11 | 5.24 | 12.95 | 70.35 | 100% |
 | sv07 | rare | 12 | 0.21 | 0.19 | 0.22 | 0.24 | 0% |
 | sv07 | reverse | 122 | 0.26 | 0.22 | 0.30 | 0.34 | 1% |

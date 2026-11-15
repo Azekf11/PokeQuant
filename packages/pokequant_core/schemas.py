@@ -1,4 +1,4 @@
-"""Entity schemas — the minimal data model of the charter (§5.3) and protocol (§3.2).
+"""Entity schemas: the minimal data model of the charter (§5.3) and protocol (§3.2).
 
 Every record is immutable and rejects unknown fields. A missing value is a
 missing record (or ``None`` where the schema allows it), never a zero.

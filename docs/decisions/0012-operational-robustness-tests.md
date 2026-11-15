@@ -1,4 +1,4 @@
-# 0012 — Operational definitions of the robustness tests
+# 0012: Operational definitions of the robustness tests
 
 - Status: accepted
 - Date: 2026-11-15

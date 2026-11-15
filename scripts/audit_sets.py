@@ -31,7 +31,7 @@ SERIES = ("sv", "me")  # ADR 0005 criterion 2: Scarlet & Violet series or later
 MIN_PACKS = 5000  # criterion 3
 MIN_PRICE_COVERAGE = 0.90  # criterion 6
 # Poké Life rarity ids from "Double Rare" upwards (criterion 4): every hit rarity
-# in the registry except none — the registry only lists Double Rare and above
+# in the registry except none: the registry only lists Double Rare and above
 # for these series, so all rows are checked.
 NON_HIT_RARITIES = {"Common", "Uncommon", "None", ""}
 PRICE_META_KEYS = {"unit", "updated", "idProduct", "productId"}

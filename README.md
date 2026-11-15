@@ -22,7 +22,7 @@ taken into account?
 
 The project does not try to prove that boosters are or are not profitable. It
 measures under which conditions, and with what uncertainty, the strategies
-differ — reporting the full distribution (median, probability of loss,
+differ, reporting the full distribution (median, probability of loss,
 quantiles, CVaR), not only the expected value.
 
 Details: [research protocol](research/protocol/protocol.md) ·

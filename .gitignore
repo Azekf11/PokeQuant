@@ -28,7 +28,7 @@ data/raw/*
 data/processed/*
 !data/raw/.gitkeep
 # Allow-listed sources (see ADR):
-# ADR 0006 — Poké Life registry, CC BY 4.0
+# ADR 0006: Poké Life registry, CC BY 4.0
 !data/raw/pokelife/
 !data/processed/.gitkeep
 

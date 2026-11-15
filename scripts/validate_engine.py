@@ -76,7 +76,7 @@ def main() -> None:
         "| | Exact | Simulated | Deviation / SE |",
         "|---|---|---|---|",
         f"| Mean | 3 | {x.mean():.4f} | {abs(x.mean() - 3) / math.sqrt(21 / len(x)):.2f} |",
-        f"| Variance | 21 | {x.var():.4f} | — |",
+        f"| Variance | 21 | {x.var():.4f} | n/a |",
         "",
     ]
 

@@ -1,4 +1,4 @@
-# Data audit — week S2
+# Data audit: week S2
 
 Date: 2026-11-15. Reproduce with:
 
@@ -12,7 +12,7 @@ the registry, eligibility and ranking) and
 for the selected sets). The selection rule ([ADR 0005](../../docs/decisions/0005-set-selection-rule.md))
 was committed before any data was analysed.
 
-## 1. Pull rates — Poké Life registry (snapshot 2026-11-13)
+## 1. Pull rates: Poké Life registry (snapshot 2026-11-13)
 
 - 234 rarity rows over **36 sets** (the site covers 167 sets, but only these
   36 have rarity-level rates in the open files).
@@ -30,7 +30,7 @@ was committed before any data was analysed.
   pools TCGplayer + a second channel (Poké Life's own openings are flagged
   non-qualifying).
 
-## 2. Catalogue — TCGdex (fetched 2026-11-15)
+## 2. Catalogue: TCGdex (fetched 2026-11-15)
 
 - All 15 candidate sets are complete: every card listed in the set has a
   rarity, and the count equals the official total.
@@ -38,7 +38,7 @@ was committed before any data was analysed.
   **matches exactly** Poké Life's `cards_in_rarity` (rarity reconciliation
   file). This validates the within-rarity uniform model input.
 
-## 3. Prices — presence only
+## 3. Prices: presence only
 
 - TCGdex returns at least one positive price field for **100 %** of the cards
   of rarity Rare and above in all 15 candidate sets (criterion 6 does not
@@ -73,13 +73,13 @@ Violet, or fewer than 5 000 packs).
    Dirichlet case only to a slot whose outcomes are documented as exclusive.
 2. **Reconstructed counts (S4).** Posteriors built from reconstructed counts
    overstate precision if the published margin was not binomial. Robustness
-   test 9 (protocol §7.2) cannot exclude them — it would leave no data — so it
+   test 9 (protocol §7.2) cannot exclude them (it would leave no data), so it
    becomes: widen the posterior (e.g. halve the effective sample size) and
    check whether conclusions change.
 3. **Heterogeneity (S4).** Two or three datasets per set allow a test of
    homogeneity between TCGplayer and YouTube openings before pooling.
 
-## 6. Gate G2 — recommendation
+## 6. Gate G2: recommendation
 
 Criterion: *usable, legally reusable price data*. Status: **conditional GO**.
 

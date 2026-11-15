@@ -1,4 +1,4 @@
-# Scoping note — end of S1
+# Scoping note: end of S1
 
 Date: 2026-11-15. Deliverable of roadmap week S1 ("note de cadrage + registre
 des sources").
@@ -16,15 +16,15 @@ des sources").
 
 ## 2. Data situation
 
-- **Pull rates — available and redistributable.** Poké Life registry, CC BY
+- **Pull rates: available and redistributable.** Poké Life registry, CC BY
   4.0, immutable dated versions, per-rarity hits / packs / Jeffreys CI /
   confidence / reconstructed-count flag. 167 English sets; largest samples
   around 10 000–25 000 packs (e.g. Chilling Reign, Battle Styles, Destined
   Rivals, Surging Sparks). Caveats: mostly automated curation, some counts
   reconstructed or lower bounds.
-- **Catalogue — available.** TCGdex (MIT database, no key, multilingual).
+- **Catalogue: available.** TCGdex (MIT database, no key, multilingual).
   Pokémon TCG API is deprecated (offline 2027-03-01): not used.
-- **Prices — the main risk.** No price source can currently be redistributed
+- **Prices: the main risk.** No price source can currently be redistributed
   without written permission. Usable for access: TCGdex price fields
   (TCGplayer USD, Cardmarket EUR; listing and provider-market types, rights
   unclear) and PkmnPrices (free tier, no licence granted). Realised sales
@@ -34,10 +34,10 @@ des sources").
 
 | Option | Price type | Reproducible by third parties? | Legal status |
 |---|---|---|---|
-| P1 — TCGdex price fields, kept locally; publish only derived statistics + fetch scripts + snapshot hash | provider_market (+ listing) | Re-run on a new snapshot, not on ours | Unclear → ask TCGdex |
-| P2 — PkmnPrices with written permission | provider_market; sold if paid plan | Depends on permission | To request |
-| P3 — Small documented manual pilot of realised prices for the highest-value cards | sold | Partially (published sample if allowed) | To check per source |
-| P4 — Fallback: simulation study with price scenarios + limited case study | scenario | Fully | No risk |
+| P1: TCGdex price fields, kept locally; publish only derived statistics + fetch scripts + snapshot hash | provider_market (+ listing) | Re-run on a new snapshot, not on ours | Unclear → ask TCGdex |
+| P2: PkmnPrices with written permission | provider_market; sold if paid plan | Depends on permission | To request |
+| P3: Small documented manual pilot of realised prices for the highest-value cards | sold | Partially (published sample if allowed) | To check per source |
+| P4: Fallback: simulation study with price scenarios + limited case study | scenario | Fully | No risk |
 
 Provider-market prices are not realised sales: whichever option is chosen, the
 paper treats them as indicative and applies liquidity haircuts (Heck et al.

@@ -16,11 +16,11 @@ follows the publisher of the pull-rate data, the TCGplayer Authentication
 Center: ACE SPEC Rares replace the first reverse holo; Illustration Rares,
 Special Illustration Rares and Hyper Rares replace the second; Double Rares and
 Ultra Rares occupy the rare slot. One earlier source places Hyper Rares in the
-rare slot instead; this alternative is a robustness scenario. Within a slot,
-outcomes are mutually exclusive; slots are assumed independent, and printings
-within a pool equally likely, an assumption that the TCGplayer per-card counts
-support, with one reported exception (a short-printed Double Rare in Stellar
-Crown, tested as a scenario).
+rare slot instead, and we treat this alternative as a robustness scenario.
+Within a slot, outcomes are mutually exclusive. Slots are assumed independent
+and printings within a pool equally likely, an assumption that the TCGplayer
+per-card counts support with one reported exception (a short-printed Double
+Rare in Stellar Crown, tested as a scenario).
 
 Each random slot has a Dirichlet posterior with a Jeffreys prior on the
 registry counts. Because rows of one set have different denominators, the
@@ -54,15 +54,16 @@ without a market price takes the median price of its pool (central) or zero
 
 ## 5.3 Strategies and estimands
 
-- **E1 — budget liquidation.** With budgets of 1, 10, 36 and 100 packs,
-  Strategy A opens the packs and sells every card; Strategy B buys, at t₀, the
-  most expensive printings of the set that fit the same budget (greedy rule in
-  decreasing order of a(c)) and sells them back.
-- **E2 — target acquisition.** For two targets per set — the most expensive
-  printing and the most expensive Special Illustration Rare at t₀ — Strategy A
-  opens packs until the target appears, capped at n_max = ⌈3 / p_hit⌉ (a
-  failure then buys the target), and sells every other card; Strategy B buys
-  the target.
+Experiment E1 concerns budget liquidation. With budgets of 1, 10, 36 and 100
+packs, Strategy A opens the packs and sells every card, while Strategy B buys,
+at t₀, the most expensive printings of the set that fit the same budget
+(greedy rule in decreasing order of a(c)) and sells them back.
+
+Experiment E2 concerns target acquisition. For two targets per set (the most
+expensive printing and the most expensive Special Illustration Rare at t₀),
+Strategy A opens packs until the target appears, capped at
+n_max = ⌈3 / p_hit⌉ (a failure then buys the target), and sells every other
+card. Strategy B simply buys the target.
 
 ## 5.4 Simulation and metrics
 
@@ -77,19 +78,20 @@ lists every simulation parameter.
 
 ## 5.5 Robustness
 
-R1 alternative price statistic; R2 haircuts of 30 % and 50 %; R3 fees and
-shipping ± 50 %; R4 pull rates at their interval bounds; R5 excluding the 1 %
-most valuable printings; R6 comparison of sets; R7 number of simulated runs;
-R8 uniform prior; R9b halved effective sample size; R10 haircuts anchored on
-observed sell-through (transferred evidence); R11 short-printed Double Rare;
-R12 Hyper Rare in the rare slot; R13 TCGplayer-only rates (planned only if
-pooling were rejected; it was not). Hypothesis H4 compares the three sets and a
-second price snapshot (2026-12-13).
+The robustness checks are defined as follows. R1 uses an alternative price
+statistic, R2 haircuts of 30 % and 50 %, and R3 fees and shipping ± 50 %. R4 sets the pull rates at their interval bounds, R5 excludes
+the 1 % most valuable printings, R6 compares sets, R7 varies the number of
+simulated runs and R8 uses a uniform prior. R9b halves the effective sample
+size. R10 anchors haircuts on observed sell-through (transferred evidence),
+R11 models the short-printed Double Rare and R12 places the Hyper Rare in the
+rare slot. R13, TCGplayer-only rates, was planned only if pooling were
+rejected; it was not. Hypothesis H4 compares the three sets and a second price
+snapshot (2026-12-13).
 
 ## 5.6 Deviations from the first-stage registration
 
 1. The pre-registered test excluding reconstructed counts is replaced by R9b:
    every row of the selected sets has reconstructed counts.
-2. Valuation uses TCGplayer prices only; Cardmarket is exploratory, its fee
-   schedule not being verifiable from an official page.
+2. Valuation uses TCGplayer prices only. Cardmarket is exploratory, because
+   its fee schedule cannot be verified from an official page.
 3. The booster price is a scenario, not an observation.

@@ -12,7 +12,7 @@ exact mean 3, exact variance 21. N = 10⁶ packs.
 | | Exact | Simulated | Deviation / SE |
 |---|---|---|---|
 | Mean | 3 | 2.9919 | 1.76 |
-| Variance | 21 | 20.9677 | — |
+| Variance | 21 | 20.9677 | n/a |
 
 ## 2. Simulated card frequencies vs theory (sv08)
 

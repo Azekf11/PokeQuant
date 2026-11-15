@@ -1,4 +1,4 @@
-# 0006 — Pull-rate and catalogue sources
+# 0006: Pull-rate and catalogue sources
 
 - Status: accepted
 - Date: 2026-11-15

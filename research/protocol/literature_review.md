@@ -1,4 +1,4 @@
-# Literature review — working notes (S1)
+# Literature review: working notes (S1)
 
 Bibliography: [`research/paper/references.bib`](../paper/references.bib)
 (40 verified entries). Each entry's `note` says what was actually read. As of
@@ -27,7 +27,7 @@ checked against the full text.**
 | PackRip | Slot EV from a price snapshot; notes median ≪ EV. | No simulation or fees. |
 
 **Consequence:** a pack-level Monte Carlo distribution is not a contribution by
-itself. Neither is "EV is misleading because of skew" (H1) — it is already
+itself. Neither is "EV is misleading because of skew" (H1): it is already
 stated informally by practitioners; our value is to quantify it with net prices
 and uncertainty.
 
@@ -38,15 +38,15 @@ and uncertainty.
   Dobrynskaya & Strelnikov 2025 (CS:GO skins, items from loot boxes); Mei &
   Moses 2002 (art); Wang & Langelett (sealed CCG boxes); Hilbert 2024.
 - **Hedonic pricing:** Rosen 1974; Renneboog & Spaenjers 2013; Hughes 2022
-  (rarity designation — measured by pack odds — carries its own price premium
+  (rarity designation, measured by pack odds, carries its own price premium
   in MTG: links pull rates to prices); Mullin & Dunn 2002.
 - **Loot boxes / gacha / booster packs:** Chen et al. 2021 (loot box design);
   Gan 2021; Hu, Qin & Sekar 2024 (rarity design of blind boxes); Zendle et al.
   2021 (physical booster packs as loot-box analogues); Xiao et al. 2023 (poor
-  odds disclosure — supports estimating rates instead of trusting published
+  odds disclosure, supports estimating rates instead of trusting published
   ones); Xiao et al. 2025.
 - **Risk and estimation:** Artzner et al. 1999; Rockafellar & Uryasev 2000,
-  2002; Acerbi & Tasche 2002 (ES coherent for discrete distributions — our
+  2002; Acerbi & Tasche 2002 (ES coherent for discrete distributions; our
   payoffs are discrete); Brown, Cai & DasGupta 2001 (Jeffreys/Wilson intervals);
   Jeffreys 1946; Gordy & Juneja 2010 (outer/inner budget in nested
   simulation); Der Kiureghian & Ditlevsen 2009 (aleatory vs epistemic).
@@ -66,15 +66,15 @@ and uncertainty.
 > TCG, (i) Bayesian uncertainty on community-estimated pull rates propagated
 > through a nested Monte Carlo, (ii) typed market prices converted into net
 > realisable values with explicit fees and liquidity scenarios, (iii) coherent
-> tail-risk measures, and (iv) two pre-registered estimands — equal-budget
-> liquidation and the cost of acquiring a target card — compared with direct
+> tail-risk measures, and (iv) two pre-registered estimands (equal-budget
+> liquidation and the cost of acquiring a target card) compared with direct
 > purchase.
 
 **Status: provisional.** It must be re-checked once the full texts below are read.
 
 ## 5. To do before freezing the novelty claim
 
-- [x] Read Mota (2026) in full — closest work (SSRN PDF, 14 pages, read
+- [x] Read Mota (2026) in full: closest work (SSRN PDF, 14 pages, read
       2026-11-15). The novelty claim holds; §2.4 of the paper now states what
       the two models share.
 - [ ] Read Baro (2026) and Sharma (2026) in full (SSRN).

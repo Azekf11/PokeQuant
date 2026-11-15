@@ -2,7 +2,7 @@
 
 A booster is a sequence of slots. Each slot draws a rarity r with probability
 P(R_s = r); a card is then drawn within that rarity. Within a rarity, cards are
-equally likely unless a later model version states otherwise — this is an
+equally likely unless a later model version states otherwise. This is an
 explicit assumption, recorded in ``BoosterModel.assumptions``.
 
 This module only holds the model structure and its closed-form probabilities.

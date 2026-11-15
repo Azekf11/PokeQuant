@@ -1,4 +1,4 @@
-# 0001 — Repository layout and tooling
+# 0001: Repository layout and tooling
 
 - Status: accepted
 - Date: 2026-11-14
@@ -19,7 +19,7 @@ against creating a folder for every idea.
 - Dependencies are added in the week that first uses them, not up front.
 - Quality: ruff (lint + format), mypy (strict on the package), pytest
   (+ hypothesis for property tests). Pre-commit runs the same tools.
-- CI: GitHub Actions — lint, format check, types, tests, gitleaks secret scan.
+- CI: GitHub Actions: lint, format check, types, tests, gitleaks secret scan.
 - Research reports go to `research/reports/` (data audit, validation,
   robustness, QA), which the v1.0 layout did not name explicitly.
 

@@ -1,4 +1,4 @@
-# 0004 — Publication route
+# 0004: Publication route
 
 - Status: accepted
 - Date: 2026-11-14

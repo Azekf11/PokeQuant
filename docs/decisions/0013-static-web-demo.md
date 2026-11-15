@@ -1,4 +1,4 @@
-# 0013 — Static web demo instead of a live API
+# 0013: Static web demo instead of a live API
 
 - Status: accepted
 - Date: 2026-11-15

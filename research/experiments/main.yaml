@@ -1,4 +1,4 @@
-# Main experiment — fixed before any price value is analysed (tag prereg-v2).
+# Main experiment: fixed before any price value is analysed (tag prereg-v2).
 # Schema: pokequant_core.experiment.ExperimentConfig. Spec: research/protocol/model_spec.md.
 name: main
 description: >-

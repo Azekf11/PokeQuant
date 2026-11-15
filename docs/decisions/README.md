@@ -7,7 +7,7 @@ accepted; a later ADR supersedes an earlier one.
 File name: `NNNN-short-title.md`. Template:
 
 ```markdown
-# NNNN — Title
+# NNNN: Title
 
 - Status: proposed | accepted | superseded by NNNN
 - Date: YYYY-MM-DD

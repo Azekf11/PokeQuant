@@ -22,8 +22,8 @@ indicative estimate. No price is presented as a realised sale.
 
 Π is the net profit of a run in USD.
 
-- **E1:** Π = Σ ℓ(C_i) − n·b for opening n boosters at price b.
-- **E2:** Π = a(c\*) − K, where K is the cost of opening until the target
+- E1: Π = Σ ℓ(C_i) − n·b for opening n boosters at price b.
+- E2: Π = a(c\*) − K, where K is the cost of opening until the target
   appears, net of the other cards sold.
 
 A seller receives ℓ(c) = max(0, p(c)(1 − h)(1 − f_m − f_p) − f_0 − s). A
@@ -47,19 +47,19 @@ buyer pays a(c) = p(c)(1 + f_b) + s_b.
 `scripts/validate_engine.py` checks the engine against exact results, with
 synthetic card values:
 
-1. **Toy case.** A one-slot toy case gives a simulated mean 1.76 standard
+1. A one-slot toy case gives a simulated mean 1.76 standard
    errors from the exact value, with N = 10⁶.
-2. **Card frequencies.** Simulated card frequencies in the random slots of
+2. Simulated card frequencies in the random slots of
    Surging Sparks pass a χ² test: p = 0.15, 0.64 and 0.54.
-3. **Hit counts.** Hit counts for a Special Illustration Rare over 100 packs
+3. Hit counts for a Special Illustration Rare over 100 packs
    match the binomial in mean, variance and P(at least one).
-4. **Error decay.** The root-mean-square error falls with a log-log slope of
+4. The root-mean-square error falls with a log-log slope of
    −0.52, against −0.5 in theory, from N = 10³ to 10⁶.
-5. **Aggregate path.** The aggregate multinomial path agrees with
+5. The aggregate multinomial path agrees with
    card-by-card simulation (Kolmogorov–Smirnov p = 0.91).
-6. **Packs to the target.** The capped number of packs to a target matches
+6. The capped number of packs to a target matches
    its closed form.
-7. **Reproducibility.** The same seed, data and model give identical output.
+7. The same seed, data and model give identical output.
 
 The full report is `research/reports/validation.md`.
 

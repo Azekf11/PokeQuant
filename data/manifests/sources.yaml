@@ -1,4 +1,4 @@
-# Source register — PokéQuant
+# Source register: PokéQuant
 #
 # One entry per candidate data source. Updated whenever terms are re-checked.
 # Rights values: yes | no | unclear | not_stated.
@@ -13,7 +13,7 @@ checked_on: "2026-11-14"
 
 sources:
   - id: pokelife
-    name: "Poké Life — Pokémon TCG pull-rate evidence registry"
+    name: "Poké Life: Pokémon TCG pull-rate evidence registry"
     urls:
       - https://www.poke-life.com/data/
       - https://www.poke-life.com/data/changelog/
@@ -133,7 +133,7 @@ sources:
     use_as: do_not_use
 
   - id: tpci_official
-    name: "The Pokémon Company International — official sites"
+    name: "The Pokémon Company International: official sites"
     urls:
       - https://tcg.pokemon.com/
       - https://www.pokemon.com/us/legal/terms-of-use/

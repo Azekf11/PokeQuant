@@ -1,4 +1,4 @@
-# 0002 — Code licence
+# 0002: Code licence
 
 - Status: accepted
 - Date: 2026-11-14

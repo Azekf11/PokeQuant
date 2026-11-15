@@ -1,4 +1,4 @@
-# 0011 — Operational rules for strategy comparisons
+# 0011: Operational rules for strategy comparisons
 
 - Status: accepted
 - Date: 2026-11-15

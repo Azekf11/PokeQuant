@@ -9,44 +9,47 @@ outputs.
 
 ## 3.1 Sources
 
-**Pull rates.** Per-pack rarity rates are taken from the Poké Life pull-rate
-evidence registry, which aggregates published openings (case breaks, store
-tallies, streamed box openings and the TCGplayer Authentication Center). We use
-the immutable dated version 2026-11-13. It contains 234 rarity rows covering
-36 English-language sets, and a companion file describing 75 reviewed openings,
-53 of which are flagged as qualifying. The registry is published under
-CC BY 4.0 and is redistributed in the replication package with the required
-attribution: Poké Life, "Pokémon TCG pull-rate evidence registry,"
-https://www.poke-life.com/data/ (accessed 2026-11-15), CC BY 4.0. Intervals
-are Beta posteriors under a Jeffreys prior [@jeffreys1946invariant]. Curation
-is largely automated, with human review of a sample only; the operator is not
-named and the licence of the underlying openings is not stated. We treat the
-registry as a documented secondary compilation, not as primary evidence.
+Per-pack rarity rates are taken from the Poké Life pull-rate evidence
+registry, which aggregates published openings (case breaks, store tallies,
+streamed box openings and the TCGplayer Authentication Center). We use the
+immutable dated version 2026-11-13. It contains 234 rarity rows covering 36
+English-language sets, together with a companion file describing 75 reviewed
+openings, of which 53 are flagged as qualifying. The registry is published
+under CC BY 4.0 and is redistributed in the replication package with the
+required attribution: Poké Life, "Pokémon TCG pull-rate evidence registry,"
+https://www.poke-life.com/data/ (accessed 2026-11-15), CC BY 4.0. Its
+intervals are Beta posteriors under a Jeffreys prior [@jeffreys1946invariant].
+Curation is largely automated and only a sample is reviewed by hand; the
+operator is not named, and the licence of the underlying openings is not
+stated. We therefore treat the registry as a documented secondary compilation
+rather than as primary evidence.
 
-**Catalogue.** Card lists, numbers and rarities come from TCGdex, whose card
-database is released under the MIT licence. Raw TCGdex responses are not
-committed, because they embed price fields and image URLs whose rights are
+The catalogue (card lists, numbers and rarities) comes from TCGdex, whose card
+database is released under the MIT licence. We do not commit the raw TCGdex
+responses, because they embed price fields and image URLs whose rights are
 unclear; they can be re-fetched by script.
 
-**Prices.** TCGdex also exposes price fields from two providers: TCGplayer
-(USD; low, mid and high listing prices and a market price) and Cardmarket
-(EUR; a low listing price, a trend price and averages). In the typology of the
-protocol, these are *active listings* and *provider-market aggregates*. None
-is a realised-sale price, and no open source of realised sales was identified.
-Each value is attached to one printing (normal, reverse or holo) by a fixed
-rule (ADR 0008); values that cannot be attributed to a single printing are
-discarded and counted in the ingestion manifest rather than guessed.
-Both TCGdex and the secondary provider PkmnPrices authorised their use for
-this non-commercial project (ADR 0009). Prices are labelled by type, never
-presented as transaction values, and always combined with liquidity-haircut
-scenarios; only derived statistics are published, never raw prices. Field evidence supports this
-caution: in a one-year study of 300 Pokémon cards listed on eBay, 73 % sold
-and posted prices acted as a ceiling on realised prices [@heck2026sales].
-The permission does not extend to the terms of the originating marketplaces,
-which were not reviewed; this is one more reason not to redistribute raw
-prices. Attribution: price data from TCGdex (tcgdex.dev), relaying TCGplayer
-and Cardmarket prices, used with permission. This section uses price
-*coverage* only.
+TCGdex also exposes price fields from two providers: TCGplayer (USD; low, mid
+and high listing prices and a market price) and Cardmarket (EUR; a low listing
+price, a trend price and averages). In the typology of the protocol, these are
+*active listings* and *provider-market aggregates*. None is a realised-sale
+price, and we identified no open source of realised sales. Each value is
+attached to one printing (normal, reverse or holo) by a fixed rule (ADR 0008);
+values that cannot be attributed to a single printing are discarded and
+counted in the ingestion manifest rather than guessed. Both TCGdex and the
+secondary provider PkmnPrices authorised their use for this non-commercial
+project (ADR 0009).
+
+Prices are labelled by type, never presented as transaction values and always
+combined with liquidity-haircut scenarios; only derived statistics are
+published, never raw prices. Field evidence
+supports this caution: in a one-year study of 300 Pokémon cards listed on
+eBay, 73 % sold and posted prices acted as a ceiling on realised prices
+[@heck2026sales]. The permission we received does not extend to the terms of
+the originating marketplaces, which were not reviewed, and this is one more
+reason not to redistribute raw prices. Attribution: price data from TCGdex
+(tcgdex.dev), relaying TCGplayer and Cardmarket prices, used with permission.
+This section uses price *coverage* only.
 
 ## 3.2 Set selection
 
@@ -74,7 +77,7 @@ most packs are Destined Rivals (sv10), Surging Sparks (sv08) and Stellar Crown
 only 80 % of its rows are high confidence. Next in line are Journey Together
 (sv09), Scarlet & Violet (sv01) and Paradox Rift (sv04).
 
-**Table 1 — Coverage and quality of the selected sets**
+**Table 1.** Coverage and quality of the selected sets.
 
 | | Destined Rivals | Surging Sparks | Stellar Crown |
 |---|---|---|---|
@@ -100,50 +103,52 @@ Sources: `data/raw/pokelife/2026-11-13/`, `research/reports/data_audit_*.csv`.
 
 ## 3.3 Pull-rate data: characteristics and limitations
 
-**Hit rarities only.** For the three sets, the registry reports per-pack rates
-(hits divided by packs) for hit rarities only. Common, Uncommon and Rare have
-no row, although they account for 165 of 244, 165 of 252 and 125 of 175
-catalogue cards respectively. The rates are not slot distributions: a hit
-rarity may appear in more than one physical position (rare and reverse-holo
-slots), and the official product description gives only the card count, one
-Basic Energy and one code card. The card-count match with TCGdex validates
-the number of cards per rarity, not the assumption that cards are equally
-likely within a rarity, which the registry cannot test. The ingestion pipeline
-re-checks the per-rarity card counts and rejects any snapshot in which the two
-sources disagree. *Consequences for the methodology:* the slot structure
-must be documented from community sources and treated as scenarios where
-uncertain; per-pack rates are modelled with one Beta posterior per rarity, the
+For the three sets, the registry reports per-pack rates (hits divided by
+packs) for hit rarities only. Common, Uncommon and Rare have no row, although
+they account for 165 of 244, 165 of 252 and 125 of 175 catalogue cards
+respectively. Nor are the rates slot distributions. A hit rarity may appear in
+more than one physical position (rare and reverse-holo slots), and the
+official product description gives only the card count, one Basic Energy and
+one code card. The card-count match with TCGdex validates the number of cards
+per rarity, but not the assumption that cards are equally likely within a
+rarity, which the registry cannot test. The ingestion pipeline re-checks the
+per-rarity card counts and rejects any snapshot in which the two sources
+disagree. For the methodology, this means that the slot structure must be
+documented from community sources and treated as scenarios where uncertain,
+that per-pack rates are modelled with one Beta posterior per rarity (the
 Dirichlet case being reserved for slots whose outcomes are documented as
-mutually exclusive; and the treatment of low-value cards is specified
+mutually exclusive), and that the treatment of low-value cards is specified
 separately.
 
-**Reconstructed counts.** All 17 rows of the selected sets carry
-`counts_reconstructed = true` (174 of 234 rows registry-wide): hits and packs
-were back-calculated from a published rate and margin rather than tallied. If
-the published margins were not binomial, posteriors built from these counts
-overstate precision. Within a set, rows also have different denominators
-(Table 1), so rarities do not share a common sample of packs. *Consequence:*
-the pre-registered robustness test that excludes reconstructed rows would
-leave no data; it is replaced by a widened-posterior check (for example,
-halving the effective sample size), to be recorded as a deviation.
+The counts themselves are reconstructed. All 17 rows of the selected sets
+carry `counts_reconstructed = true` (174 of 234 rows registry-wide), which
+means that hits and packs were back-calculated from a published rate and
+margin rather than tallied. If the published margins were not binomial,
+posteriors built from these counts overstate precision. Rows within a set also
+have different denominators (Table 1), so rarities do not share a common
+sample of packs. As a result, the pre-registered robustness test that excludes
+reconstructed rows would leave no data. We replace it with a widened-posterior
+check (for example, halving the effective sample size), to be recorded as a
+deviation.
 
-**Small counts at the top.** The rarest outcomes rest on few hits: Hyper Rare
-counts are 86, 64 and 76 (rates 0.691 % [0.557, 0.848], 0.570 %
-[0.443, 0.722] and 0.712 % [0.565, 0.885], 95 % intervals as reported), and
-Special Illustration Rare counts are 130, 138 and 121. Because jackpot cards
-concentrate in these rarities, their uncertainty is propagated rather than
-fixed at point estimates.
+At the top of the distribution, counts are small. The rarest outcomes rest on
+few hits: Hyper Rare counts are 86, 64 and 76 (rates 0.691 % [0.557, 0.848],
+0.570 % [0.443, 0.722] and 0.712 % [0.565, 0.885], 95 % intervals as
+reported), and Special Illustration Rare counts are 130, 138 and 121. Because
+jackpot cards concentrate in these rarities, we propagate the uncertainty in
+their rates rather than fixing the rates at point estimates.
 
-**Pooling of heterogeneous openings.** Each selected rate pools two qualifying
-datasets: the TCGplayer Authentication Center and one YouTube opening series.
-Surging Sparks and Stellar Crown share the same store-affiliated channel;
-Destined Rivals uses a different one. Registry-wide, rows pool one, two or three
-datasets (166, 48 and 20 rows). The openings were published at or around
-release (2024-09-13 to 2025-05-30), so the rates describe early product;
-stability across later print runs is not observed, nor is the
-representativeness of openings that were chosen for publication. *Consequence:* homogeneity
-between datasets is tested before pooling where per-dataset counts can be
-recovered; otherwise pooling is stated as an assumption.
+Finally, each selected rate pools heterogeneous openings, namely two
+qualifying datasets: the TCGplayer Authentication Center and one YouTube
+opening series. Surging Sparks and Stellar Crown share the same
+store-affiliated channel, while Destined Rivals uses a different one.
+Registry-wide, rows pool one, two or three datasets (166, 48 and 20 rows). The
+openings were published at or around release (2024-09-13 to 2025-05-30), so
+the rates describe early product. We observe neither their stability across
+later print runs nor the representativeness of openings that were chosen for
+publication. Where per-dataset counts can be recovered, we test homogeneity
+between datasets before pooling; otherwise pooling is stated as an
+assumption.
 
 ## 3.4 Price snapshot
 
@@ -175,8 +180,8 @@ No card image is used or redistributed: the rights to TCGdex images are not
 stated, and card names and numbers are used as facts only, without
 affiliation with the rights holder. Raw prices are never committed or
 redistributed (ADRs 0006, 0007 and 0009); only derived statistics are
-published. The replication package contains the
-pull-rate snapshot (CC BY 4.0, with attribution) and the scripts that re-fetch
-the catalogue. Other sources were examined but not used: the Pokémon TCG API
-(deprecated, no stated licence), the TCGplayer and Cardmarket APIs (closed to
-new access) and eBay sold-price history (restricted).
+published. The replication package contains the pull-rate snapshot (CC BY 4.0,
+with attribution) and the scripts that re-fetch the catalogue. We examined
+other sources but did not use them: the Pokémon TCG API (deprecated, no stated
+licence), the TCGplayer and Cardmarket APIs (closed to new access) and eBay
+sold-price history (restricted).

@@ -1,4 +1,4 @@
-# 0009 — Price data permission (Gate G2 follow-up)
+# 0009: Price data permission (Gate G2 follow-up)
 
 - Status: accepted
 - Date: 2026-11-15

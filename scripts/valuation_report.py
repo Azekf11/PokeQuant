@@ -38,7 +38,7 @@ MIN_N = 5  # below this, quantiles would reveal individual prices: not published
 
 
 def q(values: Sequence[float], p: float) -> str:
-    return f"{np.quantile(values, p):.2f}" if len(values) >= MIN_N else "—"
+    return f"{np.quantile(values, p):.2f}" if len(values) >= MIN_N else "n/a"
 
 
 def main() -> None:

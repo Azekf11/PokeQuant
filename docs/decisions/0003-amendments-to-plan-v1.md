@@ -1,4 +1,4 @@
-# 0003 — Amendments to the v1.0 plan
+# 0003: Amendments to the v1.0 plan
 
 - Status: accepted
 - Date: 2026-11-14

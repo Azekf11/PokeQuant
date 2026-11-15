@@ -1,4 +1,4 @@
-# 0010 — Booster model choices and deviations from `prereg-v1`
+# 0010: Booster model choices and deviations from `prereg-v1`
 
 - Status: accepted
 - Date: 2026-11-15
@@ -40,7 +40,7 @@ Choices that refine `prereg-v1` without changing it:
    denominator among its rows (conservative common sample size).
 6. New robustness tests: **R11** (Dachsbun ex short print in sv07, from the
    TCGplayer note), **R12** (Hyper Rare slot), **R13** (TCGplayer-only rates,
-   triggered only if the homogeneity rule rejects pooling — it did not).
+   triggered only if the homogeneity rule rejects pooling; it did not).
 7. Basic Energy and code card are valued at 0.
 8. A card without a TCGplayer market price is valued at the median price of
    its pool in the central scenario and at 0 in the adverse scenario; the

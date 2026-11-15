@@ -2,7 +2,7 @@
 
 | Folder | Content | In git? |
 |---|---|---|
-| `raw/` | Source snapshots exactly as received, one folder per source and date (`raw/<source>/<YYYY-MM-DD>/`), with SHA-256 checksums. Never modified. | Only if the licence allows redistribution — each allowed source is allow-listed explicitly in `.gitignore` after an ADR. |
+| `raw/` | Source snapshots exactly as received, one folder per source and date (`raw/<source>/<YYYY-MM-DD>/`), with SHA-256 checksums. Never modified. | Only if the licence allows redistribution; each allowed source is allow-listed explicitly in `.gitignore` after an ADR. |
 | `processed/` | Normalised Parquet files produced by the ingestion pipeline from `raw/`. Always regenerable. | No |
 | `manifests/` | Provenance: source register (`sources.yaml`), licences, access dates, snapshot checksums, versions. | Yes |
 

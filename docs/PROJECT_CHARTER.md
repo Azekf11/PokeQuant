@@ -37,11 +37,11 @@ Sub-questions, hypotheses and metrics: see
 - Opening vs direct-purchase comparator with fees and liquidity scenarios.
 - Simple web interface, methodology documentation, CSV/JSON export, public repo.
 
-## Out of scope (MVP) — red lines
+## Out of scope (MVP): red lines
 
 - Computer vision predicting PSA 10 from a photo.
 - 6- or 12-month price prediction without sufficient history and temporal validation.
-- Marketplace scraping or circumventing API restrictions — **forbidden**.
+- Marketplace scraping or circumventing API restrictions: **forbidden**.
 - All languages, all sets, all variants, all graders.
 - Personalised buy/sell recommendations or return promises.
 - Blockchain, tokens, user accounts, payments, real portfolios, social features.
@@ -79,7 +79,7 @@ the MVP. Otherwise it goes to the backlog.
 - Data limitations are visible without opening the technical docs.
 - No API key in the browser or in git.
 
-## Supervisor rules — re-read every week
+## Supervisor rules: re-read every week
 
 1. No new feature until the current milestone is validated.
 2. No chart without a definition of the variable and its source.
@@ -89,5 +89,5 @@ the MVP. Otherwise it goes to the backlog.
 6. No scraping, no circumvention of terms of use.
 7. No deep learning for show.
 8. No paper that turns exploratory results into certainties.
-9. If the data cannot answer the question, shrink the question — never fabricate data.
+9. If the data cannot answer the question, shrink the question; never fabricate data.
 10. Reproducibility matters as much as model performance.

@@ -1,4 +1,4 @@
-# 0008 — Canonical identifiers
+# 0008: Canonical identifiers
 
 - Status: accepted
 - Date: 2026-11-15

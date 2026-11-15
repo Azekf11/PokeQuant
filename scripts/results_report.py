@@ -134,7 +134,7 @@ def main(run_dir: Path) -> None:
         title = {"central": "main result", "adverse": "prudent", "gross": "reference only"}
         lines += [
             "",
-            f"## 2.{('central', 'adverse', 'gross').index(scenario) + 1} E1 — budget, "
+            f"## 2.{('central', 'adverse', 'gross').index(scenario) + 1} E1: budget, "
             f"{scenario} scenario ({title[scenario]})",
             "",
             *e1_table(results, scenario, cost),
@@ -142,7 +142,7 @@ def main(run_dir: Path) -> None:
     for scenario in ("central", "adverse", "gross"):
         lines += [
             "",
-            f"## 3.{('central', 'adverse', 'gross').index(scenario) + 1} E2 — target, "
+            f"## 3.{('central', 'adverse', 'gross').index(scenario) + 1} E2: target, "
             f"{scenario} scenario",
             "",
             *e2_table(results, scenario, rarity),

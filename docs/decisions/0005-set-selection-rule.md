@@ -1,4 +1,4 @@
-# 0005 — Set selection rule
+# 0005: Set selection rule
 
 - Status: accepted
 - Date: 2026-11-15

@@ -1,4 +1,4 @@
-# 0007 — Gate G2: price data
+# 0007: Gate G2: price data
 
 - Status: accepted
 - Date: 2026-11-15
@@ -26,7 +26,7 @@ first needed in S6.
 3. Until an answer allows it, price data is used **locally only**: raw prices
    are never committed and no figure based on them is published.
 4. **Deadline: end of S5.** Without a favourable answer, S6 switches to option
-   P4 — price scenarios plus a limited case study — and the paper makes no
+   P4 (price scenarios plus a limited case study), and the paper makes no
    claim about observed market profitability.
 5. Whatever the source, prices are labelled by type (listing / provider
    market), never presented as realised sales, and always combined with

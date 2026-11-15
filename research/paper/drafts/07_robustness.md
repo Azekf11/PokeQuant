@@ -4,37 +4,35 @@
 
 The robustness tests were registered at `prereg-v2` and defined
 operationally before any of them was run (ADR 0012). Each test changes one
-assumption of the main run. It keeps the seed, the 200 pull-rate draws and
+assumption of the main run and keeps the seed, the 200 pull-rate draws and
 the 20,000 runs per draw. Variants that change only card values are valued
-on the same simulated openings as the main run (common random numbers): any
-difference is due to the assumption, not to simulation noise. As a check, the
-baseline of these variants reproduces the main run exactly (largest
-difference 0.00 USD).
+on the same simulated openings as the main run (common random numbers), so
+any difference is due to the assumption and not to simulation noise. As a
+check, the baseline of these variants reproduces the main run exactly
+(largest difference 0.00 USD).
 
 We check three conclusions in each variant:
 
-- **C1. Opening loses on average.** The 95 % interval of the mean profit of
-  opening is below zero, for every set and budget.
-- **C2. The break-even price is below the booster price.** The upper 95 %
-  bound of the break-even booster price is below 4.49 USD, central and gross.
-- **C3. Buying is decisively better.** It wins on the mean, the median and the
+- C1, opening loses on average: the 95 % interval of the mean profit of
+  opening is below zero, for every set and budget;
+- C2, the break-even price is below the booster price: the upper 95 % bound
+  of the break-even booster price is below 4.49 USD, central and gross;
+- C3, buying is decisively better: it wins on the mean, the median and the
   CVaR 5 %, for every budget of 10 boosters or more and every target.
 
 All three use the central scenario.
 
 ## 7.1 Results
 
-Table 4 summarises the 16 variants and the baseline:
+Table 4 summarises the 16 variants and the baseline. C1 and C3 hold in all
+17 rows, and C2 holds in 16. It fails once, for the gross break-even price of
+Stellar Crown when cards are valued at the median of TCGplayer's listing and
+market statistics (R1). In that variant the posterior mean is still below the
+booster price (4.42 USD), but the upper bound is 4.53 USD. The central
+break-even price of the same variant is 1.51 [1.44, 1.59] USD.
 
-- **C1 and C3 hold in all 17 rows.**
-- **C2 holds in 16.** It fails once, for the gross break-even price of
-  Stellar Crown when cards are valued at the median of TCGplayer's listing
-  and market statistics (R1). There the posterior mean is still below the
-  booster price (4.42 USD), but the upper bound is 4.53 USD. The central
-  break-even price of the same variant is 1.51 [1.44, 1.59] USD.
-
-The central break-even booster price ranges from 0.54 to 1.74 USD over all
-variants and sets, never more than 39 % of the retail price.
+Over all variants and sets, the central break-even booster price ranges from
+0.54 to 1.74 USD and is never more than 39 % of the retail price.
 
 **Table 4.** Central break-even booster price b* (USD, posterior mean),
 change in the mean advantage of opening over buying at 36 boosters relative
@@ -66,40 +64,33 @@ The complete table, with intervals, is in `research/reports/robustness.md`.
 
 ## 7.2 What moves the results
 
-**Liquidation assumptions dominate.**
+The liquidation assumptions dominate. Doubling the liquidity haircut from
+0.15 to 0.30 lowers the break-even price by about a fifth (R2), and a haircut
+of 0.50 roughly halves it. When the haircut is anchored on sell-through, the
+value of 0.27 derived from the sell-through rates of Heck et al. (R10) gives
+results between the central and the doubled haircut. Halving the selling and
+shipping costs raises the break-even price by about 0.2 to 0.3 USD (R3).
 
-- **Haircut.** Doubling the liquidity haircut from 0.15 to 0.30 lowers the
-  break-even price by about a fifth (R2). A haircut of 0.50 roughly halves it.
-- **Haircut anchored on sell-through.** The haircut of 0.27 derived from the
-  sell-through rates of Heck et al. (R10) gives results between the central
-  and the doubled haircut.
-- **Selling and shipping costs.** Halving them raises the break-even price by
-  about 0.2 to 0.3 USD (R3).
-
-Higher costs also narrow the gap between the strategies. They hurt buying
-too, because the buyer resells its cards: with a 50 % haircut, the gap at 36
-boosters shrinks by about 24 to 30 USD. The gap stays above 38 USD in every
+Higher costs also narrow the gap between the strategies, because they hurt
+buying too: the buyer resells its cards. With a 50 % haircut, the gap at 36
+boosters shrinks by about 24 to 30 USD, yet it stays above 38 USD in every
 variant.
 
-**Excluding the most valuable cards matters as much as the largest
-haircut.** Removing the 1 % most valuable printings of each set (R5) lowers
-the central break-even price by 0.46 to 0.83 USD and widens the gap at 36
-boosters by 9 to 20 USD. Much of the value of opening sits in a few cards.
-The conclusions hold with or without them.
+Excluding the most valuable cards matters as much as the largest haircut.
+Removing the 1 % most valuable printings of each set (R5) lowers the central
+break-even price by 0.46 to 0.83 USD and widens the gap at 36 boosters by 9
+to 20 USD. Much of the value of opening sits in a few cards, but the
+conclusions hold with or without them.
 
-**The pull-rate assumptions barely matter.** None of the following changes
-the central break-even price, at two decimals, or the gap by more than
-0.2 USD:
-
-- the prior (R8);
-- halving the effective sample size (R9b), which widens the intervals;
-- the slot of Hyper Rares (R12);
-- the documented short print (R11).
-
-Setting every hit rate at a bound of its 95 % interval at once (R4), an
-extreme case, moves the central break-even price by 0.12 to 0.15 USD. This
-is comparable to the width of the intervals of the main run. Figure 6 shows
-these pull-rate variants set by set.
+The pull-rate assumptions, by contrast, barely matter. Changing the prior
+(R8), halving the effective sample size (R9b, which widens the intervals),
+changing the slot of Hyper Rares (R12) or adding the documented short print
+(R11) leaves the central break-even price unchanged at two decimals and
+moves the gap by no more than 0.2 USD. Setting every hit rate at a bound of
+its 95 % interval at once (R4) is an extreme case; it moves the central
+break-even price by 0.12 to 0.15 USD, which is comparable to the width of the
+intervals of the main run. Figure 6 shows these pull-rate variants set by
+set.
 
 ![Figure 6. Central break-even booster price under the pull-rate assumptions: posterior mean and 95 % interval over the draws (R4: single models at the bounds of every rate). The retail price, 4.49 USD, is off the scale.](../figures/fig6_breakeven_rates.png)
 
@@ -107,29 +98,24 @@ these pull-rate variants set by set.
 
 With 1,000, 10,000 or 100,000 runs per draw instead of 20,000, every metric
 stays within its uncertainty interval. Three verdicts change, all at a
-one-booster budget, where the two strategies differ by less than 0.40 USD:
+one-booster budget, where the two strategies differ by less than 0.40 USD.
+The first is the mean for Stellar Crown. It is undetermined in the main run,
+where opening beats buying in 89.5 % of the draws, just under the 90 %
+threshold, and it becomes decisive for opening with 100,000 runs (97.5 %).
+The posterior share in the main run is diluted by within-draw simulation
+noise, and with more runs per draw the advantage of opening on the mean at
+one booster, 0.09 USD, is resolved. The other two are the means for Surging
+Sparks and Destined Rivals, which become undetermined with 1,000 runs. No
+other verdict changes with the number of runs, and none of the three is part
+of C1–C3.
 
-- **Stellar Crown, mean.** Undetermined in the main run: opening beats
-  buying in 89.5 % of the draws, just under the 90 % threshold. It becomes
-  decisive for opening with 100,000 runs (97.5 %). The posterior share in the
-  main run is diluted by within-draw simulation noise. With more runs per
-  draw, the advantage of opening on the mean at one booster, 0.09 USD, is
-  resolved.
-- **Surging Sparks and Destined Rivals, mean.** They become undetermined with
-  1,000 runs. These are the only verdicts that change with the number of runs.
-
-None of the three is part of C1–C3.
-
-**Implication for H2.** Hypothesis H2 asks whether a verdict that is decisive
+This has a consequence for H2, which asks whether a verdict that is decisive
 at the posterior-mean rates becomes undetermined once their uncertainty is
-propagated. Its status depends on the precision of the simulation:
-
-- with 1,000 runs per draw, it is no longer supported;
-- with 10,000 runs, it has a second instance (Stellar Crown, one booster,
-  mean).
-
-Both instances are comparisons near a tie. We therefore report H2 as
-supported, but fragile.
+propagated. Its status depends on the precision of the simulation. With
+1,000 runs per draw it is no longer supported, while with 10,000 runs it has
+a second instance (Stellar Crown, one booster, mean). Both instances are
+comparisons near a tie, and we therefore report H2 as supported, but
+fragile.
 
 ## 7.4 Status of the hypotheses
 
