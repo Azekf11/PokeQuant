@@ -1,4 +1,4 @@
-.PHONY: install lint format typecheck test check data reproduce
+.PHONY: install lint format typecheck test check data reproduce paper web-test
 
 install:  ## Create the environment and install git hooks
 	uv sync
@@ -34,3 +34,12 @@ reproduce: data  ## Every report, table and figure of the paper (about 3 h on 8 
 	uv run python scripts/results_report.py $(RUN)
 	uv run pokequant robustness $(CONFIG)
 	uv run python scripts/robustness_report.py $(RUN)
+	uv run python scripts/paper_figures.py $(RUN)
+	uv run python scripts/export_web.py $(RUN)
+	uv run python scripts/build_paper.py
+
+paper:  ## Working paper (Markdown, HTML and PDF; the PDF needs a local Chrome)
+	uv run python scripts/build_paper.py --pdf
+
+web-test:  ## Journey test of the web demo (needs Node and a local Chrome)
+	cd apps/web && npm ci --no-audit --no-fund && npx playwright test
