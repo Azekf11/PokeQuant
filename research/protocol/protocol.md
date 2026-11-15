@@ -1,6 +1,6 @@
 # Research protocol
 
-> **Status: v1, candidate for pre-registration** (2026-11-15). Based on the
+> **Status: v1 — candidate for pre-registration** (2026-11-15). Based on the
 > internal *Protocole scientifique et plan du papier* (v1.0, 2 Nov 2026), the
 > amendments of [ADR 0003](../../docs/decisions/0003-amendments-to-plan-v1.md)
 > and the S1 work ([scoping note](scoping_note.md)).
@@ -25,11 +25,11 @@ fees and liquidity are taken into account?
 
 ### 1.1 Sub-questions
 
-- **Q1**: What is the value distribution of the cards obtained by opening, not only its mean?
-- **Q2**: Above which booster price does opening become economically comparable to buying a target card or basket directly?
-- **Q3**: How much does pull-rate uncertainty change the conclusions?
-- **Q4**: Do conclusions change with the set, booster price, price window and transaction costs?
-- **Q5**: Do strategies have different risk profiles (probability of loss, quantiles, CVaR, capital tied up)?
+- **Q1** — What is the value distribution of the cards obtained by opening, not only its mean?
+- **Q2** — Above which booster price does opening become economically comparable to buying a target card or basket directly?
+- **Q3** — How much does pull-rate uncertainty change the conclusions?
+- **Q4** — Do conclusions change with the set, booster price, price window and transaction costs?
+- **Q5** — Do strategies have different risk profiles (probability of loss, quantiles, CVaR, capital tied up)?
 
 ### 1.2 Hypotheses (to pre-register)
 
@@ -50,7 +50,7 @@ structure, (ii) Bayesian uncertainty on community-estimated pull rates,
 propagated through a nested Monte Carlo, (iii) typed market prices converted
 into net realisable values with explicit fees and liquidity scenarios, and
 (iv) a risk-adjusted comparison with direct purchase under two pre-registered
-estimands (E1, E2; §6.3).
+estimands (E1, E2 — §6.3).
 
 The contribution is **not** to be the first odds calculator, EV calculator or
 pack-opening simulator: practitioner tools already simulate outcome
@@ -194,7 +194,7 @@ use labelled scenarios (fast sale, slow sale, haircut).
 - Every observation is timestamped; an estimate at date t uses only information available at t.
 - Train / validation / test splits are chronological, never random, for temporal data.
 - Current prices are never used to reconstruct past values.
-- If history is too short, no temporal prediction; scenario analysis only.
+- If history is too short, no temporal prediction — scenario analysis only.
 
 ## 6. Strategies and estimands
 
@@ -202,8 +202,8 @@ use labelled scenarios (fast sale, slow sale, haircut).
 
 For a card printing c at reference date t₀:
 
-- **Acquisition price** a(c): what a buyer pays: price + buyer fees + shipping.
-- **Liquidation value** ℓ(c): what a seller receives: realisable price −
+- **Acquisition price** a(c) — what a buyer pays: price + buyer fees + shipping.
+- **Liquidation value** ℓ(c) — what a seller receives: realisable price −
   seller fees − payment fees − shipping/insurance, after the liquidity scenario
   (haircut, or 0 for unsellable bulk in the prudent scenario).
 
@@ -217,11 +217,11 @@ stated in the paper.
 
 ### 6.2 Strategies
 
-- **A: Opening.** Buy n boosters at unit cost b (incl. taxes and shipping) and
+- **A — Opening.** Buy n boosters at unit cost b (incl. taxes and shipping) and
   liquidate everything obtained.
-- **B: Direct purchase.** Buy a target card or basket defined **ex ante** in the
+- **B — Direct purchase.** Buy a target card or basket defined **ex ante** in the
   experiment configs (tag `prereg-v2`); no a-posteriori best basket.
-- **C: Raw + grading** (extension, excluded from main results).
+- **C — Raw + grading** (extension, excluded from main results).
   EV = Σ_g P(G = g | X) · V_g − purchase − grading − shipping − selling fees.
   P(G | X) requires a representative sample of documented raw cards, never the
   PSA population report alone.
@@ -231,13 +231,13 @@ stated in the paper.
 The research question mixes two economically different uses of boosters. Both
 are reported, separately:
 
-- **E1: Budget liquidation.** With budget B, Strategy A opens n = ⌊B / b⌋
+- **E1 — Budget liquidation.** With budget B, Strategy A opens n = ⌊B / b⌋
   boosters. Net profit of simulated opening j:
   Π_j = Σ_{cards i obtained} ℓ(C_ij) − n·b.
   Strategy B at the same date has a near-deterministic profit
   Π_B = Σ_{c ∈ basket} [ℓ(c) − a(c)] ≤ 0 (the round-trip cost), so E1 compares a
   risky distribution with a known transaction cost.
-- **E2: Target acquisition cost.** Goal: own one copy of target card c\*.
+- **E2 — Target acquisition cost.** Goal: own one copy of target card c\*.
   Strategy A opens boosters until the first c\* (capped at n_max, a
   pre-registered limit) and liquidates every other card. Net cost of run j:
   K_j = k_j·b − Σ_{other cards i} ℓ(C_ij), where k_j is the number of boosters
@@ -325,7 +325,7 @@ Added in S1:
 
 | Section | Content | Figures / tables |
 |---|---|---|
-| Abstract | Question, data, method, main result, main limitation. | n/a |
+| Abstract | Question, data, method, main result, main limitation. | — |
 | 1. Introduction | Context, question, interest, contribution, plan. | Optional concept diagram. |
 | 2. Literature review | Collectibles, pricing, pull-rate estimation, risk/liquidity. | Literature comparison table. |
 | 3. Data | Sets, cards, pull rates, prices, costs, exclusions, licences. | Table 1 coverage & quality. |
@@ -334,7 +334,7 @@ Added in S1:
 | 6. Results | EV, median, P(loss), quantiles, CVaR, break-even. | Histograms, CDFs, sensitivity curves. |
 | 7. Robustness | CIs, alternative prices, fees, liquidity, jackpot exclusion. | Tornado plot, Table 4. |
 | 8. Discussion | Interpretation, limits, implications, non-generalisation. | No new results. |
-| 9. Conclusion | Cautious answer, contribution, future work. | n/a |
+| 9. Conclusion | Cautious answer, contribution, future work. | — |
 | Appendix | Sources, definitions, tests, parameters, implementation. | Technical tables. |
 
 ### Figures and tables

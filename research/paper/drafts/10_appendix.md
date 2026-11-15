@@ -96,11 +96,11 @@ Paldea Evolved duplicate had been noticed (ADR 0015).
 
 ## F. Additional figures
 
-![Figure A1. Data and simulation pipeline: sources, model and card values, nested Monte Carlo and outputs.](../figures/fig1_pipeline.png)
+![Figure A1. Data and simulation pipeline: sources, model and card values, nested Monte Carlo and outputs.](../figures/figA1_pipeline.png)
 
-![Figure A2. Central break-even price under the pull-rate assumptions: posterior mean and 95 % interval over the draws (R4: single models at the bounds of every rate).](../figures/fig6_breakeven_rates.png)
+![Figure A2. Central break-even price under the pull-rate assumptions: posterior mean and 95 % interval over the draws (R4: single models at the bounds of every rate).](../figures/figA2_breakeven_rates.png)
 
-![Figure A3. Mean net profit against CVaR 5 % for each budget, central scenario. A: posterior mean over 200 draws; B: deterministic.](../figures/fig7_mean_cvar.png)
+![Figure A3. Mean net profit against CVaR 5 % for each budget, central scenario. A: posterior mean over 200 draws; B: deterministic.](../figures/figA3_mean_cvar.png)
 
 ## G. Reproduction
 

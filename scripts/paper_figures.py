@@ -1,13 +1,15 @@
 """Figures of the paper (protocol §8), written to research/paper/figures/.
 
-Figures 1-2 are diagrams of the pipeline and of the slot model. Figures 3-5
-re-simulate openings at the posterior-mean pull rates with their own random
-streams (seed, set, 3, k), so they never reuse the streams of the main run.
-Figures 6-7 read the main run and, for Figure 6, its robustness variants.
-Figure 8 shows the convergence of the Monte Carlo estimates against the exact
-mean, and Figure 9 the posterior draws of the break-even price; both also
-write the numbers quoted in the paper to research/reports/simulation_diagnostics.md.
-No per-card price is shown (ADR 0009).
+File names follow the paper's numbering: fig1 (slot model), fig2 (Monte Carlo
+convergence), fig3 (posterior draws of the break-even price), fig4-fig6
+(re-simulated openings at the posterior-mean pull rates, with their own random
+streams (seed, set, 3, k), so they never reuse the streams of the main run) and,
+in the appendix, figA1 (pipeline), figA2 (break-even price under the pull-rate
+assumptions, from the robustness variants) and figA3 (mean against CVaR).
+Figure 7 is research/reports/figures/tornado.png (scripts/robustness_report.py)
+and Figure 8 is fig8_ten_sets.png (scripts/extension_report.py). The convergence
+and posterior-draw figures also write the numbers quoted in the paper to
+research/reports/simulation_diagnostics.md. No per-card price is shown (ADR 0009).
 
 Usage: uv run python scripts/paper_figures.py results/<run_id>
 """
@@ -43,7 +45,7 @@ CONVERGENCE_RUNS = 100_000
 OUT = ROOT / "research/paper/figures"
 SERIES = ("#2a78d6", "#eb6834", "#1baf7a")  # categorical slots 1-3 (sets, or A/B)
 INK, INK2, MUTED, GRID = "#0b0b0b", "#52514e", "#898781", "#e1e0d9"
-PACKS = 200_000  # single-pack values for Figure 3
+PACKS = 200_000  # single-pack values for Figure 4
 RUNS = 20_000
 SOURCE = "Prices: TCGplayer market price (provider aggregate), USD, 2026-11-15."
 
@@ -79,7 +81,7 @@ def source_note(fig: Figure, text: str) -> None:
     fig.text(0.0, -0.08, text, fontsize=7, color=MUTED, ha="left", va="top")
 
 
-# --- Figure 1: pipeline -----------------------------------------------------------
+# --- Figure A1: pipeline -----------------------------------------------------------
 
 
 def _box(ax: Axes, x: float, y: float, w: float, h: float, title: str, body: str) -> None:
@@ -120,7 +122,7 @@ def _arrow(ax: Axes, a: tuple[float, float], b: tuple[float, float]) -> None:
     ax.add_patch(FancyArrowPatch(a, b, arrowstyle="-|>", mutation_scale=9, color=INK2, lw=0.9))
 
 
-def figure_1() -> None:
+def pipeline_diagram() -> None:
     fig, ax = plt.subplots(figsize=(7.6, 3.6))
     ax.set_xlim(-0.05, 4.42)
     ax.set_ylim(0, 2.1)
@@ -178,10 +180,10 @@ def figure_1() -> None:
         color=INK2,
     )
     _arrow(ax, (2.24 + w / 2, 1.41), (2.24 + w / 2, 0.55 + h))
-    save(fig, "fig1_pipeline.png")
+    save(fig, "figA1_pipeline.png")
 
 
-# --- Figure 2: slot model -------------------------------------------------------
+# --- Figure 1: slot model -------------------------------------------------------
 
 
 SHORT = {
@@ -198,7 +200,7 @@ SHORT = {
 }
 
 
-def figure_2(ctx: SetContext) -> None:
+def slot_diagram(ctx: SetContext) -> None:
     """Slot structure with posterior-mean outcome probabilities of one set."""
     model = ctx.posterior.mean_model()
     probs = {s.slot_id: s.outcomes for s in model.slots}
@@ -275,10 +277,10 @@ def figure_2(ctx: SetContext) -> None:
         "Rates: Poké Life registry, version 2026-11-13. Grey slots always hold "
         "a card of their pool; the Basic Energy and code card are not modelled.",
     )
-    save(fig, "fig2_slots.png")
+    save(fig, "fig1_slots.png")
 
 
-# --- Figures 3-5: re-simulated openings -------------------------------------------
+# --- Figures 4-6: re-simulated openings -------------------------------------------
 
 
 def pack_values(ctx: SetContext, seed: int, key: int, n_packs: int, runs: int) -> np.ndarray:
@@ -291,7 +293,7 @@ def pack_values(ctx: SetContext, seed: int, key: int, n_packs: int, runs: int) -
     )
 
 
-def figure_3(contexts: list[SetContext], names: dict[str, str], seed: int, cost: float) -> None:
+def pack_value(contexts: list[SetContext], names: dict[str, str], seed: int, cost: float) -> None:
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.0), sharey=True)
     for ax, scenario in zip(axes, ("gross", "central"), strict=True):
         for color, ctx in zip(SERIES, contexts, strict=True):
@@ -328,10 +330,10 @@ def figure_3(contexts: list[SetContext], names: dict[str, str], seed: int, cost:
         f"{PACKS:,} simulated packs per set at the posterior-mean pull rates. "
         f"{SOURCE} Gross: market price; central: net of fees, shipping, haircut.",
     )
-    save(fig, "fig3_pack_value.png")
+    save(fig, "fig4_pack_value.png")
 
 
-def figure_4(
+def profit_cdf(
     contexts: list[SetContext],
     names: dict[str, str],
     seed: int,
@@ -364,10 +366,12 @@ def figure_4(
         f"Central scenario, budget 36 x {cost:.2f} USD. {RUNS:,} simulated runs "
         f"at the posterior-mean pull rates. {SOURCE}",
     )
-    save(fig, "fig4_profit_cdf.png")
+    save(fig, "fig5_profit_cdf.png")
 
 
-def figure_5(contexts: list[SetContext], names: dict[str, str], seed: int, cost: float) -> None:
+def loss_probability(
+    contexts: list[SetContext], names: dict[str, str], seed: int, cost: float
+) -> None:
     prices = np.linspace(0.25, 6.0, 116)
     fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.7), sharey=True)
     for ax, ctx in zip(axes, contexts, strict=True):
@@ -387,13 +391,13 @@ def figure_5(contexts: list[SetContext], names: dict[str, str], seed: int, cost:
         f"Central costs; dashed line: {cost:.2f} USD. {RUNS:,} runs per budget at "
         f"the posterior-mean pull rates. {SOURCE}",
     )
-    save(fig, "fig5_ploss_price.png")
+    save(fig, "fig6_ploss_price.png")
 
 
-# --- Figures 6-7: from the run --------------------------------------------------
+# --- Figures A2-A3: from the run --------------------------------------------------
 
 
-def figure_6(run_dir: Path, names: dict[str, str], cost: float) -> None:
+def breakeven_rates(run_dir: Path, names: dict[str, str], cost: float) -> None:
     """Central break-even price under pull-rate assumptions (posterior mean, 95 % interval)."""
     folder = run_dir / "robustness"
     rows: list[tuple[str, str, str]] = [
@@ -443,10 +447,10 @@ def figure_6(run_dir: Path, names: dict[str, str], cost: float) -> None:
         "(R4: single model). R11 applies to Stellar Crown only. "
         f"Booster price {cost:.2f} USD (off scale). {SOURCE}",
     )
-    save(fig, "fig6_breakeven_rates.png")
+    save(fig, "figA2_breakeven_rates.png")
 
 
-def figure_7(results: list[dict[str, Any]], names: dict[str, str]) -> None:
+def mean_cvar(results: list[dict[str, Any]], names: dict[str, str]) -> None:
     fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.9), sharey=True, sharex=True)
     for ax, set_id in zip(axes, names, strict=True):
         for res in results:
@@ -481,10 +485,10 @@ def figure_7(results: list[dict[str, Any]], names: dict[str, str]) -> None:
         "Central scenario, E1 budgets of n boosters; A: mean over 200 pull-rate "
         f"draws. Up and left is better. {SOURCE}",
     )
-    save(fig, "fig7_mean_cvar.png")
+    save(fig, "figA3_mean_cvar.png")
 
 
-# --- Figures 8-9: the simulation itself ----------------------------------------------
+# --- Figures 2-3: the simulation itself ----------------------------------------------
 
 
 def running_cvar(x: np.ndarray, checkpoints: np.ndarray, alpha: float = 0.05) -> np.ndarray:
@@ -496,7 +500,7 @@ def running_cvar(x: np.ndarray, checkpoints: np.ndarray, alpha: float = 0.05) ->
     return np.asarray(out)
 
 
-def figure_8(
+def mc_convergence(
     contexts: list[SetContext], names: dict[str, str], seed: int, cost: float
 ) -> list[str]:
     """Running Monte Carlo estimates against the exact mean, 36 boosters, central."""
@@ -546,11 +550,11 @@ def figure_8(
         f"one stream of {CONVERGENCE_RUNS:,} runs per set.\nLeft: band ±1.96 Monte Carlo SE; "
         "dashed line: exact mean 36 (sum of P(c in a pack) l(c) - b). " + SOURCE,
     )
-    save(fig, "fig8_mc_convergence.png")
+    save(fig, "fig2_mc_convergence.png")
     return lines
 
 
-def figure_9(results: list[dict[str, Any]], names: dict[str, str], cost: float) -> list[str]:
+def breakeven_draws(results: list[dict[str, Any]], names: dict[str, str], cost: float) -> list[str]:
     """Posterior draws of the break-even booster price (epistemic uncertainty)."""
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.6), sharey=True)
     lines = [
@@ -586,7 +590,7 @@ def figure_9(results: list[dict[str, Any]], names: dict[str, str], cost: float) 
         "Each dot is one of the 200 posterior draws of the pull rates; bar: 95 % interval, "
         "tick: mean. Dashed: retail booster price. " + SOURCE,
     )
-    save(fig, "fig9_breakeven_draws.png")
+    save(fig, "fig3_breakeven_draws.png")
     return lines
 
 
@@ -595,16 +599,16 @@ def write_diagnostics(run_id: str, convergence: list[str], draws: list[str]) -> 
         "# Simulation diagnostics",
         "",
         f"Generated by `scripts/paper_figures.py` from run `{run_id}`. Numbers quoted in the",
-        "paper's methods section (Figures 8 and 9).",
+        "paper's methods section (Figures 2 and 3).",
         "",
-        "## Convergence to the exact mean (Figure 8)",
+        "## Convergence to the exact mean (Figure 2)",
         "",
         "Opening 36 boosters, central scenario, posterior-mean pull rates. The exact mean is",
         "36 (sum over printings of P(printing in a pack) x l(printing) - booster price).",
         "",
         *convergence,
         "",
-        "## Epistemic and aleatory uncertainty (Figure 9)",
+        "## Epistemic and aleatory uncertainty (Figure 3)",
         "",
         "Break-even booster price over the 200 posterior draws of the main run, and, for the",
         "mean profit of opening 36 boosters, the within-draw Monte Carlo standard error",
@@ -634,15 +638,15 @@ def main(run_dir: Path) -> None:
     seed = cfg.simulation.seed
     cost = cfg.scenario("central").booster_cost
     contexts, names = contexts_for(cfg)
-    figure_1()
-    figure_2(contexts[cfg.sets.index("sv08")])
-    figure_3(contexts, names, seed, cost)
-    figure_4(contexts, names, seed, results, cost)
-    figure_5(contexts, names, seed, cost)
-    figure_6(run_dir, names, cost)
-    figure_7(results, names)
-    convergence = figure_8(contexts, names, seed, cost)
-    draws = figure_9(results, names, cost)
+    pipeline_diagram()
+    slot_diagram(contexts[cfg.sets.index("sv08")])
+    pack_value(contexts, names, seed, cost)
+    profit_cdf(contexts, names, seed, results, cost)
+    loss_probability(contexts, names, seed, cost)
+    breakeven_rates(run_dir, names, cost)
+    mean_cvar(results, names)
+    convergence = mc_convergence(contexts, names, seed, cost)
+    draws = breakeven_draws(results, names, cost)
     write_diagnostics(run_dir.name, convergence, draws)
 
 

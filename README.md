@@ -6,8 +6,9 @@
 comparison of Pokémon TCG booster opening versus direct purchase on the
 secondary market.
 
-> **Status: working paper v1.0.** Analysis frozen at tag `analysis-v1`;
-> paper in [research/paper/paper.pdf](research/paper/paper.pdf)
+> **Status: working paper, version 2 (November 2026).** Main analysis frozen
+> at tag `analysis-v1`; two pre-registered extensions (tags `prereg-v3` and
+> `prereg-v4`). Paper in [research/paper/paper.pdf](research/paper/paper.pdf)
 > ([HTML](research/paper/paper.html)); interactive demo at
 > <https://azekf11.github.io/PokeQuant/>. See the [roadmap](docs/ROADMAP.md).
 
@@ -45,9 +46,20 @@ runs. Central cost scenario unless stated.
 | Opening until the top card is cheaper than buying it | 4 % to 14 % of runs |
 | Robustness variants in which opening still loses on average | 16 of 16 |
 
+Two pre-registered extensions test the same conclusions elsewhere:
+
+| Extension | Result |
+|---|---|
+| Ten sets: the main three plus every other eligible set that fits the pack layout | Opening loses on average in all ten; central break-even price 0.60 to 2.38 USD; buying wins for every budget of ten boosters or more |
+| Cardmarket 30-day average sale prices (EUR, converted at the ECB rate) | Opening still loses on average; central break-even price 1.16 to 2.42 USD |
+| Pull rates against their primary source and out of sample | 33 of 33 rates match the published tables; 20 of 20 pooled rows inside the 95 % predictive interval |
+
 Every number has an interval in
-[results.md](research/reports/results.md) and
-[robustness.md](research/reports/robustness.md). Answers to the usual
+[results.md](research/reports/results.md),
+[robustness.md](research/reports/robustness.md),
+[extension_sets.md](research/reports/extension_sets.md),
+[sales_benchmark.md](research/reports/sales_benchmark.md) and
+[pull_rate_checks.md](research/reports/pull_rate_checks.md). Answers to the usual
 objections: [docs/FAQ.md](docs/FAQ.md).
 
 ## Deliverables
@@ -59,9 +71,13 @@ objections: [docs/FAQ.md](docs/FAQ.md).
 3. Reports: [data audit](research/reports/data_audit.md),
    [validation](research/reports/validation.md),
    [valuation](research/reports/valuation.md),
+   [simulation diagnostics](research/reports/simulation_diagnostics.md),
    [results](research/reports/results.md),
    [robustness](research/reports/robustness.md),
-   [web QA](research/reports/qa.md).
+   [ten sets](research/reports/extension_sets.md),
+   [sale prices](research/reports/sales_benchmark.md),
+   [pull-rate checks](research/reports/pull_rate_checks.md),
+   [QA](research/reports/qa.md).
 4. The [working paper](research/paper/paper.pdf), whose figures and tables all
    regenerate from this repository.
 5. A [static web demo](https://azekf11.github.io/PokeQuant/) of the frozen
@@ -105,8 +121,8 @@ uv run pokequant ingest --pokelife 2026-11-13 --tcgdex 2026-11-15 --sets sv07,sv
 Each run writes a `manifest.json` with input and output checksums; two runs on
 the same inputs give byte-identical outputs.
 
-Regenerate every report, figure and the paper (about three hours on eight
-cores):
+Regenerate every report, figure and the paper (several hours on eight
+cores; `make paper` then prints the PDF):
 
 ```bash
 make reproduce

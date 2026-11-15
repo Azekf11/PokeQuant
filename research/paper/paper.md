@@ -226,7 +226,7 @@ Slots are independent, printings are equally likely within a pool, and the
 Commons and Uncommons of one pack are distinct cards. Robustness tests move
 the Hyper Rare to the rare slot (R12) and add a documented short print (R11).
 
-![Figure 1. Slot structure of one booster (Surging Sparks) with the posterior-mean probability of each outcome of the three random slots. Rates: Poké Life registry, version 2026-11-13.](figures/fig2_slots.png)
+![Figure 1. Slot structure of one booster (Surging Sparks) with the posterior-mean probability of each outcome of the three random slots. Rates: Poké Life registry, version 2026-11-13.](figures/fig1_slots.png)
 
 ## 3.2 Uncertainty on the pull rates
 
@@ -317,7 +317,7 @@ settles more slowly, because it rests on the worst 5 % of runs only: with
 just 50 runs. The main run uses M = 20,000 runs per draw so that every tail
 estimate rests on at least 1,000 runs.
 
-![Figure 2. Monte Carlo convergence for opening 36 boosters, central scenario. Left: running mean with its 95 % Monte Carlo band; dashed lines are the exact means from equation (5). Right: running CVaR 5 %.](figures/fig8_mc_convergence.png)
+![Figure 2. Monte Carlo convergence for opening 36 boosters, central scenario. Left: running mean with its 95 % Monte Carlo band; dashed lines are the exact means from equation (5). Right: running CVaR 5 %.](figures/fig2_mc_convergence.png)
 
 Figure 3 shows the outer loop: the 200 posterior draws of b\*. The spread
 across draws is the epistemic uncertainty that a fixed-rate calculator
@@ -327,7 +327,7 @@ mean profit of 36 boosters, the standard deviation across draws (1.45 to
 0.34 USD), so the reported intervals are dominated by what is unknown about
 the rates, not by simulation noise.
 
-![Figure 3. Break-even booster price b\* in each of the 200 posterior draws of the pull rates. Bars: 95 % interval; ticks: mean. The dashed line is the retail price.](figures/fig9_breakeven_draws.png)
+![Figure 3. Break-even booster price b\* in each of the 200 posterior draws of the pull rates. Bars: 95 % interval; ticks: mean. The dashed line is the retail price.](figures/fig3_breakeven_draws.png)
 
 The engine was also checked against exact results before any price was used
 (Appendix C): per-slot card frequencies pass χ² tests, the root-mean-square
@@ -362,7 +362,7 @@ to between 0.52 and 0.78. The fall comes from the fixed cost of a sale. In
 so the net value of the pack is zero and the value of opening sits in a thin
 tail of rare hits (Figure 4).
 
-![Figure 4. Distribution of the value of one pack (complementary CDF, log scales) at the posterior-mean pull rates. Left: gross market values. Right: central net values; packs with zero net value are not shown.](figures/fig3_pack_value.png)
+![Figure 4. Distribution of the value of one pack (complementary CDF, log scales) at the posterior-mean pull rates. Left: gross market values. Right: central net values; packs with zero net value are not shown.](figures/fig4_pack_value.png)
 
 ## 4.2 Spending a budget (E1)
 
@@ -396,9 +396,9 @@ distribution for 36 boosters, and Figure 6 the probability of a loss as a
 function of the booster price. Even at 2 USD a pack, opening 36 packs loses
 money in most runs.
 
-![Figure 5. Cumulative distribution of the net profit of opening 36 boosters (central scenario), against the fixed profit of buying with the same budget.](figures/fig4_profit_cdf.png)
+![Figure 5. Cumulative distribution of the net profit of opening 36 boosters (central scenario), against the fixed profit of buying with the same budget.](figures/fig5_profit_cdf.png)
 
-![Figure 6. Probability that opening n packs loses money, as a function of the booster price, central costs. Dashed line: 4.49 USD.](figures/fig5_ploss_price.png)
+![Figure 6. Probability that opening n packs loses money, as a function of the booster price, central costs. Dashed line: 4.49 USD.](figures/fig6_ploss_price.png)
 
 ## 4.3 Chasing one card (E2)
 
@@ -494,7 +494,7 @@ streams are keyed by a set's position in the configuration, so the three main
 sets are re-simulated with new streams; their central and gross b\* are
 identical to two decimals.
 
-![Figure 8. Break-even booster price b\* in the ten evaluable sets, central costs and gross reference. Posterior mean and 95 % interval over 200 pull-rate draws. Asterisks mark the two sets flagged by the duplicate rule of Section 5.4.](figures/fig10_ten_sets.png)
+![Figure 8. Break-even booster price b\* in the ten evaluable sets, central costs and gross reference. Posterior mean and 95 % interval over 200 pull-rate draws. Asterisks mark the two sets flagged by the duplicate rule of Section 5.4.](figures/fig8_ten_sets.png)
 
 C1 and C3 hold in all ten sets. Opening loses on average for every budget,
 and buying is decisively better on the mean, the median and the CVaR for
@@ -741,11 +741,11 @@ Paldea Evolved duplicate had been noticed (ADR 0015).
 
 ## F. Additional figures
 
-![Figure A1. Data and simulation pipeline: sources, model and card values, nested Monte Carlo and outputs.](figures/fig1_pipeline.png)
+![Figure A1. Data and simulation pipeline: sources, model and card values, nested Monte Carlo and outputs.](figures/figA1_pipeline.png)
 
-![Figure A2. Central break-even price under the pull-rate assumptions: posterior mean and 95 % interval over the draws (R4: single models at the bounds of every rate).](figures/fig6_breakeven_rates.png)
+![Figure A2. Central break-even price under the pull-rate assumptions: posterior mean and 95 % interval over the draws (R4: single models at the bounds of every rate).](figures/figA2_breakeven_rates.png)
 
-![Figure A3. Mean net profit against CVaR 5 % for each budget, central scenario. A: posterior mean over 200 draws; B: deterministic.](figures/fig7_mean_cvar.png)
+![Figure A3. Mean net profit against CVaR 5 % for each budget, central scenario. A: posterior mean over 200 draws; B: deterministic.](figures/figA3_mean_cvar.png)
 
 ## G. Reproduction
 

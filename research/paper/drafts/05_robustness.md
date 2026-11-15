@@ -69,7 +69,7 @@ streams are keyed by a set's position in the configuration, so the three main
 sets are re-simulated with new streams; their central and gross b\* are
 identical to two decimals.
 
-![Figure 8. Break-even booster price b\* in the ten evaluable sets, central costs and gross reference. Posterior mean and 95 % interval over 200 pull-rate draws. Asterisks mark the two sets flagged by the duplicate rule of Section 5.4.](../figures/fig10_ten_sets.png)
+![Figure 8. Break-even booster price b\* in the ten evaluable sets, central costs and gross reference. Posterior mean and 95 % interval over 200 pull-rate draws. Asterisks mark the two sets flagged by the duplicate rule of Section 5.4.](../figures/fig8_ten_sets.png)
 
 C1 and C3 hold in all ten sets. Opening loses on average for every budget,
 and buying is decisively better on the mean, the median and the CVaR for

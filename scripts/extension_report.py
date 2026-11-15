@@ -1,7 +1,7 @@
 """Report of the ten-set extension (ADR 0015, tag prereg-v4).
 
 Reads a run of research/experiments/extension_sets.yaml and writes
-research/reports/extension_sets.md and the paper figure fig10_ten_sets.png:
+research/reports/extension_sets.md and the paper figure fig8_ten_sets.png:
 C1-C3 by set, break-even prices, and H1-H4 over the ten sets, with and
 without the sets flagged by the duplicate rule F1.
 
@@ -31,7 +31,7 @@ from pokequant_core.schemas import CardSet
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "research/reports/extension_sets.md"
-FIGURE = ROOT / "research/paper/figures/fig10_ten_sets.png"
+FIGURE = ROOT / "research/paper/figures/fig8_ten_sets.png"
 FLAGGED = ("sv02", "sv04")  # F1, research/reports/pull_rate_checks.md
 MAIN_SETS = ("sv07", "sv08", "sv10")
 INK2, MUTED, GRID = "#52514e", "#898781", "#e1e0d9"

@@ -17,7 +17,7 @@ to between 0.52 and 0.78. The fall comes from the fixed cost of a sale. In
 so the net value of the pack is zero and the value of opening sits in a thin
 tail of rare hits (Figure 4).
 
-![Figure 4. Distribution of the value of one pack (complementary CDF, log scales) at the posterior-mean pull rates. Left: gross market values. Right: central net values; packs with zero net value are not shown.](../figures/fig3_pack_value.png)
+![Figure 4. Distribution of the value of one pack (complementary CDF, log scales) at the posterior-mean pull rates. Left: gross market values. Right: central net values; packs with zero net value are not shown.](../figures/fig4_pack_value.png)
 
 ## 4.2 Spending a budget (E1)
 
@@ -51,9 +51,9 @@ distribution for 36 boosters, and Figure 6 the probability of a loss as a
 function of the booster price. Even at 2 USD a pack, opening 36 packs loses
 money in most runs.
 
-![Figure 5. Cumulative distribution of the net profit of opening 36 boosters (central scenario), against the fixed profit of buying with the same budget.](../figures/fig4_profit_cdf.png)
+![Figure 5. Cumulative distribution of the net profit of opening 36 boosters (central scenario), against the fixed profit of buying with the same budget.](../figures/fig5_profit_cdf.png)
 
-![Figure 6. Probability that opening n packs loses money, as a function of the booster price, central costs. Dashed line: 4.49 USD.](../figures/fig5_ploss_price.png)
+![Figure 6. Probability that opening n packs loses money, as a function of the booster price, central costs. Dashed line: 4.49 USD.](../figures/fig6_ploss_price.png)
 
 ## 4.3 Chasing one card (E2)
 
