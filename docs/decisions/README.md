@@ -34,3 +34,4 @@ File name: `NNNN-short-title.md`. Template:
 | [0013](0013-static-web-demo.md) | Static web demo instead of a live API | accepted |
 | [0014](0014-sale-price-benchmark-and-price-panel.md) | Sale-price benchmark and weekly price panel (prereg-v3) | accepted |
 | [0015](0015-extension-to-eligible-sets-and-pull-rate-checks.md) | Extension to the other eligible sets and pull-rate checks (prereg-v4) | accepted |
+| [0016](0016-mega-evolution-sets-and-mega-hyper-rare-slot.md) | Mega Evolution sets and the slot of the Mega Hyper Rare (prereg-v5) | accepted |

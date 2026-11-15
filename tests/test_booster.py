@@ -133,3 +133,39 @@ def test_empty_residual_pool_is_rejected() -> None:
     no_uncommon = {k: v for k, v in SPEC.items() if k != "uncommon"}
     with pytest.raises(ValueError, match="uncommon"):
         build_set_posterior("zz", printings(no_uncommon), rates(), LAYOUTS["tcgplayer"])
+
+
+# Mega Evolution layouts (ADR 0016): the Mega Hyper Rare replaces the Hyper Rare.
+MEGA_SPEC = {k if k != "hyper rare" else "mega hyper rare": v for k, v in SPEC.items()}
+MEGA_RATES = {k if k != "hyper rare" else "mega hyper rare": v for k, v in RATES.items()}
+
+
+@pytest.mark.parametrize(
+    ("layout", "slot", "other"),
+    [("mega-in-rev2", "rev2", "rare"), ("mega-in-rare-slot", "rare", "rev2")],
+)
+def test_mega_layouts_place_the_mega_hyper_rare_in_one_slot(
+    layout: str, slot: str, other: str
+) -> None:
+    post = build_set_posterior("zz", printings(MEGA_SPEC), rates(MEGA_RATES), LAYOUTS[layout])
+    assert set(post.posteriors) == {"rev2", "rare"}  # rev1 is always a reverse printing
+    assert "mega hyper rare" in post.posteriors[slot].outcomes
+    assert "mega hyper rare" not in post.posteriors[other].outcomes
+    for s in post.mean_model().slots:
+        assert math.isclose(math.fsum(s.outcomes.values()), 1.0)
+
+
+def test_main_layouts_still_reject_the_mega_hyper_rare() -> None:
+    with pytest.raises(ValueError, match="no slot"):
+        build_set_posterior("zz", printings(MEGA_SPEC), rates(MEGA_RATES), LAYOUTS["tcgplayer"])
+
+
+def test_mega_layouts_differ_from_the_main_layouts_only_in_the_top_rarity() -> None:
+    swap = {"hyper rare": "mega hyper rare"}
+    for mega, main in (("mega-in-rev2", "tcgplayer"), ("mega-in-rare-slot", "hyper-in-rare-slot")):
+        a, b = LAYOUTS[mega].slots, LAYOUTS[main].slots
+        assert [s.slot_id for s in a] == [s.slot_id for s in b]
+        for x, y in zip(a, b, strict=True):
+            assert x.residual == y.residual
+            expected = tuple(swap.get(r, r) for r in y.hits if r != "ace spec rare")
+            assert x.hits == expected, x.slot_id
