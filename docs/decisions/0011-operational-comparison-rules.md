@@ -42,9 +42,9 @@ this record was written. None of them changes a pre-registered quantity.
 
 5. Each metric has a direction. Higher is better for mean, median, quantiles
    and P(Π > 0). Lower is better for P(loss), VaR 5 % and CVaR 5 %. "A beats
-   B" in a draw means strictly better, so ties count against A. The verdict is
-   the §7.0b rule on the share of draws: decisive at ≥ 0.90 either way,
-   otherwise undetermined.
+   B" in a draw means strictly better; a tie is a win for neither. The verdict
+   is the §7.0b rule: decisive for a strategy when it is strictly better in
+   ≥ 90 % of the draws, otherwise undetermined.
 6. **H1** is supported if both of the following happen in one set, scenario
    and budget or target:
    - the verdict on the mean is decisive for one strategy;
