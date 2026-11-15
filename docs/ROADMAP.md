@@ -136,10 +136,10 @@ PR into `main`.
 **Exit:** simulation converges to theoretical results on toy cases.
 
 ### S6 — Valuation and costs · branch `week/06-valuation`
-- [ ] Typed prices: `listing`, `provider_market`, `sold`, `window_median`. Types are never mixed without an explicit rule; enforced by types and tests.
-- [ ] Card value V(c, t): price type, time window, condition; documented policy for missing prices (excluded or scenario, never 0) and for low-value bulk (lot value, or 0 in the prudent scenario).
-- [ ] `CostScenario`: seller fees, payment fees, shipping/insurance, taxes; liquidity scenarios (fast sale, slow sale, haircut) clearly labelled as assumptions.
-- [ ] Dated price snapshots. Hedonic regression only if the data has enough observations and variation — otherwise document why not.
+- [x] Typed prices: `listing`, `provider_market`, `sold`, `window_median`. Types are never mixed without an explicit rule; enforced by types and tests. *`valuation.PriceBasis`; `listing` is refused as a transaction value.*
+- [x] Card value V(c, t): price type, time window, condition; documented policy for missing prices (excluded or scenario, never 0) and for low-value bulk (lot value, or 0 in the prudent scenario). *Missing: pool median (central) or 0 (adverse, labelled); bulk: 0 below the sale threshold, no lot value (no source).*
+- [x] `CostScenario`: seller fees, payment fees, shipping/insurance, taxes; liquidity scenarios (fast sale, slow sale, haircut) clearly labelled as assumptions. *Taxes sit in the booster cost; haircuts 15 % / 30 % (R2: 30 %, 50 %).*
+- [x] Dated price snapshots. Hedonic regression only if the data has enough observations and variation — otherwise document why not. *Not done; reasons in [`valuation.md`](../research/reports/valuation.md) §6.*
 
 **Deliverable:** valuation model v1 + dated snapshots.
 **Exit:** no confusion between listed price and realised sale anywhere in code or outputs.

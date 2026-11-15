@@ -145,7 +145,23 @@ representativeness of openings that were chosen for publication. *Consequence:* 
 between datasets is tested before pooling where per-dataset counts can be
 recovered; otherwise pooling is stated as an assumption.
 
-## 3.4 Exclusions and licensing
+## 3.4 Price snapshot
+
+The main analysis values cards with the TCGplayer market price (USD) of a
+single snapshot, relayed by TCGdex on 2026-11-15; every observation carries the
+provider's update time (2026-11-14, 22:22 to 22:24 UTC), and none is later
+than the reference date. The market price is a provider aggregate: it is
+neither an asking price nor a realised sale observed by this study, and the
+listing statistics stored alongside it are never used as transaction values.
+Of the 1,126 printings that a pack of the three sets can contain, 1,119 have a
+market price. The seven exceptions are all in Stellar Crown (one Hyper Rare,
+three Rares and their reverse holos), whose TCGdex records carry no TCGplayer
+block at all. They are imputed at the median of their pool in the central
+scenario and valued at zero in the adverse one; targets and baskets are chosen
+among observed prices only. Coverage and price distributions by pool are in
+`research/reports/valuation.md`.
+
+## 3.5 Exclusions and licensing
 
 Japanese sets, which the registry keeps in a separate section, are excluded:
 the protocol restricts the main analysis to English products, and an English
