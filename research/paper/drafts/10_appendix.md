@@ -65,6 +65,8 @@ The full report is `research/reports/validation.md`.
 
 ## D. Parameters
 
+**Table 2.** Simulation parameters of the main run.
+
 | Parameter | Value |
 |---|---|
 | Sets | Stellar Crown (sv07), Surging Sparks (sv08), Destined Rivals (sv10) |

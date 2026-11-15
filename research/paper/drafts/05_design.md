@@ -72,7 +72,8 @@ runs (aleatory), so that every 5 % tail rests on 1,000 samples. Metrics are
 those of §4: mean, median, P(loss), quantiles, VaR and CVaR at 5 % (reported as
 positive losses), break-even booster price, P(target in n packs) and expected
 packs, each with its Monte Carlo standard error and its 95 % interval over
-epistemic draws. The random seed is fixed (20261115).
+epistemic draws. The random seed is fixed (20261115). Table 2 (Appendix D)
+lists every simulation parameter.
 
 ## 5.5 Robustness
 
