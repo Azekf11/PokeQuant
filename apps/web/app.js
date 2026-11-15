@@ -207,7 +207,7 @@
     s.appendChild(svg("text", { class: "label-ref", x: W - R, y: ys(booster) - 6, "text-anchor": "end" }, "Booster price " + usd(booster)));
     var my = gridValue(g, "mean", k, f);
     s.appendChild(svg("circle", { class: "dot-a ring", cx: xs(Math.min(Math.max(f, F[0]), F[F.length - 1])), cy: ys(my), r: 6 }));
-    var cross = svg("line", { class: "crosshair", y1: T, y2: H - B, x1: -10, x2: -10 });
+    var cross = svg("line", { class: "crosshair", y1: T, y2: H - B, x1: L, x2: L, visibility: "hidden" });
     s.appendChild(cross);
     var hit = svg("rect", { x: L, y: T, width: W - L - R, height: H - T - B, fill: "transparent" });
     hit.addEventListener("mousemove", function (ev) {
@@ -217,10 +217,10 @@
       var i = Math.round((fx - F[0]) / (F[1] - F[0]));
       i = Math.max(0, Math.min(F.length - 1, i));
       var p = pts[i];
-      cross.setAttribute("x1", xs(p.x)); cross.setAttribute("x2", xs(p.x));
+      cross.setAttribute("x1", xs(p.x)); cross.setAttribute("x2", xs(p.x)); cross.setAttribute("visibility", "visible");
       showTip(ev, "Fixed cost " + usd(p.x) + " USD<br><b>Break-even " + usd(p.m) + "</b> [" + usd(p.lo) + ", " + usd(p.hi) + "]");
     });
-    hit.addEventListener("mouseleave", function () { cross.setAttribute("x1", -10); cross.setAttribute("x2", -10); hideTip(); });
+    hit.addEventListener("mouseleave", function () { cross.setAttribute("visibility", "hidden"); hideTip(); });
     s.appendChild(hit);
     var box = $("be-chart"); box.innerHTML = ""; box.appendChild(s);
     $("be-caption").textContent = "Break-even booster price as the fixed cost per card sold changes · " + setName(state.set);

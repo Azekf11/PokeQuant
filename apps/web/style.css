@@ -95,7 +95,7 @@ h1 { margin: 4px 0 8px; font-size: clamp(1.9rem, 5vw, 2.6rem); line-height: 1.15
 .seg button[aria-checked="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
 .seg button:focus-visible, input:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.params { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 6px 16px; margin: 14px 0 0; font-size: 0.92rem; }
+.params { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 6px 16px; margin: 14px 0 0; font-size: 0.92rem; }
 .params div { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--grid); padding: 4px 0; }
 .params dt { color: var(--ink-2); }
 .params dd { margin: 0; font-variant-numeric: tabular-nums; text-align: right; }

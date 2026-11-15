@@ -1,0 +1,11 @@
+{
+  "name": "pokequant-web-tests",
+  "private": true,
+  "description": "End-to-end journey test of the static web demo.",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
+  }
+}

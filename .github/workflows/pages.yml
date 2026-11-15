@@ -24,8 +24,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Collect the site files only (no test tooling)
+        run: |
+          mkdir -p _site/data
+          cp apps/web/index.html apps/web/style.css apps/web/app.js apps/web/icon.svg _site/
+          cp apps/web/data/results.json apps/web/data/results.js _site/data/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: apps/web
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4

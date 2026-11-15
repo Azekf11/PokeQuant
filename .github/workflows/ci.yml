@@ -42,3 +42,34 @@ jobs:
       - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  web:
+    name: Web demo journey test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: Install
+        working-directory: apps/web
+        run: npm ci --no-audit --no-fund
+      - name: Journey test (system Chrome)
+        working-directory: apps/web
+        run: npx playwright test
+
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Python dependencies (pip-audit)
+        run: |
+          uv export --format requirements-txt --no-hashes --all-groups --no-emit-project > requirements.txt
+          uvx pip-audit -r requirements.txt --disable-pip --no-deps --progress-spinner off
+      - name: Web test tooling (npm audit)
+        working-directory: apps/web
+        run: npm audit --audit-level=high
