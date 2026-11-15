@@ -62,7 +62,14 @@ every set and budget:
 - To obtain a set's most valuable card, opening until it appears is cheaper
   than buying it in only 4 % to 14 % of simulated runs.
 
-<!-- ROBUSTNESS-SUMMARY -->
+**Robustness.** These conclusions survive sixteen pre-registered variants
+(§7): other price statistics, haircuts up to 0.50, halved or increased
+selling costs, pull rates at the bounds of their intervals, another prior,
+the exclusion of the 1 % most valuable cards, and up to 100,000 runs per
+draw. Opening loses on average and buying is decisively better in every
+variant. The break-even booster price stays between 0.54 and 1.74 USD. The
+gross break-even price stays below the retail price in every variant but
+one, where its upper bound exceeds it.
 
 **Contribution.** The contribution is not a new expected-value calculator. It
 is a reproducible and pre-registered framework that combines four elements:

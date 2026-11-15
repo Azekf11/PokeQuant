@@ -32,7 +32,7 @@ exactly by Jeffreys intervals on its counts, and a homogeneity test between
 pooled openings rejects none of the 16 testable rows.
 
 The sample is not a random sample of packs. A common bias would not be
-captured by the intervals. This is stated as a limit (paper §8.4). R9b halves
+captured by the intervals. This is stated as a limit (paper §8.5). R9b halves
 the weight of every row to mimic a smaller effective sample, and R4 sets the
 rates at their interval bounds.
 
@@ -48,7 +48,10 @@ robustness scenario (R12). So is the one documented short print (R11).
 
 Jeffreys (a₀ = ½) is the standard reference prior for proportions, and it
 reproduces the registry's intervals. With a uniform prior (R8), the
-break-even prices and verdicts barely move. See [Table 4](../research/reports/robustness.md).
+central break-even prices are unchanged at two decimals (1.42, 1.03 and
+1.13 USD), every hypothesis keeps its status, and the mean advantage at 36
+boosters moves by at most 0.1 USD. See Table 4 in
+[robustness.md](../research/reports/robustness.md).
 
 ## 5. What is the difference between listing price, aggregated price and realised sale?
 
@@ -108,8 +111,17 @@ At a one-booster budget, opening has the better mean in every set, because a
 single direct purchase pays 4.50 USD of tracked shipping. Buying still has the
 better median and CVaR in two sets, and they tie in the third.
 
-Under the robustness variants, see [robustness.md](../research/reports/robustness.md)
-and paper §7.
+Under the sixteen robustness variants (paper §7,
+[robustness.md](../research/reports/robustness.md)):
+
+- opening loses on average and buying is decisively better in every variant;
+- the central break-even price stays between 0.54 and 1.74 USD;
+- the gross break-even price stays below 4.49 USD except once: under the
+  indicative median of asking-price statistics (R1), Stellar Crown's is
+  4.42 USD with an upper bound of 4.53 USD.
+
+The largest effects come from a 0.50 haircut and from excluding the 1 % most
+valuable cards. The pull-rate assumptions barely matter.
 
 ## 10. Which conclusions can you not draw from your data?
 

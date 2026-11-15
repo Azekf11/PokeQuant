@@ -50,9 +50,26 @@ prices, where the median is close to a tie (H2). The conclusions do not hinge
 on the precise rates. This is expected, given that the gap between opening and
 buying is large compared with the uncertainty on the rates.
 
-<!-- ROBUSTNESS-DISCUSSION -->
+## 8.4 What the robustness tests add
 
-## 8.4 Limits
+The robustness tests (§7) separate two kinds of assumption:
+
+- **Liquidation assumptions move the size of the result.** The haircut,
+  the selling costs and the exclusion of the most valuable cards move the
+  break-even booster price by up to 0.83 USD and the gap at 36 boosters by up
+  to 30 USD. None of them reverses a conclusion.
+- **Pull-rate assumptions barely move it.** The prior, the effective sample
+  size, the slot of Hyper Rares and the short print leave the central
+  break-even price unchanged at two decimals. Even every rate at a bound of its
+  interval moves it by at most 0.15 USD.
+
+The only verdicts that depend on the simulation itself are comparisons at a
+one-booster budget, where the two strategies differ by less than 0.40 USD.
+There the decision rule, a share of posterior draws, also absorbs simulation
+noise within each draw. A verdict close to the threshold should therefore be
+read as a near tie, whichever side it falls on.
+
+## 8.5 Limits
 
 **Prices.**
 
@@ -104,7 +121,7 @@ buying is large compared with the uncertainty on the rates.
 The novelty claim should be checked against the full texts of the closest
 papers.
 
-## 8.5 Implications
+## 8.6 Implications
 
 For a collector who wants specific cards, the results support buying them
 directly, unless the booster price is far below retail. In the central
