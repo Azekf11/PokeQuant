@@ -88,6 +88,9 @@ h1 { margin: 4px 0 8px; font-size: clamp(1.9rem, 5vw, 2.6rem); line-height: 1.15
 .warn { color: var(--bad); }
 
 .seg { display: flex; flex-wrap: wrap; gap: 8px; }
+.set-groups .group-label { margin: 14px 0 6px; font-size: 0.85rem; color: var(--ink-2); }
+.set-groups .group-label:first-child { margin-top: 0; }
+.note { border-left: 3px solid var(--axis); padding-left: 10px; }
 .seg button {
   font: inherit; font-size: 0.95rem; padding: 8px 14px; border-radius: 999px; cursor: pointer;
   background: transparent; color: var(--ink); border: 1px solid var(--axis); min-height: 40px;

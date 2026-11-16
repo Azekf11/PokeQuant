@@ -22,9 +22,15 @@ test("the six-step journey works end to end", async ({ page }) => {
   await expect(banner).toContainText("2026-11-15");
   await expect(banner).toContainText("not a realised sale");
 
-  // 1. Set.
+  // 1. Set: fourteen sets in three groups; the Mega Evolution sets carry a layout note.
+  await expect(page.locator("#set-picker [role=radio]")).toHaveCount(14);
+  await expect(page.locator("#set-picker [role=radiogroup]")).toHaveCount(3);
+  await page.getByRole("radio", { name: "Chaos Rising" }).click();
+  await expect(page.locator("#set-hint")).toContainText("Chaos Rising (me04)");
+  await expect(page.locator("#set-note")).toContainText("Mega Hyper Rare");
   await page.getByRole("radio", { name: "Surging Sparks" }).click();
   await expect(page.locator("#set-hint")).toContainText("Surging Sparks (sv08)");
+  await expect(page.locator("#set-note")).toBeHidden();
 
   // 2. Cost scenario.
   await page.getByRole("radio", { name: "Adverse (prudent)" }).click();
@@ -52,7 +58,8 @@ test("the six-step journey works end to end", async ({ page }) => {
   await expect(page.locator("#e2-table")).toContainText("Most expensive card");
 
   // 6. Hypotheses, limits and downloads.
-  await expect(page.locator("#hyp .hyp")).toHaveCount(4);
+  await expect(page.locator("#hyp .hyp")).toHaveCount(5);
+  await expect(page.locator("#hyp")).toContainText("H4 over the fourteen sets");
   const [download] = await Promise.all([
     page.waitForEvent("download"),
     page.locator("#dl-csv").click(),
@@ -72,6 +79,7 @@ test("no horizontal scroll on a phone and keyboard selection works", async ({ pa
   await page.getByRole("radio", { name: "Stellar Crown" }).focus();
   await page.keyboard.press("ArrowRight");
   await expect(page.getByRole("radio", { name: "Surging Sparks" })).toHaveAttribute("aria-checked", "true");
+  await expect(page.getByRole("radio", { name: "Surging Sparks" })).toBeFocused();
 });
 
 test("the page declares a strict content security policy", async ({ page }) => {

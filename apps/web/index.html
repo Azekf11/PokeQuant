@@ -31,12 +31,13 @@
 
   <main id="main" class="wrap">
     <noscript><p class="warn">This page needs JavaScript to display the results.
-      The same numbers are in <code>research/reports/results.md</code> of the repository.</p></noscript>
+      The same numbers are in <code>research/reports/</code> of the repository.</p></noscript>
 
     <section class="step" aria-labelledby="s1">
       <h2 id="s1"><span class="num">1</span> Choose a set</h2>
-      <div class="seg" role="radiogroup" aria-label="Set" id="set-picker"></div>
+      <div class="set-groups" id="set-picker"></div>
       <p class="hint" id="set-hint"></p>
+      <p class="hint note" id="set-note" hidden></p>
     </section>
 
     <section class="step" aria-labelledby="s2">
@@ -101,14 +102,18 @@
 
     <section class="step" aria-labelledby="s6">
       <h2 id="s6"><span class="num">6</span> Hypotheses, limits and data</h2>
+      <p class="hint">Hypotheses of the main analysis (three main sets); H4 is also given over the fourteen sets.</p>
       <div id="hyp"></div>
       <h3>Limits</h3>
       <ul class="limits">
         <li>Prices are a provider's market estimate on one date, not observed sales.</li>
         <li>Shipping costs and liquidity haircuts are assumptions, stated in step 2.</li>
         <li>Pull rates come from community openings; their uncertainty is propagated (95 % intervals).</li>
-        <li>Three English-language sets, booster packs only, no grading. Results do not
+        <li>Fourteen English-language sets: three in the main analysis, eleven in
+          pre-registered extensions. Booster packs only, no grading. Results do not
           generalise to other sets, dates or markets.</li>
+        <li>For the four Mega Evolution sets, the slot of the Mega Hyper Rare is an
+          assumption; the alternative slot moves the break-even price by at most 0.01 USD.</li>
         <li>This is a research result, not financial advice.</li>
       </ul>
       <h3>Download</h3>
