@@ -9,7 +9,7 @@ error handling) do not apply.
 
 | Job | What it checks | Result |
 |---|---|---|
-| Lint, types, tests | ruff, ruff format, mypy (strict), pytest with line coverage | 161 tests pass; 91 % of the package's lines covered (2026-11-16) |
+| Lint, types, tests | ruff, ruff format, mypy (strict), pytest with line coverage | 170 tests pass; 92 % of the package's lines covered (2026-11-16) |
 | Secret scan | gitleaks over the full git history | no finding |
 | Web demo journey test | Playwright, system Chrome (`apps/web/tests/journey.spec.js`) | 3 tests pass |
 | Dependency audit | `pip-audit` on the locked Python dependencies; `npm audit` on the test tooling | no known vulnerability |

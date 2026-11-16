@@ -1,0 +1,20 @@
+set_id,rarity,datasets,tcgplayer_hits,tcgplayer_packs,heldout_hits,heldout_packs,predicted_mean,pi95_low,pi95_high,inside_pi95,p_value,holm_reject_at_0.05
+me01,Double Rare,MEG-001 MEG-002,1059,5064,247,1224,256.0,225,288,True,0.5731,False
+me01,Ultra Rare,MEG-001 MEG-002,413,5023,112,1224,100.7,80,122,True,0.2948,False
+me01,Illustration Rare,MEG-001 MEG-002,549,5040,138,1224,133.4,110,158,True,0.6967,False
+me01,Mega Hyper Rare,MEG-001 MEG-002,4,4798,1,1224,1.1,0,4,True,0.9517,False
+me02,Double Rare,PFL-001 PFL-002 PFL-003,1047,5039,1089,5256,1092.4,1011,1176,True,0.9413,False
+me02,Ultra Rare,PFL-001 PFL-002 PFL-003,408,5061,430,5256,424.2,370,481,True,0.8244,False
+me02,Illustration Rare,PFL-001 PFL-002 PFL-003,557,5073,587,5256,577.5,515,642,True,0.7604,False
+me02,Special Illustration Rare,PFL-001 PFL-002 PFL-003,62,4934,66,5256,66.6,45,91,True,0.996,False
+me02,Mega Hyper Rare,PFL-001 PFL-002 PFL-003,4,4798,5,5256,4.9,0,13,True,0.8542,False
+me04,Double Rare,CRI-001 CRI-002 CRI-003,1746,8602,1071,5137,1042.9,972,1115,True,0.4386,False
+me04,Ultra Rare,CRI-001 CRI-002 CRI-003,720,8682,447,5137,426.3,378,476,True,0.4036,False
+me04,Illustration Rare,CRI-001 CRI-002 CRI-003,923,8659,586,5137,547.8,494,603,True,0.1741,False
+me04,Special Illustration Rare,CRI-001 CRI-002 CRI-003,105,8680,61,5137,62.4,44,83,True,0.9132,False
+me04,Mega Hyper Rare,CRI-001 CRI-002 CRI-003,8,7832,4,5137,5.6,1,13,True,0.673,False
+me05,Double Rare,PBL-001 PBL-002,916,4356,335,1584,333.2,297,371,True,0.9172,False
+me05,Ultra Rare,PBL-001 PBL-002,361,4348,137,1584,131.7,107,157,True,0.6667,False
+me05,Illustration Rare,PBL-001 PBL-002,479,4352,182,1584,174.5,147,204,True,0.5979,False
+me05,Special Illustration Rare,PBL-001 PBL-002,54,4354,24,1584,19.8,11,31,True,0.4091,False
+me05,Mega Hyper Rare,PBL-001 PBL-002,4,4264,2,1584,1.7,0,5,True,0.7098,False
