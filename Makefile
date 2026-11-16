@@ -49,7 +49,6 @@ reproduce: data  ## Every report, table and figure of the paper (several hours o
 	uv run pokequant robustness $(CONFIG)
 	uv run python scripts/robustness_report.py $(RUN)
 	uv run python scripts/paper_figures.py $(RUN)
-	uv run python scripts/export_web.py $(RUN)
 	uv run python scripts/sales_benchmark.py --date 2026-11-15 --offline
 	uv run pokequant run $(EXT_CONFIG)
 	uv run python scripts/extension_report.py $(EXT_RUN)
@@ -58,6 +57,7 @@ reproduce: data  ## Every report, table and figure of the paper (several hours o
 	uv run pokequant run $(MEGA_ALT_CONFIG)
 	uv run python scripts/mega_report.py $(MEGA_RUN) $(MEGA_ALT_RUN) $(EXT_RUN)
 	uv run python scripts/mega_pull_rate_checks.py
+	uv run python scripts/export_web.py $(RUN) $(EXT_RUN) $(MEGA_RUN)
 	uv run python scripts/build_paper.py
 
 paper:  ## Working paper (Markdown, HTML and PDF; the PDF needs a local Chrome)

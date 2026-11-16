@@ -40,7 +40,8 @@
   function pct(x) { return (100 * x).toFixed(1) + " %"; }
   function fmt(metric, x) { return metric === "p_loss" || metric === "p_gain" ? pct(x) : usd(x); }
   function scen(name) { return D.scenarios.filter(function (s) { return s.name === name; })[0]; }
-  function setName(id) { return D.sets.filter(function (s) { return s.id === id; })[0].name; }
+  function setInfo(id) { return D.sets.filter(function (s) { return s.id === id; })[0]; }
+  function setName(id) { return setInfo(id).name; }
   function row(set, label, scenario, metric) {
     return D.rows.filter(function (r) {
       return r.set === set && r.label === label && r.scenario === scenario && r.metric === metric;
@@ -61,7 +62,9 @@
     });
   }
   function focusChecked(container) {
-    var b = container.querySelector('[aria-checked="true"]');
+    // Pickers are rebuilt on every render: look the container up again by id.
+    var c = (container.id && document.getElementById(container.id)) || container;
+    var b = c.querySelector('[aria-checked="true"]');
     if (b) b.focus();
   }
   var tip = $("tooltip");
@@ -86,21 +89,37 @@
   var prov = $("provenance");
   prov.classList.add("wide");
   [
-    ["Run", M.run_id + " (seed " + M.seed + ", " + M.epistemic_draws + " pull-rate draws × " + M.aleatory_runs.toLocaleString("en-US") + " simulated runs)"],
-    ["Config", M.config + " (pre-registered, tag prereg-v2)"],
-    ["Results checksum", "sha256 " + M.results_sha256.slice(0, 16) + "…"],
+    ["Simulation", "Seed " + M.seed + ", " + M.epistemic_draws + " pull-rate draws × " + M.aleatory_runs.toLocaleString("en-US") + " simulated runs per draw, in every run"]
+  ].concat(M.runs.map(function (r) {
+    return [r.label, r.run_id + " · " + r.config + " · results sha256 " + r.results_sha256.slice(0, 16) + "…"];
+  })).concat([
     ["Price date and type", M.price_date + " · " + M.price_type + " · " + M.currency]
-  ].concat(M.attribution.map(function (a) { return ["Source", a]; })).forEach(function (p) {
+  ]).concat(M.attribution.map(function (a) { return ["Source", a]; })).forEach(function (p) {
     var d = el("div"); d.appendChild(el("dt", null, p[0])); d.appendChild(el("dd", null, p[1])); prov.appendChild(d);
   });
 
   // ---------- step 1 & 2 ----------
   state.set = D.sets[0].id;
   function renderPickers() {
-    picker($("set-picker"), D.sets.map(function (s) { return { value: s.id, label: s.name }; }), state.set, function (v) { state.set = v; render(); });
+    var groups = $("set-picker");
+    groups.innerHTML = "";
+    // Groups in the order of D.sets (main analysis first); object keys are sorted in the export.
+    var order = [];
+    D.sets.forEach(function (s) { if (order.indexOf(s.group) < 0) order.push(s.group); });
+    order.forEach(function (g) {
+      var sets = D.sets.filter(function (s) { return s.group === g; });
+      if (!sets.length) return;
+      groups.appendChild(el("p", { class: "group-label", id: "group-" + g }, D.groups[g]));
+      var seg = el("div", { class: "seg", id: "sets-" + g, role: "radiogroup", "aria-labelledby": "group-" + g });
+      groups.appendChild(seg);
+      picker(seg, sets.map(function (s) { return { value: s.id, label: s.name }; }), state.set, function (v) { state.set = v; render(); });
+    });
     picker($("scenario-picker"), D.scenarios.map(function (s) { return { value: s.name, label: LABEL[s.name] || s.name }; }), state.scenario, function (v) { state.scenario = v; resetCalc(); render(); });
     picker($("budget-picker"), D.budgets.map(function (n) { return { value: n, label: n + (n === 1 ? " booster" : " boosters") }; }), state.budget, function (v) { state.budget = v; render(); });
-    $("set-hint").textContent = setName(state.set) + " (" + state.set + "), English booster packs.";
+    var info = setInfo(state.set);
+    $("set-hint").textContent = info.name + " (" + info.id + "), English booster packs. " + D.groups[info.group] + ".";
+    $("set-note").textContent = info.note;
+    $("set-note").hidden = !info.note;
     var s = scen(state.scenario);
     var p = $("scenario-params");
     p.innerHTML = "";
@@ -227,7 +246,7 @@
     var lg = $("be-legend"); lg.innerHTML = "";
     var a = el("span"); a.appendChild(el("i", { class: "sw-a" })); a.appendChild(document.createTextNode("Break-even price, 95 % band")); lg.appendChild(a);
     var c = el("span"); c.appendChild(el("i", { class: "sw-ref" })); c.appendChild(document.createTextNode("Booster price")); lg.appendChild(c);
-    $("be-source").textContent = "Fee rate and haircut as entered. Prices: " + M.price_type + ", " + M.price_date + ". Grid computed from the " + M.epistemic_draws + " pull-rate draws of run " + M.run_id + ".";
+    $("be-source").textContent = "Fee rate and haircut as entered. Prices: " + M.price_type + ", " + M.price_date + ". Grid computed from the " + M.epistemic_draws + " pull-rate draws of run " + setInfo(state.set).run_id + ".";
   }
 
   // ---------- step 4: E1 ----------
@@ -301,7 +320,7 @@
     var lg = $("e1-legend"); lg.innerHTML = "";
     var a = el("span"); a.appendChild(el("i", { class: "dot sw-a" })); a.appendChild(document.createTextNode("A: open boosters (95 % interval)")); lg.appendChild(a);
     var b = el("span"); b.appendChild(el("i", { class: "dot sw-b" })); b.appendChild(document.createTextNode("B: buy single cards")); lg.appendChild(b);
-    $("e1-source").textContent = "Π in USD, " + M.price_type + " on " + M.price_date + ". Mean over " + M.epistemic_draws + " pull-rate draws, " + M.aleatory_runs.toLocaleString("en-US") + " simulated runs each.";
+    $("e1-source").textContent = "Π in USD, " + M.price_type + " on " + M.price_date + ". Mean over " + M.epistemic_draws + " pull-rate draws, " + M.aleatory_runs.toLocaleString("en-US") + " simulated runs each (run " + setInfo(state.set).run_id + ").";
   }
 
   // ---------- step 5: E2 ----------
@@ -336,19 +355,21 @@
   };
   function renderHyp() {
     var box = $("hyp"); box.innerHTML = "";
-    Object.keys(D.hypotheses).sort().forEach(function (h) {
+    function add(title, v, text) {
       var d = el("div", { class: "hyp" });
-      var p = el("p"); p.appendChild(el("span", { class: "st" }, h + ": " + D.hypotheses[h].status + ". "));
-      p.appendChild(document.createTextNode(HYP[h] || ""));
+      var p = el("p"); p.appendChild(el("span", { class: "st" }, title + ": " + v.status + ". "));
+      p.appendChild(document.createTextNode(text));
       d.appendChild(p);
       var ev = el("details", { class: "hint" });
-      ev.appendChild(el("summary", null, "Evidence (" + D.hypotheses[h].evidence.length + ")"));
+      ev.appendChild(el("summary", null, "Evidence (" + v.evidence.length + ")"));
       var ul = el("ul");
-      D.hypotheses[h].evidence.forEach(function (x) { ul.appendChild(el("li", null, x)); });
+      v.evidence.forEach(function (x) { ul.appendChild(el("li", null, x)); });
       ev.appendChild(ul);
       d.appendChild(ev);
       box.appendChild(d);
-    });
+    }
+    Object.keys(D.hypotheses).sort().forEach(function (h) { add(h, D.hypotheses[h], HYP[h] || ""); });
+    add("H4 over the fourteen sets", D.h4_all_sets, HYP.H4 + " Runs " + D.h4_all_sets.runs.join(" and ") + "; at a budget of ten boosters or more, buying wins in every set.");
   }
   $("dl-csv").addEventListener("click", function () {
     var cols = ["set", "estimand", "label", "scenario", "metric", "a_mean", "a_low", "a_high", "a_mc_se", "b", "share_a_better", "verdict"];

@@ -83,8 +83,8 @@ objections: [docs/FAQ.md](docs/FAQ.md).
    [QA](research/reports/qa.md).
 4. The [working paper](research/paper/paper.pdf), whose figures and tables all
    regenerate from this repository.
-5. A [static web demo](https://azekf11.github.io/PokeQuant/) of the frozen
-   results (`apps/web/`).
+5. A [static web demo](https://azekf11.github.io/PokeQuant/) of the frozen results
+   for the fourteen sets (`apps/web/`).
 
 ## Repository layout
 
