@@ -1,4 +1,4 @@
-<!-- Version 2. Sources of truth: data/manifests/, research/experiments/*.yaml, research/reports/validation.md, docs/decisions/. -->
+<!-- Version 3. Sources of truth: data/manifests/, research/experiments/*.yaml, research/reports/validation.md, docs/decisions/. -->
 
 # Appendix
 
@@ -19,10 +19,10 @@
 | Booster price | 4.49 USD (5.49 adverse) | Assumption: US retail price at launch; no official price list | n/a | Configuration |
 | Shipping, haircut | 1.00 / 4.50 USD; 0.15 / 0.30 | Assumptions; R10 anchors the haircut on Heck et al. [-@heck2026sales] | n/a | Configuration |
 
-Every price observation carries its date, currency, condition (unspecified)
-and type (provider market aggregate or venue sale average). No listing price
-is used as a transaction value, and missing prices are never set to zero
-except in the adverse scenario, where this is stated.
+Every price carries its date, currency, condition (unspecified) and type
+(provider market aggregate or venue sale average). No listing price is used
+as a transaction value, and missing prices are set to zero only in the
+adverse scenario.
 
 ## B. Definitions
 
@@ -41,24 +41,18 @@ except in the adverse scenario, where this is stated.
 ## C. Validation of the engine
 
 `scripts/validate_engine.py` checks the engine against exact results with
-synthetic card values, before any price was used:
-
-1. A one-slot toy case gives a simulated mean 1.76 standard errors from the
-   exact value with N = 10⁶.
-2. Simulated card frequencies in the three random slots of Surging Sparks
-   pass a χ² test (p = 0.15, 0.64 and 0.54).
-3. Hit counts of a Special Illustration Rare over 100 packs match the
-   binomial distribution in mean, variance and P(at least one).
-4. The root-mean-square error of the mean falls with a log-log slope of
-   −0.52 (theory −0.5) from N = 10³ to 10⁶.
-5. The multinomial and card-by-card samplers agree (Kolmogorov–Smirnov
-   p = 0.91).
-6. The capped number of packs to a target matches its closed form.
-7. The same seed, data and model give identical output.
-
-The full report is `research/reports/validation.md`. The exact b\* of
-equation (5) also matches the break-even price computed by the engine within
-a relative tolerance of 10⁻⁶ in the test suite (synthetic data).
+synthetic card values, before any price was used
+(`research/reports/validation.md`): (1) a one-slot toy case gives a simulated
+mean 1.76 standard errors from the exact value with N = 10⁶; (2) simulated
+card frequencies in the three random slots of Surging Sparks pass a χ² test
+(p = 0.15, 0.64 and 0.54); (3) hit counts of a Special Illustration Rare over
+100 packs match the binomial distribution in mean, variance and P(at least
+one); (4) the root-mean-square error of the mean falls with a log-log slope of
+−0.52 (theory −0.5) from N = 10³ to 10⁶; (5) the multinomial and card-by-card
+samplers agree (Kolmogorov–Smirnov p = 0.91); (6) the capped number of packs
+to a target matches its closed form; (7) the same seed, data and model give
+identical output. The exact b\* of equation (5) also matches the engine's
+break-even price within a relative tolerance of 10⁻⁶ in the test suite.
 
 ## D. Simulation parameters
 
@@ -112,9 +106,6 @@ make reproduce    # data, validation, main run, robustness, reports and figures
 ```
 
 `make reproduce` needs the TCGdex responses in the local cache, fetched by
-`pokequant ingest` on first use, and takes about three hours on eight cores.
-The extensions run with `scripts/sales_benchmark.py`,
-`scripts/pull_rate_checks.py` and `pokequant run
-research/experiments/extension_sets.yaml`. Each run writes a manifest with
-the configuration hash, seed, data snapshot identifiers and the SHA-256 of its
-results.
+`pokequant ingest` on first use, runs the main experiment and every extension,
+and takes several hours. Each run writes a manifest with the configuration
+hash, seed, data snapshot identifiers and the SHA-256 of its results.

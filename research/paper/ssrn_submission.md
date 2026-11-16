@@ -1,7 +1,7 @@
 # SSRN submission sheet
 
-Ready-to-paste fields for the SSRN form, version 2 of the paper (abstract ID
-7710358). Version 1 was submitted on 2026-11-15; version 2 is uploaded with
+Ready-to-paste fields for the SSRN form, version 3 of the paper (abstract ID
+7710358). Version 1 was submitted on 2026-11-15; version 3 is uploaded with
 "Revise" once SSRN has approved version 1. Every number comes from the reports
 cited in `research/paper/drafts/00_abstract.md`.
 
@@ -15,7 +15,7 @@ Anh-Vu TA, Independent Researcher
 
 ## Date written
 
-November 2026 (version 2)
+November 2026 (version 3)
 
 ## Abstract (1,202 characters)
 
@@ -47,4 +47,5 @@ expected shortfall, pre-registration
 
 ## File
 
-`research/paper/paper.pdf` (release v1.2.0, paper version 2)
+`research/paper/paper.pdf` (paper version 3, 14 pages: version 2 in a compact layout
+with tighter text, same results)

@@ -1,4 +1,4 @@
-<!-- Version 2. Numbers: research/reports/results.md, robustness.md, simulation_diagnostics.md, sales_benchmark.md, pull_rate_checks.md, extension_sets.md, mega_sets.md. -->
+<!-- Version 3. Numbers: research/reports/results.md, robustness.md, simulation_diagnostics.md, sales_benchmark.md, pull_rate_checks.md, extension_sets.md, mega_sets.md. -->
 
 # Abstract
 
