@@ -239,6 +239,7 @@ PR into `main`.
 - [x] Same results, text tightened by about 13 % and a denser layout: 24 pages down to 14, all 11 figures and 6 tables kept. Every number in version 3 appears in version 2.
 - [ ] Read by the author and one or two classmates; their remarks answered.
 - [ ] Release `v1.3.0` on Zenodo after that review.
+- [ ] Portfolio (https://anhvu-ta-portfolio.vercel.app, repo `Azekf11/portfolio`): update the PokéQuant entry in `src/data/projects.json` to release `v1.3.0` (status line, paper link to the release, version DOI; highlights re-checked against the abstract).
 
 ## 4. What is left
 
