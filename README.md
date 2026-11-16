@@ -136,5 +136,5 @@ make reproduce
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow and
 [CITATION.cff](CITATION.cff) to cite the work. Archived on Zenodo:
 [10.5281/zenodo.24251050](https://doi.org/10.5281/zenodo.24251050) (all
-versions; v1.1.0, paper version 2, is
-[10.5281/zenodo.24265471](https://doi.org/10.5281/zenodo.24265471)).
+versions; v1.2.0, paper version 2 with fourteen sets, is
+[10.5281/zenodo.24266520](https://doi.org/10.5281/zenodo.24266520)).
