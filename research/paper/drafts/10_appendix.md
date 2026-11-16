@@ -9,7 +9,7 @@
 | Input | Value(s) used | Source and date | Licence or permission | In the package |
 |---|---|---|---|---|
 | Pull rates | Hits, packs, rates of every hit rarity | Poké Life pull-rate evidence registry, version 2026-11-13 | CC BY 4.0 | Yes, with SHA-256 checksums |
-| Primary pull-rate tables | Printed rates and margins, ten sets | TCGplayer pull-rate articles, read 2026-11-15 | Facts cited with URLs | `research/reports/*tcgplayer_published_rates.csv` |
+| Primary pull-rate tables | Printed rates and margins, fourteen sets | TCGplayer pull-rate articles, read 2026-11-15 (ten sets) and 2026-11-16 (four Mega Evolution sets) | Facts cited with URLs | `research/reports/*tcgplayer_published_rates.csv` |
 | Slot layout | Positions of hit rarities | TCGplayer pull-rate articles; model specification | Facts cited | Described |
 | Catalogue | Cards, numbers, rarities, variants | TCGdex API, 2026-11-15 | MIT | Re-fetched by script |
 | Prices (main) | TCGplayer market price, USD | TCGdex relay, provider time 2026-11-14 22:22–22:24 UTC | Permission for this non-commercial project (ADR 0009) | No; derived statistics and checksums only |
@@ -86,6 +86,7 @@ a relative tolerance of 10⁻⁶ in the test suite (synthetic data).
 | `analysis-v1` | Frozen main run and robustness variants (Sections 4, 5.1) | Writing |
 | `prereg-v3` | Sale-price benchmark and weekly panel (Section 5.3; ADR 0014) | Any Cardmarket value of the three sets |
 | `prereg-v4` | Ten-set extension and pull-rate checks (Sections 5.2, 5.4; ADR 0015) | Any price or result of the added sets |
+| `prereg-v5` | Mega Evolution sets under two Mega Hyper Rare layouts (Section 5.5; ADR 0016) | Any price or result of the four sets |
 
 Deviations from `prereg-v1`, each recorded in an ADR: the test excluding
 reconstructed counts is replaced by R9b, since every row of the selected sets

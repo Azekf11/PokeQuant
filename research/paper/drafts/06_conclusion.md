@@ -2,7 +2,7 @@
 
 # 6. Conclusion
 
-For ten recent English Pokémon sets valued at dated market prices, under explicit
+For fourteen recent English Pokémon sets valued at dated market prices, under explicit
 costs and propagated pull-rate uncertainty, opening boosters is not a
 competitive way to acquire cards. In the three main sets, a pack's expected net resale value is
 about a quarter to a third of its retail price, and buying the same cards directly

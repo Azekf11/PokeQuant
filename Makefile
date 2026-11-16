@@ -23,17 +23,23 @@ coverage:  ## Line coverage of the package by the test suite
 
 check: lint typecheck test  ## Everything CI runs (except the secret scan)
 
-# --- Analysis (frozen at tag analysis-v1; extensions at prereg-v3 and prereg-v4) ---
+# --- Analysis (frozen at tag analysis-v1; extensions at prereg-v3, v4 and v5) -------
 CONFIG := research/experiments/main.yaml
 RUN := results/main-$(shell shasum -a 256 $(CONFIG) | cut -c1-8)-k200-m20000
 EXT_CONFIG := research/experiments/extension_sets.yaml
 EXT_RUN := results/extension_sets-$(shell shasum -a 256 $(EXT_CONFIG) | cut -c1-8)-k200-m20000
 EXT_SETS := sv01,sv02,sv03,sv04,sv05,sv06,sv07,sv08,sv09,sv10
+MEGA_CONFIG := research/experiments/mega_sets.yaml
+MEGA_RUN := results/mega_sets-$(shell shasum -a 256 $(MEGA_CONFIG) | cut -c1-8)-k200-m20000
+MEGA_ALT_CONFIG := research/experiments/mega_sets_rare_slot.yaml
+MEGA_ALT_RUN := results/mega_sets_rare_slot-$(shell shasum -a 256 $(MEGA_ALT_CONFIG) | cut -c1-8)-k200-m20000
 
 data:  ## Processed tables from the committed pull rates and the local TCGdex cache
 	uv run pokequant ingest --pokelife 2026-11-13 --tcgdex 2026-11-15 --sets sv07,sv08,sv10 --offline
 	uv run pokequant ingest --pokelife 2026-11-13 --tcgdex 2026-11-15 --sets $(EXT_SETS) \
 		--out-name extension-sets_pokelife-2026-11-13_tcgdex-2026-11-15 --offline
+	uv run pokequant ingest --pokelife 2026-11-13 --tcgdex 2026-11-15 --sets me01,me02,me04,me05 \
+		--out-name mega-sets_pokelife-2026-11-13_tcgdex-2026-11-15 --offline
 
 reproduce: data  ## Every report, table and figure of the paper (several hours on 8 cores)
 	uv run python scripts/validate_engine.py
@@ -48,6 +54,10 @@ reproduce: data  ## Every report, table and figure of the paper (several hours o
 	uv run pokequant run $(EXT_CONFIG)
 	uv run python scripts/extension_report.py $(EXT_RUN)
 	uv run python scripts/pull_rate_checks.py
+	uv run pokequant run $(MEGA_CONFIG)
+	uv run pokequant run $(MEGA_ALT_CONFIG)
+	uv run python scripts/mega_report.py $(MEGA_RUN) $(MEGA_ALT_RUN) $(EXT_RUN)
+	uv run python scripts/mega_pull_rate_checks.py
 	uv run python scripts/build_paper.py
 
 paper:  ## Working paper (Markdown, HTML and PDF; the PDF needs a local Chrome)

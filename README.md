@@ -7,8 +7,8 @@ comparison of Pokémon TCG booster opening versus direct purchase on the
 secondary market.
 
 > **Status: working paper, version 2 (November 2026).** Main analysis frozen
-> at tag `analysis-v1`; two pre-registered extensions (tags `prereg-v3` and
-> `prereg-v4`). Paper in [research/paper/paper.pdf](research/paper/paper.pdf)
+> at tag `analysis-v1`; three pre-registered extensions (tags `prereg-v3` to
+> `prereg-v5`). Paper in [research/paper/paper.pdf](research/paper/paper.pdf)
 > ([HTML](research/paper/paper.html)); interactive demo at
 > <https://azekf11.github.io/PokeQuant/>. See the [roadmap](docs/ROADMAP.md).
 
@@ -46,11 +46,12 @@ runs. Central cost scenario unless stated.
 | Opening until the top card is cheaper than buying it | 4 % to 14 % of runs |
 | Robustness variants in which opening still loses on average | 16 of 16 |
 
-Two pre-registered extensions test the same conclusions elsewhere:
+Three pre-registered extensions test the same conclusions elsewhere:
 
 | Extension | Result |
 |---|---|
 | Ten sets: the main three plus every other eligible set that fits the pack layout | Opening loses on average in all ten; central break-even price 0.60 to 2.38 USD; buying wins for every budget of ten boosters or more |
+| Four Mega Evolution sets, under two layouts for the Mega Hyper Rare, whose slot is not documented | Opening loses on average in all four; central break-even price 0.48 to 1.50 USD under either layout; buying wins for every budget of ten boosters or more |
 | Cardmarket 30-day average sale prices (EUR, converted at the ECB rate) | Opening still loses on average; central break-even price 1.16 to 2.42 USD |
 | Pull rates against their primary source and out of sample | 33 of 33 rates match the published tables; 20 of 20 pooled rows inside the 95 % predictive interval |
 
@@ -58,6 +59,7 @@ Every number has an interval in
 [results.md](research/reports/results.md),
 [robustness.md](research/reports/robustness.md),
 [extension_sets.md](research/reports/extension_sets.md),
+[mega_sets.md](research/reports/mega_sets.md),
 [sales_benchmark.md](research/reports/sales_benchmark.md) and
 [pull_rate_checks.md](research/reports/pull_rate_checks.md). Answers to the usual
 objections: [docs/FAQ.md](docs/FAQ.md).
@@ -75,6 +77,7 @@ objections: [docs/FAQ.md](docs/FAQ.md).
    [results](research/reports/results.md),
    [robustness](research/reports/robustness.md),
    [ten sets](research/reports/extension_sets.md),
+   [Mega Evolution sets](research/reports/mega_sets.md),
    [sale prices](research/reports/sales_benchmark.md),
    [pull-rate checks](research/reports/pull_rate_checks.md),
    [QA](research/reports/qa.md).

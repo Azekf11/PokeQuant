@@ -17,9 +17,9 @@ central costs the break-even booster price is 1.03 to 1.42 USD, against a
 retail price of 4.49 USD. Opening 36 boosters loses 111 to 125 USD on average,
 and buying the same value directly is better on the mean, the median and the
 5 % conditional value-at-risk in 35 of 36 comparisons. The average loss from
-opening holds in sixteen robustness variants, on seven further sets and at
+opening holds in sixteen robustness variants, on eleven further sets and at
 European sale prices, and buying stays decisively better for every budget of
-ten boosters or more in all ten sets. Selling costs drive the result: for two
+ten boosters or more in all fourteen sets. Selling costs drive the result: for two
 sets, a pack's gross market value exceeds its retail price. Pull-rate
 uncertainty widens every interval but changes no main conclusion.
 
@@ -73,8 +73,8 @@ loses 111 to 125 USD on average; buying and reselling the same value loses
 CVaR in 35 of 36 budget comparisons. Third, chasing one valuable card by
 opening rarely pays: opening until the set's most valuable card appears is
 cheaper than buying it in only 4 % to 14 % of simulated runs. These results
-survive sixteen pre-registered robustness variants and two pre-registered
-extensions. On seven further sets, opening still loses on average and buying
+survive sixteen pre-registered robustness variants and three pre-registered
+extensions. On eleven further sets, opening still loses on average and buying
 still wins for every budget of ten boosters or more, although for two sets a
 pack's gross market value exceeds its retail price. At European sale prices,
 opening still loses on average under central costs.
@@ -149,7 +149,9 @@ series or later, with at least 5,000 packs measured, complete rarity rows, a
 complete catalogue and at least 90 % price coverage of its Rare-and-above
 cards. Of the 36 sets, 15 are eligible. They are ranked by data quality, and
 the top three are Destined Rivals (sv10), Surging Sparks (sv08) and Stellar
-Crown (sv07). The other twelve are used in Section 5.2.
+Crown (sv07). Of the other twelve, seven are used in Section 5.2, the four
+Mega Evolution sets in Section 5.5, and 30th Celebration, whose catalogue
+lacks one of its rarities, is not used.
 
 The catalogue comes from TCGdex (MIT licence), fetched on 2026-11-15. For the
 three sets, the number of cards in each hit rarity matches the registry
@@ -487,8 +489,9 @@ ADR 0015 (tag `prereg-v4`) extends the main experiment to every eligible set
 that fits the main pack layout. Seven of the twelve other eligible sets do:
 Scarlet & Violet, Paldea Evolved, Obsidian Flames, Paradox Rift, Temporal
 Forces, Twilight Masquerade and Journey Together. The four Mega Evolution sets
-have a "Mega Hyper Rare" with no slot in the layout, and 30th Celebration has
-rarities absent from the catalogue; no layout was invented for them. The run
+have a "Mega Hyper Rare" with no documented slot; Section 5.5 treats them
+under two layouts. 30th Celebration has rarities absent from the catalogue and
+is not used. The run
 uses the configuration, seed and price snapshot of the main run. Random
 streams are keyed by a set's position in the configuration, so the three main
 sets are re-simulated with new streams; their central and gross b\* are
@@ -567,9 +570,50 @@ interval, and the smallest two-sided p-value is 0.161, so no row is rejected
 after Holm correction. Pooling the two openings, as the main analysis does,
 is consistent with the data.
 
+## 5.5 Mega Evolution sets
+
+The four eligible sets of the Mega Evolution series (Mega Evolution,
+Phantasmal Flames, Chaos Rising and Pitch Black) were left out of Section 5.2.
+Their top rarity, the Mega Hyper Rare, has no documented slot. In the
+TCGplayer articles on these sets, Double and Ultra Rares come in the rare slot
+and Illustration and Special Illustration Rares in the second reverse slot, as
+in the main layout. The articles also say the Mega Hyper Rare replaced the
+Hyper Rare, but none says where it sits. A second extension (ADR 0016, tag
+`prereg-v5`) therefore runs the four sets under two layouts with the same
+random streams. The central layout puts the Mega Hyper Rare in the second
+reverse slot, where the Hyper Rare was; the alternative puts it in the rare
+slot. A conclusion is kept only if it holds under both.
+
+**Table 6.** Mega Evolution sets: break-even booster price b\* (USD) and the
+mean profit of opening 36 boosters, central costs.
+
+| Set | b\*, MHR in reverse slot | b\*, MHR in rare slot | Gross b\* | Opening 36 boosters | Buying |
+|---|---|---|---|---|---|
+| Mega Evolution | 1.03 [0.88, 1.21] | 1.03 [0.88, 1.21] | 3.57 [3.36, 3.81] | −124.52 [−129.94, −118.09] | −45.88 |
+| Phantasmal Flames | 1.49 [1.29, 1.67] | 1.50 [1.29, 1.73] | 3.99 [3.72, 4.24] | −108.08 [−115.44, −101.10] | −87.83 |
+| Chaos Rising | 0.48 [0.43, 0.54] | 0.48 [0.42, 0.55] | 2.65 [2.58, 2.72] | −144.22 [−146.17, −142.12] | −50.55 |
+| Pitch Black | 0.71 [0.59, 0.83] | 0.72 [0.59, 0.83] | 2.96 [2.78, 3.13] | −136.07 [−140.56, −131.38] | −48.56 |
+
+*Source:* `research/reports/mega_sets.md`. Gross b\* and the profits use the
+central layout. MHR: Mega Hyper Rare.
+
+The slot makes no difference. The Mega Hyper Rare appears in about one pack
+in 1,000 (TCGplayer prints 1 in 956 to 1 in 1,260), so moving it between slots
+changes the mean b\* by at most 0.01. C1, C2 and C3 hold in all four sets under
+both layouts. Opening loses on average for every budget, no gross b\* reaches
+the retail price, and buying is decisively better for every budget of ten
+boosters or more and every target. Over the fourteen sets, H4 keeps the status
+of Section 5.2: the winner differs between sets only at a one-booster budget,
+where none of the four new sets favours opening. The pull-rate checks of
+Section 5.4, applied to these sets, find nothing. The one single-source row
+matches its printed rate. No set is flagged, as Mega Evolution and Phantasmal
+Flames share only one printed row (Mega Hyper Rare, 0.08 % ± 0.08 %). And all
+19 pooled rows fall inside the 95 % predictive interval (smallest p-value
+0.174).
+
 # 6. Conclusion
 
-For ten recent English Pokémon sets valued at dated market prices, under explicit
+For fourteen recent English Pokémon sets valued at dated market prices, under explicit
 costs and propagated pull-rate uncertainty, opening boosters is not a
 competitive way to acquire cards. In the three main sets, a pack's expected net resale value is
 about a quarter to a third of its retail price, and buying the same cards directly
@@ -654,7 +698,7 @@ Zendle, David, Walasek, Lukasz, Cairns, Paul, Meyer, Rachel and Drummond, Aaron 
 | Input | Value(s) used | Source and date | Licence or permission | In the package |
 |---|---|---|---|---|
 | Pull rates | Hits, packs, rates of every hit rarity | Poké Life pull-rate evidence registry, version 2026-11-13 | CC BY 4.0 | Yes, with SHA-256 checksums |
-| Primary pull-rate tables | Printed rates and margins, ten sets | TCGplayer pull-rate articles, read 2026-11-15 | Facts cited with URLs | `research/reports/*tcgplayer_published_rates.csv` |
+| Primary pull-rate tables | Printed rates and margins, fourteen sets | TCGplayer pull-rate articles, read 2026-11-15 (ten sets) and 2026-11-16 (four Mega Evolution sets) | Facts cited with URLs | `research/reports/*tcgplayer_published_rates.csv` |
 | Slot layout | Positions of hit rarities | TCGplayer pull-rate articles; model specification | Facts cited | Described |
 | Catalogue | Cards, numbers, rarities, variants | TCGdex API, 2026-11-15 | MIT | Re-fetched by script |
 | Prices (main) | TCGplayer market price, USD | TCGdex relay, provider time 2026-11-14 22:22–22:24 UTC | Permission for this non-commercial project (ADR 0009) | No; derived statistics and checksums only |
@@ -731,6 +775,7 @@ a relative tolerance of 10⁻⁶ in the test suite (synthetic data).
 | `analysis-v1` | Frozen main run and robustness variants (Sections 4, 5.1) | Writing |
 | `prereg-v3` | Sale-price benchmark and weekly panel (Section 5.3; ADR 0014) | Any Cardmarket value of the three sets |
 | `prereg-v4` | Ten-set extension and pull-rate checks (Sections 5.2, 5.4; ADR 0015) | Any price or result of the added sets |
+| `prereg-v5` | Mega Evolution sets under two Mega Hyper Rare layouts (Section 5.5; ADR 0016) | Any price or result of the four sets |
 
 Deviations from `prereg-v1`, each recorded in an ADR: the test excluding
 reconstructed counts is replaced by R9b, since every row of the selected sets

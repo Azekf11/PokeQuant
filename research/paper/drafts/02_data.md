@@ -42,7 +42,9 @@ series or later, with at least 5,000 packs measured, complete rarity rows, a
 complete catalogue and at least 90 % price coverage of its Rare-and-above
 cards. Of the 36 sets, 15 are eligible. They are ranked by data quality, and
 the top three are Destined Rivals (sv10), Surging Sparks (sv08) and Stellar
-Crown (sv07). The other twelve are used in Section 5.2.
+Crown (sv07). Of the other twelve, seven are used in Section 5.2, the four
+Mega Evolution sets in Section 5.5, and 30th Celebration, whose catalogue
+lacks one of its rarities, is not used.
 
 The catalogue comes from TCGdex (MIT licence), fetched on 2026-11-15. For the
 three sets, the number of cards in each hit rarity matches the registry

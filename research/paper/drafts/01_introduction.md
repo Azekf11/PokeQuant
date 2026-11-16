@@ -45,8 +45,8 @@ loses 111 to 125 USD on average; buying and reselling the same value loses
 CVaR in 35 of 36 budget comparisons. Third, chasing one valuable card by
 opening rarely pays: opening until the set's most valuable card appears is
 cheaper than buying it in only 4 % to 14 % of simulated runs. These results
-survive sixteen pre-registered robustness variants and two pre-registered
-extensions. On seven further sets, opening still loses on average and buying
+survive sixteen pre-registered robustness variants and three pre-registered
+extensions. On eleven further sets, opening still loses on average and buying
 still wins for every budget of ten boosters or more, although for two sets a
 pack's gross market value exceeds its retail price. At European sale prices,
 opening still loses on average under central costs.

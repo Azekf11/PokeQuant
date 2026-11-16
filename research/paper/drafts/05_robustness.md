@@ -1,4 +1,4 @@
-<!-- Version 2. Sources: research/reports/robustness.md (ADR 0012), extension_sets.md (ADR 0015), sales_benchmark.md (ADR 0014), pull_rate_checks.md (ADR 0015). -->
+<!-- Version 2. Sources: research/reports/robustness.md (ADR 0012), extension_sets.md (ADR 0015), sales_benchmark.md (ADR 0014), pull_rate_checks.md (ADR 0015), mega_sets.md and mega/pull_rate_checks.md (ADR 0016). -->
 
 # 5. Robustness and extensions
 
@@ -62,8 +62,9 @@ ADR 0015 (tag `prereg-v4`) extends the main experiment to every eligible set
 that fits the main pack layout. Seven of the twelve other eligible sets do:
 Scarlet & Violet, Paldea Evolved, Obsidian Flames, Paradox Rift, Temporal
 Forces, Twilight Masquerade and Journey Together. The four Mega Evolution sets
-have a "Mega Hyper Rare" with no slot in the layout, and 30th Celebration has
-rarities absent from the catalogue; no layout was invented for them. The run
+have a "Mega Hyper Rare" with no documented slot; Section 5.5 treats them
+under two layouts. 30th Celebration has rarities absent from the catalogue and
+is not used. The run
 uses the configuration, seed and price snapshot of the main run. Random
 streams are keyed by a set's position in the configuration, so the three main
 sets are re-simulated with new streams; their central and gross b\* are
@@ -141,3 +142,44 @@ rows the observed hits fall inside the 95 % beta-binomial predictive
 interval, and the smallest two-sided p-value is 0.161, so no row is rejected
 after Holm correction. Pooling the two openings, as the main analysis does,
 is consistent with the data.
+
+## 5.5 Mega Evolution sets
+
+The four eligible sets of the Mega Evolution series (Mega Evolution,
+Phantasmal Flames, Chaos Rising and Pitch Black) were left out of Section 5.2.
+Their top rarity, the Mega Hyper Rare, has no documented slot. In the
+TCGplayer articles on these sets, Double and Ultra Rares come in the rare slot
+and Illustration and Special Illustration Rares in the second reverse slot, as
+in the main layout. The articles also say the Mega Hyper Rare replaced the
+Hyper Rare, but none says where it sits. A second extension (ADR 0016, tag
+`prereg-v5`) therefore runs the four sets under two layouts with the same
+random streams. The central layout puts the Mega Hyper Rare in the second
+reverse slot, where the Hyper Rare was; the alternative puts it in the rare
+slot. A conclusion is kept only if it holds under both.
+
+**Table 6.** Mega Evolution sets: break-even booster price b\* (USD) and the
+mean profit of opening 36 boosters, central costs.
+
+| Set | b\*, MHR in reverse slot | b\*, MHR in rare slot | Gross b\* | Opening 36 boosters | Buying |
+|---|---|---|---|---|---|
+| Mega Evolution | 1.03 [0.88, 1.21] | 1.03 [0.88, 1.21] | 3.57 [3.36, 3.81] | −124.52 [−129.94, −118.09] | −45.88 |
+| Phantasmal Flames | 1.49 [1.29, 1.67] | 1.50 [1.29, 1.73] | 3.99 [3.72, 4.24] | −108.08 [−115.44, −101.10] | −87.83 |
+| Chaos Rising | 0.48 [0.43, 0.54] | 0.48 [0.42, 0.55] | 2.65 [2.58, 2.72] | −144.22 [−146.17, −142.12] | −50.55 |
+| Pitch Black | 0.71 [0.59, 0.83] | 0.72 [0.59, 0.83] | 2.96 [2.78, 3.13] | −136.07 [−140.56, −131.38] | −48.56 |
+
+*Source:* `research/reports/mega_sets.md`. Gross b\* and the profits use the
+central layout. MHR: Mega Hyper Rare.
+
+The slot makes no difference. The Mega Hyper Rare appears in about one pack
+in 1,000 (TCGplayer prints 1 in 956 to 1 in 1,260), so moving it between slots
+changes the mean b\* by at most 0.01. C1, C2 and C3 hold in all four sets under
+both layouts. Opening loses on average for every budget, no gross b\* reaches
+the retail price, and buying is decisively better for every budget of ten
+boosters or more and every target. Over the fourteen sets, H4 keeps the status
+of Section 5.2: the winner differs between sets only at a one-booster budget,
+where none of the four new sets favours opening. The pull-rate checks of
+Section 5.4, applied to these sets, find nothing. The one single-source row
+matches its printed rate. No set is flagged, as Mega Evolution and Phantasmal
+Flames share only one printed row (Mega Hyper Rare, 0.08 % ± 0.08 %). And all
+19 pooled rows fall inside the 95 % predictive interval (smallest p-value
+0.174).
