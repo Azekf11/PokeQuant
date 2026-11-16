@@ -42,7 +42,7 @@ TITLE = (
     "Booster Acquisition and Secondary-Market Purchases"
 )
 AUTHOR = "Anh-Vu TA"
-VERSION = "2"
+VERSION = "3"
 DATE = "November 2026"
 DOI = "10.5281/zenodo.24251050"
 REPOSITORY = "https://github.com/Azekf11/PokeQuant"
@@ -176,26 +176,30 @@ def assemble() -> str:
 
 
 CSS = """
-body { font: 11pt/1.45 "Latin Modern Roman", "CMU Serif", "Times New Roman", Times, serif;
-       color: #111; max-width: 44em; margin: 2em auto; padding: 0 1em; text-align: justify;
+body { font: 10pt/1.34 "Latin Modern Roman", "CMU Serif", "Times New Roman", Times, serif;
+       color: #111; max-width: 46em; margin: 1em auto; padding: 0 1em; text-align: justify;
        hyphens: auto; }
-h1 { font-size: 1.2em; margin: 1.8em 0 .6em; text-align: left; }
-h1:first-child { font-size: 1.55em; text-align: center; line-height: 1.3; margin: .5em 0 .8em; }
-h2 { font-size: 1.02em; margin: 1.4em 0 .4em; text-align: left; } h3 { font-size: 1em; }
-p.author { text-align: center; font-size: 1.1em; margin: 0; }
-p.meta { text-align: center; font-size: .85em; color: #333; margin: .4em 0 1.6em; }
-div.abstract { margin: 0 2.5em 2em; font-size: .92em; }
-div.abstract h1 { font-size: 1em; text-align: center; margin: 0 0 .4em; }
-table { border-collapse: collapse; margin: .6em auto 1.2em; font-size: .84em;
-        border-top: 1.5px solid #111; border-bottom: 1.5px solid #111; text-align: left; }
-th, td { padding: .22em .55em; vertical-align: top; }
+h1 { font-size: 1.15em; margin: 1.1em 0 .35em; text-align: left; }
+h1:first-child { font-size: 1.45em; text-align: center; line-height: 1.25;
+                 margin: 0 0 .5em; }
+h2 { font-size: 1em; margin: .9em 0 .25em; text-align: left; } h3 { font-size: 1em; }
+p { margin: .45em 0; }
+p.author { text-align: center; font-size: 1.05em; margin: 0; }
+p.meta { text-align: center; font-size: .82em; color: #333; margin: .3em 0 1em; }
+div.abstract { margin: 0 2em 1.2em; font-size: .9em; }
+div.abstract h1 { font-size: 1em; text-align: center; margin: 0 0 .3em; }
+table { border-collapse: collapse; margin: .4em auto .7em; font-size: .8em;
+        border-top: 1.2px solid #111; border-bottom: 1.2px solid #111; text-align: left; }
+th, td { padding: .12em .45em; vertical-align: top; }
 th { border-bottom: .8px solid #111; font-weight: 600; }
-figure { margin: 1em 0 1.3em; break-inside: avoid; }
-figure img { max-width: 100%; display: block; margin: 0 auto; }
-figcaption { font-size: .86em; margin-top: .4em; text-align: left; }
-code, pre { font-size: .82em; } pre { background: #f6f6f4; padding: .7em; overflow-x: auto;
-  border-top: 1px solid #111; border-bottom: 1px solid #111; text-align: left; }
-@page { size: letter; margin: 2.4cm 2.5cm; }
+figure { margin: .5em 0 .8em; break-inside: avoid; }
+figure img { max-width: 86%; display: block; margin: 0 auto; }
+figure img[src$="tornado.png"] { max-width: 60%; }
+figure img[src$="figA1_pipeline.png"] { max-width: 66%; }
+figcaption { font-size: .82em; margin-top: .25em; text-align: left; }
+code, pre { font-size: .78em; } pre { background: #f6f6f4; padding: .45em .6em; overflow-x: auto;
+  border-top: 1px solid #111; border-bottom: 1px solid #111; text-align: left; line-height: 1.25; }
+@page { size: letter; margin: 1.8cm 2cm; }
 @media print { body { margin: 0; max-width: none; } h1, h2, h3 { break-after: avoid; }
   table, figure, pre { break-inside: avoid; } }
 """

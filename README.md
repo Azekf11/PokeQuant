@@ -6,7 +6,7 @@
 comparison of Pokémon TCG booster opening versus direct purchase on the
 secondary market.
 
-> **Status: working paper, version 2 (November 2026).** Main analysis frozen
+> **Status: working paper, version 3 (November 2026), 14 pages.** Main analysis frozen
 > at tag `analysis-v1`; three pre-registered extensions (tags `prereg-v3` to
 > `prereg-v5`). Paper in [research/paper/paper.pdf](research/paper/paper.pdf)
 > ([HTML](research/paper/paper.html)); interactive demo at
