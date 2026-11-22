@@ -5,38 +5,38 @@ extension: the main analysis (`analysis-v1`) is unchanged. Cardmarket `avg30` is
 the venue's average sale price over the last 30 days (EUR), converted to USD at
 the ECB reference rate. Derived statistics only (ADR 0009).
 
-Snapshot dates so far: 2026-11-15 (1 of 9 planned).
+Snapshot dates so far: 2026-11-15, 2026-11-22 (2 of 9 planned).
 
-## Q1. Break-even booster price b* on 2026-11-15 (USD, posterior mean [95 % interval])
+## Q1. Break-even booster price b* on 2026-11-22 (USD, posterior mean [95 % interval])
 
 | Set | Basis | Scenario | b* | Hit coverage | Holds (upper < 4.49) |
 |---|---|---|---|---|---|
-| Stellar Crown | tcgplayer_market | central | 1.42 [1.35, 1.49] | 98% | yes |
-| Stellar Crown | tcgplayer_market | gross | 4.29 [4.18, 4.39] | 98% | yes |
-| Stellar Crown | cardmarket_avg30_usd | central | 1.16 [1.10, 1.21] | 100% | yes |
-| Stellar Crown | cardmarket_avg30_usd | gross | 2.89 [2.80, 2.98] | 100% | yes |
-| Surging Sparks | tcgplayer_market | central | 1.03 [0.95, 1.12] | 100% | yes |
-| Surging Sparks | tcgplayer_market | gross | 3.44 [3.31, 3.56] | 100% | yes |
-| Surging Sparks | cardmarket_avg30_usd | central | 2.42 [2.32, 2.53] | 100% | yes |
-| Surging Sparks | cardmarket_avg30_usd | gross | 4.75 [4.61, 4.91] | 100% | no |
-| Destined Rivals | tcgplayer_market | central | 1.13 [1.04, 1.22] | 100% | yes |
-| Destined Rivals | tcgplayer_market | gross | 3.78 [3.65, 3.91] | 100% | yes |
-| Destined Rivals | cardmarket_avg30_usd | central | 1.71 [1.55, 1.86] | 100% | yes |
-| Destined Rivals | cardmarket_avg30_usd | gross | 3.46 [3.25, 3.68] | 100% | yes |
+| Stellar Crown | tcgplayer_market | central | 1.38 [1.31, 1.45] | 98% | yes |
+| Stellar Crown | tcgplayer_market | gross | 4.35 [4.25, 4.46] | 98% | yes |
+| Stellar Crown | cardmarket_avg30_usd | central | 1.14 [1.08, 1.19] | 100% | yes |
+| Stellar Crown | cardmarket_avg30_usd | gross | 2.86 [2.78, 2.95] | 100% | yes |
+| Surging Sparks | tcgplayer_market | central | 1.03 [0.95, 1.11] | 100% | yes |
+| Surging Sparks | tcgplayer_market | gross | 3.48 [3.36, 3.60] | 100% | yes |
+| Surging Sparks | cardmarket_avg30_usd | central | 2.39 [2.29, 2.49] | 100% | yes |
+| Surging Sparks | cardmarket_avg30_usd | gross | 4.70 [4.56, 4.85] | 100% | no |
+| Destined Rivals | tcgplayer_market | central | 1.10 [1.01, 1.19] | 100% | yes |
+| Destined Rivals | tcgplayer_market | gross | 3.82 [3.69, 3.95] | 100% | yes |
+| Destined Rivals | cardmarket_avg30_usd | central | 1.66 [1.51, 1.81] | 100% | yes |
+| Destined Rivals | cardmarket_avg30_usd | gross | 3.39 [3.18, 3.60] | 100% | yes |
 
-Exchange rate: 1.1052 USD per EUR (ECB, 2026-11-13).
+Exchange rate: 1.0990 USD per EUR (ECB, 2026-11-20).
 C1' is the central row, C2' the gross row (ADR 0014, item 3).
 
-## Q2. Price ratios over hit printings on 2026-11-15
+## Q2. Price ratios over hit printings on 2026-11-22
 
 | Set | Ratio | n | Median [95 % CI] | Quartiles | Implied haircut 1 - median |
 |---|---|---|---|---|---|
-| Stellar Crown | avg30_usd/tcgplayer_market | 49 | 0.94 [0.87, 1.03] | 0.74-1.14 | 0.06 |
-| Stellar Crown | avg30/cardmarket_trend | 50 | 1.02 [0.99, 1.04] | 0.98-1.06 | n/a |
-| Surging Sparks | avg30_usd/tcgplayer_market | 87 | 1.22 [1.14, 1.31] | 1.05-1.43 | -0.22 |
-| Surging Sparks | avg30/cardmarket_trend | 87 | 0.99 [0.97, 1.00] | 0.94-1.04 | n/a |
-| Destined Rivals | avg30_usd/tcgplayer_market | 79 | 1.23 [1.16, 1.33] | 1.07-1.46 | -0.23 |
-| Destined Rivals | avg30/cardmarket_trend | 79 | 1.02 [1.00, 1.04] | 0.98-1.06 | n/a |
+| Stellar Crown | avg30_usd/tcgplayer_market | 49 | 0.98 [0.88, 1.01] | 0.78-1.09 | 0.02 |
+| Stellar Crown | avg30/cardmarket_trend | 50 | 1.01 [0.98, 1.04] | 0.97-1.05 | n/a |
+| Surging Sparks | avg30_usd/tcgplayer_market | 87 | 1.25 [1.20, 1.32] | 1.08-1.43 | -0.25 |
+| Surging Sparks | avg30/cardmarket_trend | 87 | 1.03 [1.01, 1.05] | 0.97-1.08 | n/a |
+| Destined Rivals | avg30_usd/tcgplayer_market | 79 | 1.24 [1.21, 1.33] | 1.11-1.47 | -0.24 |
+| Destined Rivals | avg30/cardmarket_trend | 79 | 1.03 [1.02, 1.04] | 0.99-1.08 | n/a |
 
 Scenario haircuts for comparison: 0.15, 0.27, 0.30. The cross-venue ratio mixes two
 markets (EU, US) and two price types, so the implied haircut is descriptive only.
@@ -51,14 +51,21 @@ markets (EU, US) and two price types, so the implied haircut is descriptive only
 | 2026-11-15 | Surging Sparks | cardmarket_avg30_usd | 2.42 | 4.75 | yes | no |
 | 2026-11-15 | Destined Rivals | tcgplayer_market | 1.13 | 3.78 | yes | yes |
 | 2026-11-15 | Destined Rivals | cardmarket_avg30_usd | 1.71 | 3.46 | yes | yes |
+| 2026-11-22 | Stellar Crown | tcgplayer_market | 1.38 | 4.35 | yes | yes |
+| 2026-11-22 | Stellar Crown | cardmarket_avg30_usd | 1.14 | 2.86 | yes | yes |
+| 2026-11-22 | Surging Sparks | tcgplayer_market | 1.03 | 3.48 | yes | yes |
+| 2026-11-22 | Surging Sparks | cardmarket_avg30_usd | 2.39 | 4.70 | yes | no |
+| 2026-11-22 | Destined Rivals | tcgplayer_market | 1.10 | 3.82 | yes | yes |
+| 2026-11-22 | Destined Rivals | cardmarket_avg30_usd | 1.66 | 3.39 | yes | yes |
 
-**H4 (dates).** Not testable yet: one snapshot date.
+**H4 (dates).** Not supported over 2 dates: C1' and C2' never change.
 
 ## V1. Relay check (TCGdex avg30 vs Cardmarket official price guide)
 
 | Date | Matched printings | Equal within 0.01 EUR | Within 5 % | Official file created | TCGdex Cardmarket update (UTC hour) |
 |---|---|---|---|---|---|
 | 2026-11-15 | 671 | 68.8% (below 95 %: flagged) | 93.4% | 2026-11-15T02:47:59+0100 | 2026-11-14T22 |
+| 2026-11-22 | 671 | 69.9% (below 95 %: flagged) | 90.3% | 2026-11-22T02:43:59+0100 | 2026-11-21T22 |
 
 The pre-registered criterion is equality within 0.01 EUR. The 5 % column and
 the update times are a diagnostic added after the first run (not
