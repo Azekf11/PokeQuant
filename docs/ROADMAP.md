@@ -233,7 +233,7 @@ PR into `main`.
 - [x] `make reproduce` also runs the sale-price benchmark, the ten-set extension and the pull-rate checks.
 - [x] Pre-registered files restored byte for byte: a punctuation pass after `analysis-v1` (commit `f1c8f8e`) had edited `research/experiments/main.yaml`, `research/protocol/protocol.md` and `research/protocol/model_spec.md`. The wording was unchanged, but the configuration hash, and with it the run id `main-94de09e8`, no longer matched. The three files are back to their tagged state, and a test now fails if a frozen configuration changes.
 - [x] README, SSRN sheet and `CITATION.cff` updated to paper version 2; tag `v1.1.0`, archived on Zenodo as [10.5281/zenodo.24265471](https://doi.org/10.5281/zenodo.24265471).
-- [ ] SSRN: upload the current paper with "Revise" once SSRN approves version 1 (still `PRELIMINARY_UPLOAD` on 2026-11-16).
+- [x] SSRN: upload the current paper with "Revise" once SSRN approves version 1. *Approved 2026-11-19 (DOI [10.2139/ssrn.7710358](https://doi.org/10.2139/ssrn.7710358)); paper version 3 uploaded with "Revise" on 2026-11-22, with the abstract, keywords and JEL codes of `research/paper/ssrn_submission.md`.*
 
 ### Paper version 3 (compact) · branch `feat/compact-paper`
 - [x] Same results, text tightened by about 13 % and a denser layout: 24 pages down to 14, all 11 figures and 6 tables kept. Every number in version 3 appears in version 2.
@@ -251,7 +251,6 @@ actions or waiting on a date:
 | Read in full the closest papers (S1) | Author |
 | External review and answers to it (S8, S11, S12) | Author and one or two readers |
 | Presentation and demo video (S12) | Author |
-| SSRN revision (paper version 3) | SSRN approval of version 1 |
 | arXiv submission 8377791 | An endorser (code J3BQL7) |
 | H4 across dates | Last weekly snapshot, 2027-01-10 |
 
